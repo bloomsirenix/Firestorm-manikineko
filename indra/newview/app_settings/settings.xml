@@ -6866,7 +6866,7 @@
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://wiki.firestormviewer.org/[TOPIC]</string>
+      <string>https://example.com/[TOPIC]</string>
       <key>Backup</key>
       <integer>0</integer>
     </map>
@@ -6879,7 +6879,7 @@
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://wiki.firestormviewer.org/start#basic_functions</string>
+      <string>https://example.com/start#basic_functions</string>
       <key>Backup</key>
       <integer>0</integer>
     </map>    
@@ -13829,7 +13829,7 @@ Change of this parameter will affect the layout of buttons in notification toast
 			<key>Type</key>
 			<string>String</string>
 			<key>Value</key>
-			<string>https://jira.firestormviewer.org/secure/CreateIssueDetails!init.jspa?pid=10005&amp;issuetype=1&amp;priority=3&amp;environment=[ENVIRONMENT]</string>
+			<string>https://jira.Manikinekoviewer.org/secure/CreateIssueDetails!init.jspa?pid=10005&amp;issuetype=1&amp;priority=3&amp;environment=[ENVIRONMENT]</string>
 		</map>
 	<key>RevokePermsOnStopAnimation</key>
     <map>
@@ -14521,7 +14521,7 @@ Change of this parameter will affect the layout of buttons in notification toast
   <key>FSUseStandaloneGroupFloater</key>
     <map>
       <key>Comment</key>
-      <string>If enabled, Firestorm will use a standalone floater for each group profile.</string>
+      <string>If enabled, Manikineko will use a standalone floater for each group profile.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -15178,7 +15178,7 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>firestorm</string>
+      <string>Manikineko</string>
     </map>
     <key>SkinningSettingsFile</key>
     <map>
@@ -19998,7 +19998,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>NearbyListShowMap</key>
     <map>
       <key>Comment</key>
-      <string>Show/hide map above nearby people list (unused by firestorm)</string>
+      <string>Show/hide map above nearby people list (unused by Manikineko)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -21643,7 +21643,7 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>Firestorm</string>
+      <string>Manikineko</string>
     </map>
   <key>FSSkinCurrentThemeReadableName</key>
     <map>
@@ -22778,7 +22778,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSUseStandalonePlaceDetailsFloater</key>
     <map>
       <key>Comment</key>
-      <string>If enabled, Firestorm will use a standalone floater for each landmark details, teleport history details and parcel details view.</string>
+      <string>If enabled, Manikineko will use a standalone floater for each landmark details, teleport history details and parcel details view.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -22789,7 +22789,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSUseStandaloneTeleportHistoryFloater</key>
     <map>
       <key>Comment</key>
-      <string>If enabled, Firestorm will use a standalone floater for the teleport history view.</string>
+      <string>If enabled, Manikineko will use a standalone floater for the teleport history view.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -22800,7 +22800,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSUseStandaloneBlocklistFloater</key>
     <map>
       <key>Comment</key>
-      <string>If enabled, Firestorm will use a standalone floater for the blocklist.</string>
+      <string>If enabled, Manikineko will use a standalone floater for the blocklist.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -22811,7 +22811,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSDisableIMChiclets</key>
     <map>
       <key>Comment</key>
-      <string>If enabled, Firestorm will not show any group / IM chat chiclets (notifications envelope and sum of IMs will remain on the screen).</string>
+      <string>If enabled, Manikineko will not show any group / IM chat chiclets (notifications envelope and sum of IMs will remain on the screen).</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -22833,7 +22833,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSDisableMouseWheelCameraZoom</key>
     <map>
       <key>Comment</key>
-      <string>If true, Firestorm will not use mouse wheel to zoom in/out the camera.</string>
+      <string>If true, Manikineko will not use mouse wheel to zoom in/out the camera.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -22855,7 +22855,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSEnableVolumeControls</key>
     <map>
         <key>Comment</key>
-        <string>If true, Firestorm will show volume controls (sounds, media, stream) in upper right corner of the screen. Useful, if skin already has its own controls.</string>
+        <string>If true, Manikineko will show volume controls (sounds, media, stream) in upper right corner of the screen. Useful, if skin already has its own controls.</string>
         <key>Persist</key>
         <integer>1</integer>
         <key>Type</key>
@@ -22866,7 +22866,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSResetCameraOnMovement</key>
     <map>
         <key>Comment</key>
-        <string>If true, Firestorm will reset camera on avatar movement.</string>
+        <string>If true, Manikineko will reset camera on avatar movement.</string>
         <key>Persist</key>
         <integer>1</integer>
         <key>Type</key>
@@ -22877,7 +22877,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSShowInterfaceInMouselook</key>
     <map>
         <key>Comment</key>
-        <string>If true, Firestorm will show user interface in mouselook mode.</string>
+        <string>If true, Manikineko will show user interface in mouselook mode.</string>
         <key>Persist</key>
         <integer>1</integer>
         <key>Type</key>
@@ -23806,7 +23806,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSFlashOnScriptDialog</key>
     <map>
       <key>Comment</key>
-      <string>Flash/Bounce the app icon when a script dialog is received and Firestorm is not in focus</string>
+      <string>Flash/Bounce the app icon when a script dialog is received and Manikineko is not in focus</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -23817,7 +23817,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSFlashOnMessage</key>
     <map>
       <key>Comment</key>
-      <string>Flash/Bounce the app icon when a new message is received and Firestorm is not in focus</string>
+      <string>Flash/Bounce the app icon when a new message is received and Manikineko is not in focus</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -23828,7 +23828,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSFlashOnObjectIM</key>
     <map>
       <key>Comment</key>
-      <string>Flash/Bounce the app icon when a new instant message from an object is received and Firestorm is not in focus.</string>
+      <string>Flash/Bounce the app icon when a new instant message from an object is received and Manikineko is not in focus.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -25616,7 +25616,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>FSDynamicTextureMemory</key>
     <map>
       <key>Comment</key>
-      <string>If enabled, Firestorm dynamically uses available memory for textures</string>
+      <string>If enabled, Manikineko dynamically uses available memory for textures</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
