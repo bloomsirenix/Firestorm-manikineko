@@ -43,6 +43,10 @@
 # include "llaudioengine_fmodstudio.h"
 #endif
 
+#ifdef LL_SDL2
+#include "llaudioengine_sdl2.h"
+#endif
+
 #ifdef LL_OPENAL
 #include "llaudioengine_openal.h"
 #endif
@@ -137,6 +141,7 @@
 #include "llproxy.h"
 #include "llproductinforequest.h"
 #include "llqueryflags.h"
+#include "llsecapi.h"
 #include "llselectmgr.h"
 #include "llsky.h"
 #include "llstatview.h"
@@ -211,7 +216,7 @@
 #include "llenvironment.h"
 
 #include "llstacktrace.h"
-
+#include "fsperfstats.h"
 #if LL_WINDOWS
 #include "lldxhardware.h"
 #endif
@@ -243,7 +248,6 @@
 #include "lggcontactsets.h"
 #include "llfloatersearch.h"
 #include "llfloatersidepanelcontainer.h"
-#include "llfriendcard.h"
 #include "llnotificationmanager.h"
 #include "llpresetsmanager.h"
 #include "llprogressview.h"
@@ -996,6 +1000,11 @@ bool idle_startup()
             }
 #endif
 
+#ifdef LL_SDL2
+    if( !gAudiop )
+        gAudiop = new LLAudioEngineSDL2();
+#endif
+
 #ifdef LL_OPENAL
 #if !LL_WINDOWS
 			// if (NULL == getenv("LL_BAD_OPENAL_DRIVER"))
@@ -1723,10 +1732,10 @@ bool idle_startup()
 			}
 			else 
 			{
-				if (reason_response != "tos") 
+				if (reason_response != "tos"  && reason_response != "mfa_challenge")
 				{
-					// Don't pop up a notification in the TOS case because
-					// LLFloaterTOS::onCancel() already scolded the user.
+					// Don't pop up a notification in the TOS or MFA cases because
+					// the specialized floater has already scolded the user.
 					std::string error_code;
 					if(response.has("errorcode"))
 					{
@@ -1790,6 +1799,10 @@ bool idle_startup()
 
 						}
 					}
+                    else if (reason_response == "BadType")
+                    {
+                        LLNotificationsUtil::add("LoginFailedToParse", LLSD(), LLSD(), login_alert_done);
+                    }
 					else if (!message.empty())
 					{
 						// This wasn't a certificate error, so throw up the normal
@@ -2157,6 +2170,10 @@ bool idle_startup()
 		gAgent.addRegionChangedCallback(boost::bind(&update_static_eyes));
 		update_static_eyes();
 		// </FS:KC>
+
+		// <FS:Beq>
+		gAgent.addRegionChangedCallback(boost::bind(&FSPerfStats::StatsRecorder::clearStats));
+		// </FS:Beq>
 
 		// *Note: this is where gWorldMap used to be initialized.
 
@@ -2570,6 +2587,17 @@ bool idle_startup()
 		// This method MUST be called before gInventory.findCategoryUUIDForType because of 
 		// gInventory.mIsAgentInvUsable is set to true in the gInventory.buildParentChildMap.
 		gInventory.buildParentChildMap();
+
+		// If buildParentChildMap succeeded, inventory will now be in
+		// a usable state and gInventory.isInventoryUsable() will be
+		// true.
+
+		// if inventory is unusable, show warning.
+		if (!gInventory.isInventoryUsable())
+		{
+			LLNotificationsUtil::add("InventoryUnusable");
+		}
+		
 		gInventory.createCommonSystemCategories();
 
 		// It's debatable whether this flag is a good idea - sets all
@@ -2613,6 +2641,7 @@ bool idle_startup()
 
 		LLStartUp::setStartupState( STATE_MISC );
 		display_startup();
+
 		return FALSE;
 	}
 
@@ -2965,7 +2994,10 @@ bool idle_startup()
 
 		if (gAgent.isOutfitChosen() && (wearables_time > max_wearables_time))
 		{
-			LLNotificationsUtil::add("ClothingLoading");
+			if (gInventory.isInventoryUsable())
+			{
+				LLNotificationsUtil::add("ClothingLoading");
+			}			
 			record(LLStatViewer::LOADING_WEARABLES_LONG_DELAY, wearables_time);
 			LLStartUp::setStartupState( STATE_CLEANUP );
 		}
@@ -3026,9 +3058,6 @@ bool idle_startup()
 		// <FS:Ansariel> Favorite Wearables
 		FSFloaterWearableFavorites::initCategory();
 
-		// <FS:Ansariel> Bypass the calling card sync-crap to create the agent's calling card
-		LLFriendCardsManager::createAgentCallingCard();
-
 		// Let the map know about the inventory.
 		LLFloaterWorldMap* floater_world_map = LLFloaterWorldMap::getInstance();
 		if(floater_world_map)
@@ -3051,10 +3080,6 @@ bool idle_startup()
 
 		// Have the agent start watching the friends list so we can update proxies
 		gAgent.observeFriends();
-		if (gSavedSettings.getBOOL("LoginAsGod"))
-		{
-			gAgent.requestEnterGodMode();
-		}
 		
 		// Start automatic replay if the flag is set.
 		if (gSavedSettings.getBOOL("StatsAutoRun") || gAgentPilot.getReplaySession())
@@ -3219,8 +3244,31 @@ void show_release_notes_if_required()
         && gSavedSettings.getBOOL("UpdaterShowReleaseNotes")
         && !gSavedSettings.getBOOL("FirstLoginThisInstall"))
     {
-        LLSD info(LLAppViewer::instance()->getViewerInfo());
-        LLWeb::loadURLInternal(info["VIEWER_RELEASE_NOTES_URL"]);
+
+#if LL_RELEASE_FOR_DOWNLOAD
+        if (!gSavedSettings.getBOOL("CmdLineSkipUpdater")
+            && !LLAppViewer::instance()->isUpdaterMissing())
+        {
+            // Instantiate a "relnotes" listener which assumes any arriving event
+            // is the release notes URL string. Since "relnotes" is an
+            // LLEventMailDrop, this listener will be invoked whether or not the
+            // URL has already been posted. If so, it will fire immediately;
+            // otherwise it will fire whenever the URL is (later) posted. Either
+            // way, it will display the release notes as soon as the URL becomes
+            // available.
+            LLEventPumps::instance().obtain("relnotes").listen(
+                "showrelnotes",
+                [](const LLSD& url) {
+                LLWeb::loadURLInternal(url.asString());
+                return false;
+            });
+        }
+        else
+#endif // LL_RELEASE_FOR_DOWNLOAD
+        {
+            LLSD info(LLAppViewer::instance()->getViewerInfo());
+            LLWeb::loadURLInternal(info["VIEWER_RELEASE_NOTES_URL"]);
+        }
         release_notes_shown = true;
     }
 }
@@ -3603,19 +3651,34 @@ void LLStartUp::loadInitialOutfit( const std::string& outfit_folder_name,
 
 	gAgentAvatarp->setSex(gender);
 
-	// try to find the outfit - if not there, create some default
-	// wearables.
+	// try to find the requested outfit or folder
+
+	// -- check for existing outfit in My Outfits
+	bool do_copy = false;
 	LLUUID cat_id = findDescendentCategoryIDByName(
-		gInventory.getLibraryRootFolderID(),
+		gInventory.findCategoryUUIDForType(LLFolderType::FT_MY_OUTFITS),
 		outfit_folder_name);
+
+	// -- check for existing folder in Library
 	if (cat_id.isNull())
 	{
+		cat_id = findDescendentCategoryIDByName(
+			gInventory.getLibraryRootFolderID(),
+			outfit_folder_name);
+		if (!cat_id.isNull())
+		{
+			do_copy = true;
+		}
+	}
+
+	if (cat_id.isNull())
+	{
+		// -- final fallback: create standard wearables
 		LL_DEBUGS() << "standard wearables" << LL_ENDL;
 		gAgentWearables.createStandardWearables();
 	}
 	else
 	{
-		bool do_copy = true;
 		bool do_append = false;
 		LLViewerInventoryCategory *cat = gInventory.getCategory(cat_id);
 		// Need to fetch cof contents before we can wear.
@@ -3741,6 +3804,11 @@ void reset_login()
 	}
 	LLFloaterReg::hideVisibleInstances();
     LLStartUp::setStartupState( STATE_BROWSER_INIT );
+
+    // Clear any verified certs and verify them again on next login
+    // to ensure cert matches server instead of just getting reused
+    LLPointer<LLCertificateStore> store = gSecAPIHandler->getCertificateStore("");
+    store->clearSertCache();
 }
 
 //---------------------------------------------------------------------------
@@ -4223,12 +4291,6 @@ bool init_benefits(LLSD& response)
 		succ = false;
 	}
 
-	// FIXME PREMIUM - for testing if login does not yet provide Premium Plus. Should be removed thereafter.
-	//if (succ && !LLAgentBenefitsMgr::has("Premium Plus"))
-	//{
-	//	LLAgentBenefitsMgr::init("Premium Plus", packages_sd["Premium"]["benefits"]);
-	//	llassert(LLAgentBenefitsMgr::has("Premium Plus"));
-	//}
 	return succ;
 }
 
@@ -4260,6 +4322,10 @@ bool process_login_success_response(U32 &first_sim_size_x, U32 &first_sim_size_y
 	// unpack login data needed by the application
 	text = response["agent_id"].asString();
 	if(!text.empty()) gAgentID.set(text);
+	// <FS:Beq> Performance floater initialisation
+	FSPerfStats::StatsRecorder::setEnabled(gSavedSettings.getBOOL("FSPerfStatsCaptureEnabled"));
+    FSPerfStats::StatsRecorder::setFocusAv(gAgentID);
+	// </FS:Beq>
 //	gDebugInfo["AgentID"] = text;
 // [SL:KB] - Patch: Viewer-CrashReporting | Checked: 2010-11-16 (Catznip-2.6.0a) | Added: Catznip-2.4.0b
 	if (gCrashSettings.getBOOL("CrashSubmitName"))
@@ -4613,6 +4679,19 @@ bool process_login_success_response(U32 &first_sim_size_x, U32 &first_sim_size_y
 		}
 	}
 
+	std::string fake_initial_outfit_name = gSavedSettings.getString("FakeInitialOutfitName");
+	if (!fake_initial_outfit_name.empty())
+	{
+		gAgent.setFirstLogin(TRUE);
+		sInitialOutfit = fake_initial_outfit_name;
+		if (sInitialOutfitGender.empty())
+		{
+			sInitialOutfitGender = "female"; // just guess, will get overridden when outfit is worn anyway.
+		}
+
+		LL_WARNS() << "Faking first-time login with initial outfit " << sInitialOutfit << LL_ENDL;
+	}
+
 	// set the location of the Agent Appearance service, from which we can request
 	// avatar baked textures if they are supported by the current region
 	std::string agent_appearance_url = response["agent_appearance_service"];
@@ -4636,6 +4715,17 @@ bool process_login_success_response(U32 &first_sim_size_x, U32 &first_sim_size_y
 	{
 		std::string openid_token = response["openid_token"];
 		LLViewerMedia::getInstance()->openIDSetup(openid_url, openid_token);
+	}
+
+
+	// Only save mfa_hash for future logins if the user wants their info remembered.
+	if(response.has("mfa_hash") && gSavedSettings.getBOOL("RememberUser") && gSavedSettings.getBOOL("RememberPassword"))
+	{
+		std::string grid(LLGridManager::getInstance()->getGridId());
+		std::string user_id(gUserCredential->userID());
+		gSecAPIHandler->addToProtectedMap("mfa_hash", grid, user_id, response["mfa_hash"]);
+		// TODO(brad) - related to SL-17223 consider building a better interface that sync's automatically
+		gSecAPIHandler->syncProtectedMap();
 	}
 
 	// <FS:Ansariel> OpenSim legacy economy support

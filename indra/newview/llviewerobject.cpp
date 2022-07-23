@@ -516,6 +516,7 @@ void LLViewerObject::markDead()
 	}
 }
 
+// <FS:Beq> Add visible (rendered) face count to inspect
 S32 LLViewerObject::getNumVisibleFaces() const 
 { 
 	int v{0}; 
@@ -523,13 +524,16 @@ S32 LLViewerObject::getNumVisibleFaces() const
 	{ 
 		for (int i = 0;i < mDrawable->getNumFaces();i++)
 		{
-			if(mDrawable->getFace(i)->getTextureEntry()->getAlpha() != 0.f)
+			const LLFace* f = mDrawable->getFace(i);
+			if (f && f->getTextureEntry() && f->getTextureEntry()->getAlpha() != 0.0f)
+			{
 				v++;
+			}
 		} 
 	}
 	return v;
 };
-
+// </FS:Beq>
 
 void LLViewerObject::dump() const
 {
@@ -1316,6 +1320,7 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 				mesgsys->getBinaryDataFast(_PREHASH_ObjectData, _PREHASH_ObjectData, data, length, block_num, MAX_OBJECT_BINARY_DATA_SIZE);
 
 				mTotalCRC = crc;
+                // Might need to update mSourceMuted here to properly pick up new radius
 				mSoundCutOffRadius = cutoff;
 
 				// Owner ID used for sound muting or particle system muting
@@ -2489,6 +2494,7 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 			color.setVec(1.f, 0.f, 0.f, 1.f);
 		}
 		gPipeline.addDebugBlip(getPositionAgent(), color);
+		LL_DEBUGS("MessageBlip") << "Update type " << (S32)update_type << " blip for local " << mLocalID << " at " << getPositionAgent() << LL_ENDL;
 	}
 
 	const F32 MAG_CUTOFF = F_APPROXIMATELY_ZERO;
@@ -6041,7 +6047,7 @@ void LLViewerObject::setAttachedSound(const LLUUID &audio_uuid, const LLUUID& ow
 		else if (flags & LL_SOUND_FLAG_STOP)
         {
 			// Just shut off the sound
-			mAudioSourcep->play(LLUUID::null);
+			mAudioSourcep->stop();
 		}
 		return;
 	}
@@ -6088,7 +6094,7 @@ void LLViewerObject::setAttachedSound(const LLUUID &audio_uuid, const LLUUID& ow
 		mAudioSourcep->setQueueSounds(queue);
 		if(!queue) // stop any current sound first to avoid "farts of doom" (SL-1541) -MG
 		{
-			mAudioSourcep->play(LLUUID::null);
+			mAudioSourcep->stop();
 		}
 		
 		// Play this sound if region maturity permits

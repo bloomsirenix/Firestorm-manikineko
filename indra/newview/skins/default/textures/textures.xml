@@ -61,6 +61,9 @@ with the same filename but different name
   <texture name="Arrow_Left" file_name="widgets/Arrow_Left.png" preload="true" />
   <texture name="Arrow_Right" file_name="widgets/Arrow_Right.png" preload="true" />
 
+  <texture name="Arrow_Left_Unscaled" file_name="widgets/Arrow_Left.png" preload="true" scale.left="1" scale.right="16" scale.bottom="0" scale.top="16"  scale_type="scale_outer"/>
+  <texture name="Arrow_Right_Unscaled" file_name="widgets/Arrow_Right.png" preload="true" scale.left="1" scale.right="16" scale.bottom="0" scale.top="16"  scale_type="scale_outer"/>
+
   <texture name="AudioMute_Off" file_name="icons/AudioMute_Off.png" preload="false" />
   <texture name="AudioMute_Over" file_name="icons/AudioMute_Over.png" preload="false" />
 
@@ -137,7 +140,8 @@ with the same filename but different name
   <texture name="Check_Mark" file_name="icons/check_mark.png" preload="true" />
 
   <texture name="Checker" file_name="checker.png" preload="false" />
-  
+
+  <texture name="Command_360_Capture_Icon"  file_name="toolbar_icons/360_capture.png"  preload="true" />
   <texture name="Command_AboutLand_Icon"    file_name="toolbar_icons/land.png"         preload="true" />
   <texture name="Command_Appearance_Icon"   file_name="toolbar_icons/appearance.png"   preload="true" />
   <texture name="Command_Avatar_Icon"       file_name="toolbar_icons/avatars.png"      preload="true" />
@@ -158,6 +162,7 @@ with the same filename but different name
   <texture name="Command_Move_Icon"         file_name="toolbar_icons/move.png"         preload="true" />
   <texture name="Command_Environments_Icon" file_name="toolbar_icons/environments.png" preload="true" />
   <texture name="Command_People_Icon"       file_name="toolbar_icons/people.png"       preload="true" />
+  <texture name="Command_Performance_Icon"  file_name="toolbar_icons/performance.png"  preload="true" />
   <texture name="Command_Picks_Icon"        file_name="toolbar_icons/picks.png"        preload="true" />
   <texture name="Command_Places_Icon"       file_name="toolbar_icons/places.png"       preload="true" />
   <texture name="Command_Preferences_Icon"  file_name="toolbar_icons/preferences.png"  preload="true" />
@@ -241,6 +246,11 @@ with the same filename but different name
   <texture name="ForSale_Badge" file_name="icons/ForSale_Badge.png" preload="false" />
   <texture name="ForwardArrow_Off" file_name="icons/ForwardArrow_Off.png" preload="false" />
   <texture name="ForwardArrow_Press" file_name="icons/ForwardArrow_Press.png" preload="false" />
+
+<!-- FS:Zi: FIRE-29572 - Add icon to currently playing animation in the FS AO -->
+  <texture name="FSAO_Animation_Playing" file_name="icn_play.tga" preload="false" />
+  <texture name="FSAO_Animation_Stopped" file_name="icons/Inv_Animation.png" preload="false" />
+<!-- /FS:Zi: FIRE-29572 -->
 
   <texture name="Generic_Experience" file_name="Blank.png" preload="false" />
   <texture name="Generic_Group" file_name="icons/Generic_Group.png" preload="false" />
@@ -826,7 +836,6 @@ with the same filename but different name
   <texture name="skin firestorm blue" file_name="skinspreview/fs_blue.jpg" preload="true" />
   <texture name="skin firestorm high contrast" file_name="skinspreview/fs_contrast.jpg" preload="true" />
   <texture name="skin firestorm ctrlaltstudio" file_name="skinspreview/fs_ctrlaltstudio.jpg" preload="true" />
-  <texture name="skin latency (beta) extra plain" file_name="skinspreview/lat_plain.jpg" preload="true" />
   <texture name="skin metaharper modern coolocean" file_name="skinspreview/meta_coolocean.jpg" preload="true" />
   <texture name="skin metaharper modern appalachiansky" file_name="skinspreview/meta_appalachia.jpg" preload="true" />
   <texture name="skin metaharper modern blackglass" file_name="skinspreview/meta_blackglass.jpg" preload="true" />

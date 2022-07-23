@@ -1272,19 +1272,20 @@ void LLVOAvatarSelf::removeMissingBakedTextures()
 // <FS:Beq> Check whether the BOM capability is different to last time we changed region (even across login)
 void LLVOAvatarSelf::checkBOMRebakeRequired()
 {
-	if(!getRegion())
+	if(getRegion())
 	{
-		auto newBOMStatus = getRegion()->bakesOnMeshEnabled();
-		if(!gSavedSettings.getBOOL("CurrentlyUsingBakesOnMesh") != newBOMStatus)
+		auto bom_can_be_used_here = getRegion()->bakesOnMeshEnabled();
+		static const LLCachedControl<bool> using_bom(gSavedSettings, "CurrentlyUsingBakesOnMesh", true);
+		if( using_bom != bom_can_be_used_here)
 		{
 			// force a rebake when the last grid we were on (including previous login) had different BOM support
 			// This replicates forceAppearanceUpdate rather than pulling in the whole of llavatarself.
 			if(!LLGridManager::instance().isInSecondLife())
 			{
-				doAfterInterval(boost::bind(&LLVOAvatarSelf::forceBakeAllTextures,	gAgentAvatarp.get(), true), 5.0);
+				doAfterInterval([](){ if (isAgentAvatarValid()) { gAgentAvatarp->forceBakeAllTextures(true); }}, 5.0);
 			}
 			// update the setting even if we are in SL so that switch SL to OS and back 
-			gSavedSettings.setBOOL("CurrentlyUsingBakesOnMesh", newBOMStatus);
+			gSavedSettings.setBOOL("CurrentlyUsingBakesOnMesh", bom_can_be_used_here);
 		}
 	}
 }
@@ -2603,6 +2604,7 @@ void LLVOAvatarSelf::debugBakedTextureUpload(EBakedTextureIndex index, BOOL fini
 const std::string LLVOAvatarSelf::verboseDebugDumpLocalTextureDataInfo(const LLViewerTexLayerSet* layerset) const
 {
 	std::ostringstream outbuf;
+    LLWearableType *wr_inst = LLWearableType::getInstance();
 	for (LLAvatarAppearanceDictionary::BakedTextures::const_iterator baked_iter =
 			 sAvatarDictionary->getBakedTextures().begin();
 		 baked_iter != sAvatarDictionary->getBakedTextures().end();
@@ -2626,7 +2628,7 @@ const std::string LLVOAvatarSelf::verboseDebugDumpLocalTextureDataInfo(const LLV
 				{
 					for (U32 wearable_index = 0; wearable_index < wearable_count; wearable_index++)
 					{
-						outbuf << "    " << LLWearableType::getTypeName(wearable_type) << " " << wearable_index << ":";
+						outbuf << "    " << wr_inst->getTypeName(wearable_type) << " " << wearable_index << ":";
 						const LLLocalTextureObject *local_tex_obj = getLocalTextureObject(tex_index, wearable_index);
 						if (local_tex_obj)
 						{
@@ -2681,6 +2683,7 @@ void LLVOAvatarSelf::dumpAllTextures() const
 const std::string LLVOAvatarSelf::debugDumpLocalTextureDataInfo(const LLViewerTexLayerSet* layerset) const
 {
 	std::string text="";
+    LLWearableType *wr_inst = LLWearableType::getInstance();
 
 	text = llformat("[Final:%d Avail:%d] ",isLocalTextureDataFinal(layerset), isLocalTextureDataAvailable(layerset));
 
@@ -2704,7 +2707,7 @@ const std::string LLVOAvatarSelf::debugDumpLocalTextureDataInfo(const LLViewerTe
 				const U32 wearable_count = gAgentWearables.getWearableCount(wearable_type);
 				if (wearable_count > 0)
 				{
-					text += LLWearableType::getTypeName(wearable_type) + ":";
+					text += wr_inst->getTypeName(wearable_type) + ":";
 					for (U32 wearable_index = 0; wearable_index < wearable_count; wearable_index++)
 					{
 						const U32 discard_level = getLocalDiscardLevel(tex_index, wearable_index);
@@ -3108,7 +3111,10 @@ void LLVOAvatarSelf::outputRezDiagnostics() const
 		}
 	}
 	LL_DEBUGS("Avatar") << "\t Time points for each upload (start / finish)" << LL_ENDL;
-	for (U32 i = 0; i < LLAvatarAppearanceDefines::BAKED_NUM_INDICES; ++i)
+	// <FS:Beq> Missed update for OpenSim BOM
+	// for (U32 i = 0; i < LLAvatarAppearanceDefines::BAKED_NUM_INDICES; ++i)
+	for (U32 i = 0; i < getNumBakes(); ++i)
+	// </FS:Beq>
 	{
 		LL_DEBUGS("Avatar") << "\t\t (" << i << ") \t" << (S32)mDebugBakedTextureTimes[i][0] << " / " << (S32)mDebugBakedTextureTimes[i][1] << LL_ENDL;
 	}
@@ -3144,6 +3150,7 @@ void LLVOAvatarSelf::reportAvatarRezTime() const
 //-- SUNSHINE CLEANUP - not clear we need any of this, may be sufficient to request server appearance in llviewermenu.cpp:handle_rebake_textures()
 void LLVOAvatarSelf::forceBakeAllTextures(bool slam_for_debug)
 {
+	if(!isAgentAvatarValid()){ return; } // <FS:Beq/> Avoid force bak e on invalid avatar pointer (based on similar change by Rye)
 	LL_INFOS() << "TAT: forced full rebake. " << LL_ENDL;
 
 	for (U32 i = 0; i < mBakedTextureDatas.size(); i++)
@@ -3471,9 +3478,10 @@ void LLVOAvatarSelf::dumpWearableInfo(LLAPRFile& outfile)
 	apr_file_printf( file, "\n<wearable_info>\n" );
 
 	LLWearableData *wd = getWearableData();
+    LLWearableType *wr_inst = LLWearableType::getInstance();
 	for (S32 type = 0; type < LLWearableType::WT_COUNT; type++)
 	{
-		const std::string& type_name = LLWearableType::getTypeName((LLWearableType::EType)type);
+		const std::string& type_name = wr_inst->getTypeName((LLWearableType::EType)type);
 		for (U32 j=0; j< wd->getWearableCount((LLWearableType::EType)type); j++)
 		{
 			LLViewerWearable *wearable = gAgentWearables.getViewerWearable((LLWearableType::EType)type,j);
@@ -3578,7 +3586,11 @@ void forceAppearanceUpdate()
 	// Trying to rebake immediately after crossing region boundary
 	// seems to be failure prone; adding a delay factor. Yes, this
 	// fix is ad-hoc and not guaranteed to work in all cases.
-	doAfterInterval(boost::bind(&LLVOAvatarSelf::forceBakeAllTextures,	gAgentAvatarp.get(), true), 5.0);
+	// <FS:Beq> Never trust the avatarp lifetime.
+	// doAfterInterval(boost::bind(&LLVOAvatarSelf::forceBakeAllTextures,	gAgentAvatarp.get(), true), 5.0);
+	doAfterInterval([](){ if (isAgentAvatarValid()) { gAgentAvatarp->forceBakeAllTextures(true); }}, 5.0);
+	// </FS:Beq>
+
 }
 
 void CheckAgentAppearanceService_httpFailure( LLSD const &aData )

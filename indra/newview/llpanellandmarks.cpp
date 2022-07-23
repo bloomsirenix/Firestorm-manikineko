@@ -57,6 +57,7 @@
 #include "llviewerregion.h"
 #include "fsfloaterplacedetails.h"
 // [RLVa:KB]
+#include "rlvactions.h"
 #include "rlvhandler.h"
 // [/RLVa:KB]
 
@@ -485,8 +486,14 @@ void LLLandmarksPanel::initLandmarksPanel(LLPlacesInventoryPanel* inventory_list
 	LLPlacesFolderView* root_folder = dynamic_cast<LLPlacesFolderView*>(inventory_list->getRootFolder());
 	if (root_folder)
 	{
-		root_folder->setupMenuHandle(LLInventoryType::IT_CATEGORY, mGearFolderMenu->getHandle());
-		root_folder->setupMenuHandle(LLInventoryType::IT_LANDMARK, mGearLandmarkMenu->getHandle());
+        if (mGearFolderMenu)
+        {
+            root_folder->setupMenuHandle(LLInventoryType::IT_CATEGORY, mGearFolderMenu->getHandle());
+        }
+        if (mGearLandmarkMenu)
+        {
+            root_folder->setupMenuHandle(LLInventoryType::IT_LANDMARK, mGearLandmarkMenu->getHandle());
+        }
 
 		root_folder->setParentLandmarksPanel(this);
 	}
@@ -509,13 +516,23 @@ void LLLandmarksPanel::initListCommandsHandlers()
 	mSortingMenu = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_places_gear_sorting.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
 	mAddMenu = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_place_add_button.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
 
-	mGearLandmarkMenu->setVisibilityChangeCallback(boost::bind(&LLLandmarksPanel::onMenuVisibilityChange, this, _1, _2));
-	mGearFolderMenu->setVisibilityChangeCallback(boost::bind(&LLLandmarksPanel::onMenuVisibilityChange, this, _1, _2));
+    if (mGearLandmarkMenu)
+    {
+        mGearLandmarkMenu->setVisibilityChangeCallback(boost::bind(&LLLandmarksPanel::onMenuVisibilityChange, this, _1, _2));
+        // show menus even if all items are disabled
+        mGearLandmarkMenu->setAlwaysShowMenu(TRUE);
+    } // Else corrupted files?
 
-	// show menus even if all items are disabled
-	mGearLandmarkMenu->setAlwaysShowMenu(TRUE);
-	mGearFolderMenu->setAlwaysShowMenu(TRUE);
-	mAddMenu->setAlwaysShowMenu(TRUE);
+    if (mGearFolderMenu)
+    {
+        mGearFolderMenu->setVisibilityChangeCallback(boost::bind(&LLLandmarksPanel::onMenuVisibilityChange, this, _1, _2));
+        mGearFolderMenu->setAlwaysShowMenu(TRUE);
+    }
+
+    if (mAddMenu)
+    {
+        mAddMenu->setAlwaysShowMenu(TRUE);
+    }
 }
 
 void LLLandmarksPanel::updateMenuVisibility(LLUICtrl* menu)
@@ -753,7 +770,9 @@ bool LLLandmarksPanel::isActionEnabled(const LLSD& userdata) const
 			if (asset_uuid.isNull()) return false;
 
 			// Disable "Show on Map" if landmark loading is in progress.
-			return !gLandmarkList.isAssetInLoadedCallbackMap(asset_uuid);
+			// <FS:Ansariel> RLVa fix
+			//return !gLandmarkList.isAssetInLoadedCallbackMap(asset_uuid);
+			return !gLandmarkList.isAssetInLoadedCallbackMap(asset_uuid) && !gRlvHandler.hasBehaviour(RLV_BHVR_SHOWWORLDMAP);
 		}
 		else if ("rename" == command_name)
 		{
@@ -762,6 +781,12 @@ bool LLLandmarksPanel::isActionEnabled(const LLSD& userdata) const
 
 			return canItemBeModified(command_name, selected_item);
 		}
+		// <FS:Ansariel> RLVa fix
+		else if ("teleport" == command_name)
+		{
+			return !gRlvHandler.hasBehaviour(RLV_BHVR_TPLM);
+		}
+		// </FS:Ansariel>
 
 		return true;
 	}
@@ -784,6 +809,13 @@ bool LLLandmarksPanel::isActionEnabled(const LLSD& userdata) const
 	}
     else if ("add_landmark" == command_name)
     {
+// [RLVa:KB] - Checked: 2012-02-08 (RLVa-1.4.5) | Added: RLVa-1.4.5
+		if (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC))
+		{
+			return false;
+		}
+// [/RLVa:KB]
+
         if (!is_single_selection)
         {
             return false;
@@ -800,23 +832,24 @@ bool LLLandmarksPanel::isActionEnabled(const LLSD& userdata) const
             //already exists
             return false;
         }
-        // <FS:Ansariel> RLVa check
-        //return true;
-        return !gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC);
-        // </FS:Ansariel>
+        return true;
     }
     else if ("add_landmark_root" == command_name)
     {
+// [RLVa:KB] - Checked: 2012-02-08 (RLVa-1.4.5) | Added: RLVa-1.4.5
+		if (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC))
+		{
+			return false;
+		}
+// [/RLVa:KB]
+
         LLViewerInventoryItem* landmark = LLLandmarkActions::findLandmarkForAgentPos();
         if (landmark)
         {
             //already exists
             return false;
         }
-        // <FS:Ansariel> RLVa check
-        //return true;
-        return !gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC);
-        // </FS:Ansariel>
+        return true;
     }
     else if ("share" == command_name)
     {
@@ -1115,7 +1148,10 @@ void LLLandmarksPanel::doShowOnMap(LLLandmark* landmark)
 	}
 
 	mShowOnMapBtn->setEnabled(TRUE); // <FS:Ansariel> FIRE-31033: Keep Teleport/Map/Profile buttons on places floater
-	mGearLandmarkMenu->setItemEnabled("show_on_map", TRUE);
+    if (mGearLandmarkMenu)
+    {
+        mGearLandmarkMenu->setItemEnabled("show_on_map", TRUE);
+    }
 }
 
 void LLLandmarksPanel::doProcessParcelInfo(LLLandmark* landmark,

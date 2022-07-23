@@ -54,6 +54,10 @@ LLScrollListCell* LLScrollListCell::create(const LLScrollListCell::Params& cell_
 	{
 		cell = new LLScrollListIconText(cell_p);
 	}
+    else if (cell_p.type() == "bar")
+    {
+        cell = new LLScrollListBar(cell_p);
+    }
 	else	// default is "text"
 	{
 		cell = new LLScrollListText(cell_p);
@@ -78,6 +82,14 @@ const LLSD LLScrollListCell::getValue() const
 {
 	return LLStringUtil::null;
 }
+
+
+// virtual
+const LLSD LLScrollListCell::getAltValue() const
+{
+	return LLStringUtil::null;
+}
+
 
 //
 // LLScrollListIcon
@@ -166,6 +178,74 @@ void LLScrollListIcon::draw(const LLColor4& color, const LLColor4& highlight_col
 }
 
 //
+// LLScrollListBar
+//
+LLScrollListBar::LLScrollListBar(const LLScrollListCell::Params& p)
+    :	LLScrollListCell(p),
+    mRatio(0),
+    mColor(p.color),
+    mBottom(1),
+    mLeftPad(1),
+    mRightPad(1)
+{}
+
+LLScrollListBar::~LLScrollListBar()
+{
+}
+
+/*virtual*/
+S32 LLScrollListBar::getHeight() const
+{ 
+    return LLScrollListCell::getHeight();
+}
+
+/*virtual*/
+const LLSD LLScrollListBar::getValue() const
+{ 
+    return LLStringUtil::null; 
+}
+
+void LLScrollListBar::setValue(const LLSD& value)
+{
+    if (value.has("ratio"))
+    {
+        mRatio = value["ratio"].asReal();
+    }
+    if (value.has("bottom"))
+    {
+        mBottom = value["bottom"].asInteger();
+    }
+    if (value.has("left_pad"))
+    {
+        mLeftPad = value["left_pad"].asInteger();
+    }
+    if (value.has("right_pad"))
+    {
+        mRightPad = value["right_pad"].asInteger();
+    }
+}
+
+void LLScrollListBar::setColor(const LLColor4& color)
+{
+    mColor = color;
+}
+
+S32	LLScrollListBar::getWidth() const 
+{
+    return LLScrollListCell::getWidth();
+}
+
+
+void LLScrollListBar::draw(const LLColor4& color, const LLColor4& highlight_color)	 const
+{
+    S32 bar_width = getWidth() - mLeftPad - mRightPad;
+    S32 left = bar_width - bar_width * mRatio;
+    left = llclamp(left, mLeftPad, getWidth() - mRightPad - 1);
+
+    gl_rect_2d(left, mBottom, getWidth() - mRightPad, mBottom - 1, mColor);
+}
+
+//
 // LLScrollListText
 //
 U32 LLScrollListText::sCount = 0;
@@ -173,6 +253,7 @@ U32 LLScrollListText::sCount = 0;
 LLScrollListText::LLScrollListText(const LLScrollListCell::Params& p)
 :	LLScrollListCell(p),
 	mText(p.label.isProvided() ? p.label() : p.value().asString()),
+	mAltText(p.alt_value().asString()),
 	mFont(p.font),
 	mColor(p.color),
 	mUseColor(p.color.isProvided()),
@@ -275,10 +356,22 @@ void LLScrollListText::setValue(const LLSD& text)
 	setText(text.asString());
 }
 
+//virtual
+void LLScrollListText::setAltValue(const LLSD& text)
+{
+	mAltText = text.asString();
+}
+
 //virtual 
 const LLSD LLScrollListText::getValue() const		
 { 
-	return LLSD(mText.getString()); 
+	return LLSD(mText.getString());  
+}
+
+//virtual 
+const LLSD LLScrollListText::getAltValue() const		
+{ 
+	return LLSD(mAltText.getString());
 }
 
 

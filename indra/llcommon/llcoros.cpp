@@ -134,6 +134,13 @@ LLCoros::LLCoros():
 
 LLCoros::~LLCoros()
 {
+}
+
+void LLCoros::cleanupSingleton()
+{
+    // Some of the coroutines (like voice) will depend onto
+    // origin singletons, so clean coros before deleting those
+
     printActiveCoroutines("at entry to ~LLCoros()");
     // Other LLApp status-change listeners do things like close
     // work queues and inject the Stop exception into pending
@@ -149,6 +156,8 @@ LLCoros::~LLCoros()
     {
         // don't use llcoro::suspend() because that module depends
         // on this one
+        // This will yield current(main) thread and will let active
+        // corutines run once
         boost::this_fiber::yield();
     }
     printActiveCoroutines("after pumping");
@@ -239,14 +248,25 @@ std::string LLCoros::launch(const std::string& prefix, const callable_t& callabl
     // protected_fixedsize_stack sets a guard page past the end of the new
     // stack so that stack underflow will result in an access violation
     // instead of weird, subtle, possibly undiagnosed memory stomps.
-    boost::fibers::fiber newCoro(boost::fibers::launch::dispatch,
-                                 std::allocator_arg,
-                                 boost::fibers::protected_fixedsize_stack(mStackSize),
-                                 [this, &name, &callable](){ toplevel(name, callable); });
-    // You have two choices with a fiber instance: you can join() it or you
-    // can detach() it. If you try to destroy the instance before doing
-    // either, the program silently terminates. We don't need this handle.
-    newCoro.detach();
+
+    try
+    {
+        boost::fibers::fiber newCoro(boost::fibers::launch::dispatch,
+            std::allocator_arg,
+            boost::fibers::protected_fixedsize_stack(mStackSize),
+            [this, &name, &callable]() { toplevel(name, callable); });
+
+        // You have two choices with a fiber instance: you can join() it or you
+        // can detach() it. If you try to destroy the instance before doing
+        // either, the program silently terminates. We don't need this handle.
+        newCoro.detach();
+    }
+    catch (std::bad_alloc&)
+    {
+        // Out of memory on stack allocation?
+        LL_ERRS("LLCoros") << "Bad memory allocation in LLCoros::launch(" << prefix << ")!" << LL_ENDL;
+    }
+
     return name;
 }
 

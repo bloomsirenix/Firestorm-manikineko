@@ -591,11 +591,6 @@ ser anexado às anotações.&quot;
 	<string name="ReleaseNotes">
 		Notas de versão
 	</string>
-	<!--
-	<string name="RELEASE_NOTES_BASE_URL">
-		https://releasenotes.secondlife.com/viewer/
-	</string>
-	-->
 	<string name="LoadingData">
 		Carregando...
 	</string>
@@ -2795,7 +2790,7 @@ Se você continuar a receber esta mensagem, contate o [SUPPORT_SITE].
 
 If you continue to receive this message, contact the [SUPPORT_SITE].
 	</string>
-	<string name="5 O&apos;Clock Shadow">
+	<string name="5 O'Clock Shadow">
 		Barba por fazer
 	</string>
 	<string name="All White">

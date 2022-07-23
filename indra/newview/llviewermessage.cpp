@@ -38,6 +38,7 @@
 #include "llfollowcamparams.h"
 #include "llinventorydefines.h"
 #include "lllslconstants.h"
+#include "llmaterialtable.h"
 #include "llregionhandle.h"
 #include "llsd.h"
 #include "llsdserialize.h"
@@ -149,6 +150,7 @@
 #include "llfloaterbump.h"
 #include "llfloaterreg.h"
 #include "llfriendcard.h"
+#include "permissionstracker.h"		// <FS:Zi> Permissions Tracker
 #include "tea.h" // <FS:AW opensim currency support>
 #include "NACLantispam.h"
 #include "chatbar_as_cmdline.h"
@@ -4696,6 +4698,7 @@ void process_kill_object(LLMessageSystem *mesgsys, void **user_data)
 				{
 					LLColor4 color(0.f,1.f,0.f,1.f);
 					gPipeline.addDebugBlip(objectp->getPositionAgent(), color);
+					LL_DEBUGS("MessageBlip") << "Kill blip for local " << local_id << " at " << objectp->getPositionAgent() << LL_ENDL;
 				}
 
 				// Do the kill
@@ -4731,6 +4734,8 @@ void process_object_properties(LLMessageSystem *msg, void**user_data)
 	{
 		explorer->requestNameCallback(msg);
 	}
+
+	PermissionsTracker::instance().objectPropertiesCallback(msg);
 }
 // </FS:Techwolf Lupindo> area search
 
@@ -4827,11 +4832,11 @@ void process_sound_trigger(LLMessageSystem *msg, void **)
 	// </FS>
 
 	// NaCl - Antispam Registry
- 	static LLCachedControl<U32> _NACL_AntiSpamSoundMulti(gSavedSettings, "_NACL_AntiSpamSoundMulti");
-	static LLCachedControl<bool> FSPlayCollisionSounds(gSavedSettings, "FSPlayCollisionSounds");
-	if (NACLAntiSpamRegistry::instance().isCollisionSound(sound_id))
+	static LLCachedControl<U32> _NACL_AntiSpamSoundMulti(gSavedSettings, "_NACL_AntiSpamSoundMulti");
+	static LLCachedControl<bool> EnableCollisionSounds(gSavedSettings, "EnableCollisionSounds");
+	if (LLMaterialTable::basic.isCollisionSound(sound_id))
 	{
-		if (!FSPlayCollisionSounds)
+		if (!EnableCollisionSounds)
 		{
 			return;
 		}
@@ -4880,28 +4885,35 @@ void process_sound_trigger(LLMessageSystem *msg, void **)
 	{
 		return;
 	}
-	
-	// AO: Hack for legacy radar script interface compatibility. Interpret certain
+
+	// <FS:AO> Hack for legacy radar script interface compatibility. Interpret certain
 	// sound assets as a request for a full radar update to a channel
-	if ((owner_id == gAgent.getID()) && (sound_id.asString() == gSavedSettings.getString("RadarLegacyChannelAlertRefreshUUID")))
+	if ((owner_id == gAgentID) && (sound_id.asString() == gSavedSettings.getString("RadarLegacyChannelAlertRefreshUUID")))
 	{
-		FSRadar* radar = FSRadar::getInstance();
-		if (radar)
-		{
-			radar->requestRadarChannelAlertSync();
-		}
+		FSRadar::getInstance()->requestRadarChannelAlertSync();
 		return;
 	}
-		
-	// Don't play sounds from gestures if they are not enabled.
-	// ...TS: Unless they're your own.
-	if ((!gSavedSettings.getBOOL("EnableGestureSounds")) &&
-		(owner_id != gAgent.getID()) &&
-		(owner_id == object_id)) return;
 
-  // NaCl - Sound Explorer
+	// Do play sounds triggered by avatar, since muting your own
+	// gesture sounds and your own sounds played inworld from 
+	// Inventory can cause confusion.
+	if (object_id == owner_id
+        && owner_id != gAgentID
+        && !gSavedSettings.getBOOL("EnableGestureSounds"))
+	{
+		return;
+	}
+
+	// NaCl - Antispam Registry
+	//if (LLMaterialTable::basic.isCollisionSound(sound_id) && !gSavedSettings.getBOOL("EnableCollisionSounds"))
+	//{
+	//	return;
+	//}
+	// NaCl End
+
+	// NaCl - Sound Explorer
 	gAudiop->triggerSound(sound_id, owner_id, gain, LLAudioEngine::AUDIO_TYPE_SFX, pos_global, object_id);
-  // NaCl End
+	// NaCl End
 }
 
 void process_preload_sound(LLMessageSystem *msg, void **user_data)
@@ -6480,6 +6492,7 @@ bool attempt_standard_notification(LLMessageSystem* msgsystem)
 
 			make_ui_sound("UISndRestart");
 			report_to_nearby_chat(LLTrans::getString("FSRegionRestartInLocalChat")); // <FS:PP> FIRE-6307: Region restart notices in local chat
+			fs_report_region_restart_to_channel(seconds); // <FS:PP> Announce region restart to a defined chat channel
 		}
 
 		// <FS:Ansariel> FIRE-9858: Kill annoying "Autopilot canceled" toast
@@ -6734,6 +6747,7 @@ void process_alert_core(const std::string& message, BOOL modal)
 
 			make_ui_sound("UISndRestartOpenSim");
 			report_to_nearby_chat(LLTrans::getString("FSRegionRestartInLocalChat")); // <FS:PP> FIRE-6307: Region restart notices in local chat
+			fs_report_region_restart_to_channel(seconds); // <FS:PP> Announce region restart to a defined chat channel
 			return;
 		}
 		// </FS:Ansariel>
@@ -6828,7 +6842,7 @@ void mean_name_callback(const LLUUID &id, const LLAvatarName& av_name)
 		LLMeanCollisionData *mcd = *iter;
 		if (mcd->mPerp == id)
 		{
-			mcd->mFullName = av_name.getUserName();
+			mcd->mFullName = gRlvHandler.hasBehaviour(RLV_BHVR_SHOWNAMES) ? RlvStrings::getAnonym(av_name) : av_name.getUserName();
 		}
 	}
 	// <FS:Ansariel> Instant bump list floater update
@@ -6875,7 +6889,14 @@ void process_mean_collision_alert_message(LLMessageSystem *msgsystem, void **use
 		{
 			std::string action;
 			LLStringUtil::format_map_t args;
-			args["NAME"] = llformat("secondlife:///app/agent/%s/inspect", perp.asString().c_str());
+			if (!gRlvHandler.hasBehaviour(RLV_BHVR_SHOWNAMES))
+			{
+				args["NAME"] = llformat("secondlife:///app/agent/%s/inspect", perp.asString().c_str());
+			}
+			else
+			{
+				args["NAME"] = llformat("secondlife:///app/agent/%s/rlvanonym", perp.asString().c_str());
+			}
 
 			switch (type)
 			{
@@ -6909,10 +6930,10 @@ void process_mean_collision_alert_message(LLMessageSystem *msgsystem, void **use
 			LLMessageSystem* msgs = gMessageSystem;
 			msgs->newMessage(_PREHASH_ScriptDialogReply);
 			msgs->nextBlock(_PREHASH_AgentData);
-			msgs->addUUID(_PREHASH_AgentID, gAgent.getID());
-			msgs->addUUID(_PREHASH_SessionID, gAgent.getSessionID());
+			msgs->addUUID(_PREHASH_AgentID, gAgentID);
+			msgs->addUUID(_PREHASH_SessionID, gAgentSessionID);
 			msgs->nextBlock(_PREHASH_Data);
-			msgs->addUUID(_PREHASH_ObjectID, gAgent.getID());
+			msgs->addUUID(_PREHASH_ObjectID, gAgentID);
 			msgs->addS32(_PREHASH_ChatChannel, gSavedSettings.getS32("FSReportCollisionMessagesChannel"));
 			msgs->addS32(_PREHASH_ButtonIndex, 1);
 			msgs->addString(_PREHASH_ButtonLabel, collision_data.c_str());
@@ -8133,17 +8154,20 @@ void process_user_info_reply(LLMessageSystem* msg, void**)
 				<< "wrong agent id." << LL_ENDL;
 	}
 	
-	BOOL im_via_email;
-	msg->getBOOLFast(_PREHASH_UserData, _PREHASH_IMViaEMail, im_via_email);
+	// <FS:Ansariel> Keep this for OpenSim
+	BOOL im_via_email = FALSE;
+	if (!LLGridManager::instance().isInSecondLife())
+		msg->getBOOLFast(_PREHASH_UserData, _PREHASH_IMViaEMail, im_via_email);
+	// </FS:Ansariel>
 	std::string email;
 	msg->getStringFast(_PREHASH_UserData, _PREHASH_EMail, email);
 	std::string dir_visibility;
 	msg->getString( "UserData", "DirectoryVisibility", dir_visibility);
 
     // For Message based user info information the is_verified is assumed to be false.
-	// <FS:Ansariel> Show email address in preferences (FIRE-1071)
-	//LLFloaterPreference::updateUserInfo(dir_visibility, im_via_email, false);   
-	LLFloaterPreference::updateUserInfo(dir_visibility, im_via_email, !LLGridManager::instance().isInSecondLife(), email); // Assume verified in OpenSim
+	// <FS:Ansariel> Show email address in preferences (FIRE-1071) and keep it for OpenSim
+	//LLFloaterPreference::updateUserInfo(dir_visibility);
+	LLFloaterPreference::updateUserInfo(dir_visibility, im_via_email, email); // Assume verified in OpenSim
 	// </FS:Ansariel> Show email address in preferences (FIRE-1071)
 	LLFloaterSnapshot::setAgentEmail(email);
 }
@@ -8757,3 +8781,22 @@ void LLOfferInfo::forceResponse(InventoryOfferResponse response)
 	// </FS:Ansariel>
 }
 
+// <FS:PP> Announce region restart to a defined chat channel
+void fs_report_region_restart_to_channel(S32 seconds)
+{
+	S32 channel = gSavedSettings.getS32("FSRegionRestartAnnounceChannel");
+	if (gSavedSettings.getBOOL("FSUseNewRegionRestartNotification") && gSavedSettings.getBOOL("FSReportRegionRestartToChat") && channel != 0)
+	{
+		LLMessageSystem* msg = gMessageSystem;
+		msg->newMessageFast(_PREHASH_ChatFromViewer);
+		msg->nextBlockFast(_PREHASH_AgentData);
+		msg->addUUIDFast(_PREHASH_AgentID, gAgent.getID());
+		msg->addUUIDFast(_PREHASH_SessionID, gAgent.getSessionID());
+		msg->nextBlockFast(_PREHASH_ChatData);
+		msg->addStringFast(_PREHASH_Message, "region_restart_in:" + llformat("%d", seconds));
+		msg->addU8Fast(_PREHASH_Type, CHAT_TYPE_WHISPER);
+		msg->addS32("Channel", channel);
+		gAgent.sendReliableMessage();
+	}
+}
+// </FS:PP>

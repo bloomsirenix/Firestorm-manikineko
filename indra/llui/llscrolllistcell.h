@@ -33,6 +33,7 @@
 #include "lluistring.h"
 #include "v4color.h"
 #include "llui.h"
+#include "llgltexture.h"
 
 class LLCheckBoxCtrl;
 class LLSD;
@@ -60,6 +61,7 @@ public:
 
 		Optional<void*>				userdata;
 		Optional<LLSD>				value; // state of checkbox, icon id/name, date
+		Optional<LLSD>				alt_value;
 		Optional<std::string>		label; // description or text
 		Optional<std::string>		tool_tip;
 
@@ -76,6 +78,7 @@ public:
 			enabled("enabled", true),
 			visible("visible", true),
 			value("value"),
+			alt_value("alt_value", ""),
 			label("label"),
 			tool_tip("tool_tip", ""),
 			font("font", LLFontGL::getFontSansSerifSmall()),
@@ -98,7 +101,9 @@ public:
 	virtual S32				getContentWidth() const { return 0; }
 	virtual S32				getHeight() const { return 0; }
 	virtual const LLSD		getValue() const;
+	virtual const LLSD		getAltValue() const;
 	virtual void			setValue(const LLSD& value) { }
+	virtual void			setAltValue(const LLSD& value) { }
 	virtual const std::string &getToolTip() const { return mToolTip; }
 	virtual void			setToolTip(const std::string &str) { mToolTip = str; }
 	virtual BOOL			getVisible() const { return TRUE; }
@@ -138,7 +143,9 @@ public:
 	/*virtual*/ S32		getContentWidth() const;
 	/*virtual*/ S32		getHeight() const;
 	/*virtual*/ void	setValue(const LLSD& value);
+	/*virtual*/ void	setAltValue(const LLSD& value);
 	/*virtual*/ const LLSD getValue() const;
+	/*virtual*/ const LLSD getAltValue() const;
 	/*virtual*/ BOOL	getVisible() const;
 	/*virtual*/ void	highlightText(S32 offset, S32 num_chars);
 
@@ -153,9 +160,11 @@ public:
 
 	void			setText(const LLStringExplicit& text);
 	void			setFontStyle(const U8 font_style);
+    void			setAlignment(LLFontGL::HAlign align) { mFontAlignment = align; }
 
 protected:
 	LLUIString		mText;
+	LLUIString		mAltText;
 	S32				mTextWidth;
 	const LLFontGL*	mFont;
 	LLColor4		mColor;
@@ -192,6 +201,26 @@ private:
 	LLFontGL::HAlign		mAlignment;
 };
 
+
+class LLScrollListBar : public LLScrollListCell
+{
+public:
+    LLScrollListBar(const LLScrollListCell::Params& p);
+    /*virtual*/ ~LLScrollListBar();
+    /*virtual*/ void	draw(const LLColor4& color, const LLColor4& highlight_color) const;
+    /*virtual*/ S32		getWidth() const;
+    /*virtual*/ S32		getHeight() const;
+    /*virtual*/ const LLSD		getValue() const;
+    /*virtual*/ void	setColor(const LLColor4&);
+    /*virtual*/ void	setValue(const LLSD& value);
+
+private:
+    LLColor4                    mColor;
+    F32                         mRatio;
+    S32                         mBottom;
+    S32                         mRightPad;
+    S32                         mLeftPad;
+};
 /*
  * An interactive cell containing a check box.
  */

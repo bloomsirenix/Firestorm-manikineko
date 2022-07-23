@@ -35,6 +35,8 @@
 #include "llurlregistry.h"
 #include "llstyle.h"
 
+#include "llmodaldialog.h"
+
 static LLDefaultChildRegistry::Register<LLTextBox> r("text");
 
 // Compiler optimization, generate extern template
@@ -45,7 +47,9 @@ LLTextBox::LLTextBox(const LLTextBox::Params& p)
 :	LLTextBase(p),
 	mClickedCallback(NULL),
 	mShowCursorHand(true)
-{}
+{
+	mSkipTripleClick = true;
+}
 
 LLTextBox::~LLTextBox()
 {}
@@ -69,7 +73,7 @@ BOOL LLTextBox::handleMouseDown(S32 x, S32 y, MASK mask)
 		// Route future Mouse messages here preemptively.  (Release on mouse up.)
 		// <FS> FIRE-10172: This interferes with the scroll bar buttons.
 		//gFocusMgr.setMouseCapture( this );
-		if (!gFocusMgr.getMouseCapture())
+		if (!gFocusMgr.getMouseCapture() || getParentByType<LLModalDialog>())
 			gFocusMgr.setMouseCapture( this );
 		// </FS>
 	}

@@ -59,7 +59,32 @@ class LLInventoryCategory;
 class LLMessageSystem;
 class LLInventoryCollectFunctor;
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///----------------------------------------------------------------------------
+/// LLInventoryValidationInfo 
+///----------------------------------------------------------------------------
+class LLInventoryValidationInfo: public LLRefCount
+{
+public:
+	LLInventoryValidationInfo();
+	void toOstream(std::ostream& os) const;
+	void asLLSD(LLSD& sd) const;
+	
+
+	S32 mFatalErrorCount;
+	S32 mWarningCount;
+    S32 mLoopCount; // Presence of folders whose ansestors loop onto themselves
+    S32 mOrphanedCount; // Missing or orphaned items, links and folders
+	bool mInitialized;
+	bool mFatalNoRootFolder;
+	bool mFatalNoLibraryRootFolder;
+	bool mFatalQADebugMode;
+	std::set<LLFolderType::EType> mMissingRequiredSystemFolders;
+	std::set<LLFolderType::EType> mDuplicateRequiredSystemFolders;
+	std::ostringstream mLog; // <FS:Beq/> Extra validation logs for OpenSim.
+};
+std::ostream& operator<<(std::ostream& s, const LLInventoryValidationInfo& v);
+
+///----------------------------------------------------------------------------
 // LLInventoryModel
 //
 // Represents a collection of inventory, and provides efficient ways to access 
@@ -67,7 +92,7 @@ class LLInventoryCollectFunctor;
 //   NOTE: This class could in theory be used for any place where you need 
 //   inventory, though it optimizes for time efficiency - not space efficiency, 
 //   probably making it inappropriate for use on tasks.
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///----------------------------------------------------------------------------
 class LLInventoryModel
 {
 	LOG_CLASS(LLInventoryModel);
@@ -279,10 +304,19 @@ public:
 
 	// Check if one object has a parent chain up to the category specified by UUID.
 	BOOL isObjectDescendentOf(const LLUUID& obj_id, const LLUUID& cat_id) const;
-
+    
+    enum EAnscestorResult{
+        ANSCESTOR_OK = 0,
+        ANSCESTOR_MISSING = 1,
+        ANSCESTOR_LOOP = 2,
+    };
 	// Follow parent chain to the top.
-	bool getObjectTopmostAncestor(const LLUUID& object_id, LLUUID& result) const;
-
+    EAnscestorResult getObjectTopmostAncestor(const LLUUID& object_id, LLUUID& result) const;
+	// <FS:Beq>  FIRE-31674 ignore suitcase contents
+	#ifdef OPENSIM
+	bool isInSuitcase(const LLInventoryCategory * cat) const;
+	#endif
+	// </FS:Beq>
 	// <FS:Ansariel> Re-added because of start folder id
 	// Collect all items in inventory that are linked to item_id.
 	// Assumes item_id is itself not a linked item.
@@ -590,6 +624,11 @@ private:
 	U32 mModifyMask;
 	changed_items_t mChangedItemIDs;
 	changed_items_t mAddedItemIDs;
+    // Fallback when notifyObservers is in progress
+    U32 mModifyMaskBacklog;
+    changed_items_t mChangedItemIDsBacklog;
+    changed_items_t mAddedItemIDsBacklog;
+
 // [SL:KB] - Patch: UI-Notifications | Checked: Catznip-6.5
     LLUUID mTransactionId;
 // [/SL:KB]
@@ -707,19 +746,17 @@ protected:
 	cat_array_t* getUnlockedCatArray(const LLUUID& id);
 	item_array_t* getUnlockedItemArray(const LLUUID& id);
 private:
-#ifdef LL_DEBUG
 	std::map<LLUUID, bool> mCategoryLock;
 	std::map<LLUUID, bool> mItemLock;
-#endif
 	
 	//--------------------------------------------------------------------
 	// Debugging
 	//--------------------------------------------------------------------
 public:
 	void dumpInventory() const;
-#ifdef LL_DEBUG
-	bool validate() const;
-#endif
+	LLPointer<LLInventoryValidationInfo> validate() const;
+	LLPointer<LLInventoryValidationInfo> mValidationInfo;
+	std::string getFullPath(const LLInventoryObject *obj) const;
 
 /**                    Miscellaneous
  **                                                                            **

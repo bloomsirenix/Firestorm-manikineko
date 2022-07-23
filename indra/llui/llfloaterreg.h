@@ -114,6 +114,7 @@ public:
 	// Helpers
 	static LLFloater* getLastFloaterInGroup(const std::string& name);
 	static LLFloater* getLastFloaterCascading();
+	static instance_list_t getAllFloatersInGroup(LLFloater* floater); // <FS:Ansariel> FIRE-24125: Add option to close all floaters of a group
 	
 	// Find / get (create) / remove / destroy
 	static LLFloater* findInstance(const std::string& name, const LLSD& key = LLSD());
@@ -157,6 +158,7 @@ public:
 
 	// Callback wrappers
 	static void toggleInstanceOrBringToFront(const LLSD& sdname, const LLSD& key = LLSD());
+	static void showInstanceOrBringToFront(const LLSD& sdname, const LLSD& key = LLSD());
 	
 	// Typed find / get / show
 	template <class T>

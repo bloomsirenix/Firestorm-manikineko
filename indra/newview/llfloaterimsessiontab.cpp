@@ -386,13 +386,16 @@ void LLFloaterIMSessionTab::draw()
 
 void LLFloaterIMSessionTab::enableDisableCallBtn()
 {
-    mVoiceButton->setEnabled(
-    		mSessionID.notNull()
-    		&& mSession
-    		&& mSession->mSessionInitialized
-    		&& LLVoiceClient::getInstance()->voiceEnabled()
-    		&& LLVoiceClient::getInstance()->isVoiceWorking()
-    		&& mSession->mCallBackEnabled);
+    if (LLVoiceClient::instanceExists() && mVoiceButton)
+    {
+        mVoiceButton->setEnabled(
+            mSessionID.notNull()
+            && mSession
+            && mSession->mSessionInitialized
+            && LLVoiceClient::getInstance()->voiceEnabled()
+            && LLVoiceClient::getInstance()->isVoiceWorking()
+            && mSession->mCallBackEnabled);
+    }
 }
 
 void LLFloaterIMSessionTab::onFocusReceived()
@@ -520,9 +523,12 @@ void LLFloaterIMSessionTab::addConversationViewParticipant(LLConversationItem* p
 	LLFolderViewItem* widget = get_ptr_in_map(mConversationsWidgets,uuid);
 	
 	// If not already present, create the participant view and attach it to the root, otherwise, just refresh it
-	if (widget && update_view)
+	if (widget)
 	{
-		updateConversationViewParticipant(uuid); // overkill?
+        if (update_view)
+        {
+            updateConversationViewParticipant(uuid); // overkill?
+        }
 	}
 	else
 	{

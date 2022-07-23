@@ -86,7 +86,7 @@ Fehlerdetails: The notification called &apos;[_NAME]&apos; was not found in noti
 		<usetemplate name="okbutton" yestext="OK"/>
 	</notification>
 	<notification name="LoginFailedNoNetwork">
-		Verbindung nicht möglich zum [SECOND_LIFE_GRID].
+		Verbindung nicht möglich zum [CURRENT_GRID].
     &apos;[DIAGNOSTIC]&apos;
 Stellen Sie sicher, dass Ihre Internetverbindung funktioniert.
 		<usetemplate name="okbutton" yestext="OK"/>
@@ -710,7 +710,7 @@ Das Objekt ist möglicherweise außer Reichweite oder wurde gelöscht.
 		Dateidownload nicht möglich
 	</notification>
 	<notification name="MediaFileDownloadUnsupported">
-		Sie haben einen Datei-Download angefordert, der in [SECOND_LIFE] nicht unterstützt wird.
+		Sie haben einen Datei-Download angefordert, der in [APP_NAME] nicht unterstützt wird.
 		<usetemplate ignoretext="Warnung anzeigen, wenn ein Datei-Download nicht unterstützt wird" name="okignore" yestext="OK"/>
 	</notification>
 	<notification name="CannotWriteFile">
@@ -1230,6 +1230,9 @@ Dies ist ein temporärer Fehler. Bitte passen Sie das Kleidungsstück in einigen
 [MESSAGE]
 		<usetemplate name="okcancelbuttons" notext="Beenden" yestext="IM &amp; Chat anzeigen"/>
 	</notification>
+	<notification name="InventoryUnusable">
+		Es gab ein Problem mit Ihrem Inventar. Bitte versuchen Sie zunächst, sich erneut anzumelden. Falls Sie diese Nachricht erneut erhalten, kontaktieren Sie den Support, um die Ursache des Problems zu korrigieren.
+	</notification>
 	<notification name="OnlyOfficerCanBuyLand">
 		Landkauf für Gruppe nicht möglich:
 Sie sind nicht berechtigt, Land für die aktive Gruppe zu kaufen.
@@ -1250,6 +1253,7 @@ Sie sind nicht berechtigt, Land für die aktive Gruppe zu kaufen.
 		Name für neue Liste:
 		<form name="form">
 			<button name="SetName" text="OK"/>
+			<button name="Cancel" text="Abbrechen"/>
 		</form>
 	</notification>
 	<notification label="Automatische Ersetzungsliste umbenennen" name="RenameAutoReplaceList">
@@ -1509,11 +1513,11 @@ Falls Sie [CURRENT_GRID] zum ersten Mal verwenden, müssen Sie zuerst ein Konto 
 		<usetemplate name="okcancelbuttons" notext="Weiter" yestext="Konto erstellen..."/>
 	</notification>
 	<notification name="LoginPacketNeverReceived">
-		Es gibt Probleme mit der Verbindung. Möglicherweise besteht ein Problem mit Ihrer Internetverbindung oder dem [SECOND_LIFE_GRID].
+		Es gibt Probleme mit der Verbindung. Möglicherweise besteht ein Problem mit Ihrer Internetverbindung oder dem [CURRENT_GRID].
 
 Überprüfen Sie Ihre Internetverbindung und versuchen Sie es dann erneut, oder klicken Sie auf Hilfe, um zu [SUPPORT_SITE] zu gelangen, oder klicken Sie auf Teleportieren, um nach Hause zu teleportieren.
 		<url name="url">
-			http://de.secondlife.com/support/
+			https://www.firestormviewer.org/support/
 		</url>
 		<form name="form">
 			<button name="OK" text="OK"/>
@@ -1522,11 +1526,11 @@ Falls Sie [CURRENT_GRID] zum ersten Mal verwenden, müssen Sie zuerst ein Konto 
 		</form>
 	</notification>
 	<notification name="LoginPacketNeverReceivedNoTP">
-		Es gibt Probleme mit der Verbindung. Möglicherweise besteht ein Problem mit Ihrer Internetverbindung oder dem [SECOND_LIFE_GRID].
+		Es gibt Probleme mit der Verbindung. Möglicherweise besteht ein Problem mit Ihrer Internetverbindung oder dem [CURRENT_GRID].
 
 Überprüfen Sie Ihre Internetverbindung und versuchen Sie es dann erneut, oder klicken Sie auf Hilfe, um zu [SUPPORT_SITE] zu gelangen.
 		<url name="url">
-			http://de.secondlife.com/support/
+			https://www.firestormviewer.org/support/
 		</url>
 		<form name="form">
 			<button name="OK" text="OK"/>
@@ -3724,7 +3728,7 @@ Bitte prüfen Sie Ihre Netzwerk- und Firewall-Konfiguration.
 Deaktivieren Sie alle SIP ALG-Funktionen in Ihrem Router. 
 
 Voice-Kommunikation ist leider nicht verfügbar.
-[https://wiki.firestormviewer.org/fs_voice]
+https://wiki.firestormviewer.org/fs_voice
 		<usetemplate name="okignore" yestext="OK" ignoretext="Warnen, wenn keine Verbindung zum Voice-Server hergestellt werden kann."/>
 	</notification>
 	<notification name="NoVoiceConnect-GIAB">
@@ -4721,6 +4725,14 @@ Wählen Sie eine kleinere Landfläche aus.
 			<ignore name="ignore" text="Bestätigen, bevor eine Liste meiner aktuell aktiven RLV-Restriktionen an jemanden übertragen werden."/>
 		</form>
 	</notification>
+	<notification name="InventoryValidationFailed" label="Inventar-Validierungsfehler">
+		Eine Beschädigung Ihrers Inventars wurde erkannt.
+Bitte kontaktieren Sie [HELP] mit der folgenden Liste an Fehlern.
+Diese können anhand von http://opensimulator.org/wiki/inventory die erkannten Fehler korrigieren.
+
+[ERRORS]
+		<usetemplate ignoretext="Warnen, wenn Fehler bei der Inventar-Validierung festgestellt wurden" name="okignore" yestext="OK"/>
+	</notification>
 	<notification name="PreferenceChatClearLog">
 		Dadurch werden die Protokolle vorheriger Unterhaltungen und alle Backups dieser Datei gelöscht.
 		<usetemplate ignoretext="Löschen des Protokolls vorheriger Unterhaltungen bestätigen." name="okcancelignore" notext="Abbrechen" yestext="OK"/>
@@ -4830,6 +4842,19 @@ Bitte kopieren Sie diese in Ihr Inventar und versuchen Sie es erneut.
 	</notification>
 	<notification name="TrackLoadMismatch">
 		Der Pfad konnte nicht aus [TRACK1] in [TRACK2] geladen werden.
+	</notification>
+	<notification name="CompressionTestResults">
+		Test-Ergebnis für gip-Level 6 Datei-Komprimierung für [FILE] mit Größe [SIZE] KB:
+Packen: [PACK_TIME]s [PSIZE]KB
+Entpacken: [UNPACK_TIME]s [USIZE]KB
+		<tag>fail</tag>
+	</notification>
+	<notification label="Eingabe MFA-Token" name="PromptMFAToken">
+		[MESSAGE]
+		<form name="form">
+			<button name="continue" text="Fortsetzen"/>
+			<button name="cancel" text="Abbrechen"/>
+		</form>
 	</notification>
 	<notification name="NoValidEnvSettingFound">
 		Keine gültige Einstellung für die Umgebung ausgewählt.
@@ -5523,5 +5548,20 @@ Falls Sie diesen Nutzungsbestimmungen nicht zustimmen, sollten keinerlei finanzi
 	</notification>
 	<notification name="WindlightBulkImportFinished">
 		Mehrfach-Import von Windlight abgeschlossen.
+	</notification>
+	<notification name="AttachedRiggedObjectToHUD">
+		Der Anhang „[NAME]“ enthält geriggtes Mesh, ist aber am HUD-Punkt „[HUD_POINT]“ angehängt. Das bedeutet, dass Sie es korrekt sehen werden, alle anderen werden es hingegen gar nicht sehen. Denken Sie darüber nach, den Anhang zu entfernen und an einem regulären Punkt am Körper anzuhängen.
+		<usetemplate ignoretext="Warnen, wenn ein geriggtes Mesh an einem HUD-Punkt angehängt wird." name="notifyignore"/>
+	</notification>
+	<notification name="WarnForceLoginURL">
+		URL der Startseite des Anmeldebildschirms wird für Testzwecke übersteuert.
+
+URL auf Standard zurücksetzen?
+		<usetemplate name="okcancelbuttons" notext="Nächstes Mal erinnern" yestext="Zurücksetzen"/>
+	</notification>
+	<notification name="WarnScriptedCamera">
+		Zurücksetzen der Kamera könnte durch folgende Objekte verhindert werden:
+
+[SOURCES]
 	</notification>
 </notifications>

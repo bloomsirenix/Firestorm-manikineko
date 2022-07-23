@@ -188,7 +188,9 @@ BOOL LLToolPie::handleMouseDown(S32 x, S32 y, MASK mask)
 
 	mMouseButtonDown = true;
 
-    return handleLeftClickPick();
+	// If nothing clickable is picked, needs to return
+	// false for click-to-walk or click-to-teleport to work.
+	return handleLeftClickPick();
 }
 
 // Spawn context menus on right mouse down so you can drag over and select
@@ -443,8 +445,9 @@ BOOL LLToolPie::handleLeftClickPick()
 		gFocusMgr.setKeyboardFocus(NULL);
 	}
 
-	BOOL touchable = (object && object->flagHandleTouch()) 
-					 || (parent && parent->flagHandleTouch());
+    bool touchable = object
+                     && (object->getClickAction() != CLICK_ACTION_DISABLED)
+                     && (object->flagHandleTouch() || (parent && parent->flagHandleTouch()));
 
 	// Switch to grab tool if physical or triggerable
 	if (object && 
@@ -524,8 +527,9 @@ BOOL LLToolPie::useClickAction(MASK mask,
 			&& object
 			&& !object->isAttachment() 
 			&& LLPrimitive::isPrimitive(object->getPCode())
-			&& (object->getClickAction() 
-				|| parent->getClickAction());
+				// useClickAction does not handle Touch (0) or Disabled action
+			&& ((object->getClickAction() && object->getClickAction() != CLICK_ACTION_DISABLED)
+				|| (parent && parent->getClickAction() && parent->getClickAction() != CLICK_ACTION_DISABLED));
 
 }
 
@@ -536,18 +540,18 @@ U8 final_click_action(LLViewerObject* obj)
 
 	U8 click_action = CLICK_ACTION_TOUCH;
 	LLViewerObject* parent = obj->getRootEdit();
-	if (obj->getClickAction()
-	    || (parent && parent->getClickAction()))
-	{
-		if (obj->getClickAction())
-		{
-			click_action = obj->getClickAction();
-		}
-		else if (parent && parent->getClickAction())
-		{
-			click_action = parent->getClickAction();
-		}
-	}
+    U8 object_action = obj->getClickAction();
+    U8 parent_action = parent ? parent->getClickAction() : CLICK_ACTION_TOUCH;
+    if (parent_action == CLICK_ACTION_DISABLED || object_action)
+    {
+        // CLICK_ACTION_DISABLED ("None" in UI) is intended for child action to
+        // override parent's action when assigned to parent or to child
+        click_action = object_action;
+    }
+    else if (parent_action)
+    {
+        click_action = parent_action;
+    }
 	return click_action;
 }
 
@@ -686,18 +690,21 @@ bool LLToolPie::walkToClickedLocation()
         mPick.mPosGlobal = gAgent.getPositionGlobal() + LLVector3d(LLViewerCamera::instance().getAtAxis()) * SELF_CLICK_WALK_DISTANCE;
     }
 
-    if ((mPick.mPickType == LLPickInfo::PICK_LAND && !mPick.mPosGlobal.isExactlyZero()) ||
-        (mPick.mObjectID.notNull() && !mPick.mPosGlobal.isExactlyZero()))
-    {
+//    if ((mPick.mPickType == LLPickInfo::PICK_LAND && !mPick.mPosGlobal.isExactlyZero()) ||
+//        (mPick.mObjectID.notNull() && !mPick.mPosGlobal.isExactlyZero()))
 // [RLVa:KB] - Checked: RLVa-2.0.0
-        if (RlvActions::isRlvEnabled() && !RlvActions::canTeleportToLocal(mPick.mPosGlobal))
-        {
-            RlvUtil::notifyBlocked(RlvStringKeys::Blocked::AutoPilot);
-            mPick = saved_pick;
-            return false;
-        }
-// [/RLVa:KB]
+	bool fValidPick = ((mPick.mPickType == LLPickInfo::PICK_LAND && !mPick.mPosGlobal.isExactlyZero()) ||
+		(mPick.mObjectID.notNull() && !mPick.mPosGlobal.isExactlyZero()));
 
+	if ( (fValidPick) && (RlvActions::isRlvEnabled()) && (!RlvActions::canTeleportToLocal(mPick.mPosGlobal)) )
+	{
+		RlvUtil::notifyBlocked(RlvStringKeys::Blocked::AutoPilot);
+		fValidPick = false;
+	}
+
+	if (fValidPick)
+// [/RLVa:KB]
+    {
         // <FS:PP> FIRE-31135 Do not reset camera position for "click to walk"
         // gAgentCamera.setFocusOnAvatar(TRUE, TRUE);
         static LLCachedControl<bool> sResetCameraOnMovement(gSavedSettings, "FSResetCameraOnMovement");
@@ -748,16 +755,23 @@ bool LLToolPie::teleportToClickedLocation()
     LLViewerObject* objp = mHoverPick.getObject();
     LLViewerObject* parentp = objp ? objp->getRootEdit() : NULL;
 
+    if (objp && (objp->getAvatar() == gAgentAvatarp || objp == gAgentAvatarp)) // ex: nametag
+    {
+        // Don't teleport to self, teleporting to other avatars is fine
+        return false;
+    }
+
     bool is_in_world = mHoverPick.mObjectID.notNull() && objp && !objp->isHUDAttachment();
     bool is_land = mHoverPick.mPickType == LLPickInfo::PICK_LAND;
     bool pos_non_zero = !mHoverPick.mPosGlobal.isExactlyZero();
     bool has_touch_handler = (objp && objp->flagHandleTouch()) || (parentp && parentp->flagHandleTouch());
-    bool has_click_action = final_click_action(objp);
+    U8 click_action = final_click_action(objp); // default action: 0 - touch
+    bool has_click_action = (click_action || has_touch_handler) && click_action != CLICK_ACTION_DISABLED;
 
     // <FS:Ansariel> FIRE-1765: Allow double-click walk/teleport to scripted objects
-    //if (pos_non_zero && (is_land || (is_in_world && !has_touch_handler && !has_click_action)))
+    //if (pos_non_zero && (is_land || (is_in_world && !has_click_action)))
     bool allowDoubleClickOnScriptedObjects = gSavedSettings.getBOOL("FSAllowDoubleClickOnScriptedObjects");
-    if (pos_non_zero && (is_land || (is_in_world && ((allowDoubleClickOnScriptedObjects && objp->getClickAction() != CLICK_ACTION_SIT) || (!has_touch_handler && !has_click_action)))))
+    if (pos_non_zero && (is_land || (is_in_world && ((allowDoubleClickOnScriptedObjects && objp->getClickAction() != CLICK_ACTION_SIT) || !has_click_action))))
     // </FS:Ansariel>
     {
 // [RLVa:KB] - Checked: RLVa-2.0.0
@@ -860,7 +874,7 @@ BOOL LLToolPie::handleHover(S32 x, S32 y, MASK mask)
 	else if (!mMouseOutsideSlop 
 		&& mMouseButtonDown
 		// disable camera steering if click on land is not used for moving
-		&& gViewerInput.isMouseBindUsed(CLICK_LEFT))
+		&& gViewerInput.isMouseBindUsed(CLICK_LEFT, MASK_NONE, MODE_THIRD_PERSON))
 	{
 		S32 delta_x = x - mMouseDownX;
 		S32 delta_y = y - mMouseDownY;
@@ -916,8 +930,9 @@ BOOL LLToolPie::handleHover(S32 x, S32 y, MASK mask)
 			gViewerWindow->setCursor(UI_CURSOR_TOOLGRAB);
 			LL_DEBUGS("UserInput") << "hover handled by LLToolPie (inactive)" << LL_ENDL;
 		}
-		else if ((!object || !object->isAttachment() || object->getClickAction() != CLICK_ACTION_DISABLED)
-				 && ((object && object->flagHandleTouch()) || (parent && parent->flagHandleTouch())))
+		else if ((!object || object->getClickAction() != CLICK_ACTION_DISABLED)
+				 && ((object && object->flagHandleTouch()) || (parent && parent->flagHandleTouch()))
+				 && (!object || !object->isAvatar()))
 		{
 			show_highlight = true;
 			gViewerWindow->setCursor(UI_CURSOR_HAND);
@@ -1460,35 +1475,25 @@ BOOL LLToolPie::handleTooltipObject( LLViewerObject* hover_object, std::string l
 				// Display the PE weight for an object if mesh is enabled
 				if (gMeshRepo.meshRezEnabled())
 				{
-					// Ansariel: What a bummer! PE is only available for
-					//           objects in the same region as you!
-					if (hover_object->getRegion() && gAgent.getRegion() &&
-						hover_object->getRegion()->getRegionID() == gAgent.getRegion()->getRegionID())
+					S32 link_cost = LLSelectMgr::getInstance()->getHoverObjects()->getSelectedLinksetCost();
+					if (link_cost > 0)
 					{
-						S32 link_cost = LLSelectMgr::getInstance()->getHoverObjects()->getSelectedLinksetCost();
-						if (link_cost > 0)
-						{
-							args.clear();
-							args["PEWEIGHT"] = llformat("%d", link_cost);
-							tooltip_msg.append(LLTrans::getString("TooltipPrimEquivalent", args));
-						}
+						args.clear();
+						args["PEWEIGHT"] = llformat("%d", link_cost);
+						tooltip_msg.append(LLTrans::getString("TooltipPrimEquivalent", args));
+					}
 /// <FS:CR> Don't show loading on vanila OpenSim (some grids have it, not not vanilla) If they have it, it will
 /// show eventually
 #ifdef OPENSIM
-						else if (LLGridManager::getInstance()->isInOpenSim())
-						{
-							// Do nothing at all.
-						}
+					else if (LLGridManager::getInstance()->isInOpenSim())
+					{
+						// Do nothing at all.
+					}
 #endif
 // </FS:CR>
-						else
-						{
-							tooltip_msg.append(LLTrans::getString("TooltipPrimEquivalentLoading"));
-						}
-					}
 					else
 					{
-						tooltip_msg.append(LLTrans::getString("TooltipPrimEquivalentUnavailable"));
+						tooltip_msg.append(LLTrans::getString("TooltipPrimEquivalentLoading"));
 					}
 				}
 

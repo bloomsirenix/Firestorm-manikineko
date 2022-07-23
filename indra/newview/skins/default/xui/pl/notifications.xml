@@ -34,9 +34,14 @@ Szczegóły błędu: Błąd o nazwie &apos;[_NAME]&apos; nie został odnaleziony
 		Instalacja [APP_NAME] jest uszkodzona. Proszę [https://www.firestormviewer.org/downloads pobrać nową kopię] przeglądarki i ponownie ją zainstalować.
 	</notification>
 	<notification name="LoginFailedNoNetwork">
-		Nie można połączyć z [SECOND_LIFE_GRID].
+		Nie można połączyć z [CURRENT_GRID].
 &apos;[DIAGNOSTIC]&apos;
 Upewnij się, że Twoje połączenie z internetem działa.
+	</notification>
+	<notification name="LoginFailedToParse">
+		Przeglądarka otrzymała zniekształconą odpowiedź z serwera. Upewnij się, że połączenie internetowe działa prawidłowo i spróbuj ponownie później.
+
+Jeśli uważasz, że to błąd - skontaktuj się z pomocą techniczną.
 	</notification>
 	<notification name="MessageTemplateNotFound">
 		Szablon komunikatu dla [PATH] nie został odnaleziony.
@@ -1139,6 +1144,9 @@ Zazwyczaj jest to tymczasowy problem. Możesz kontynuować modyfikacje i zapisa�
 [MESSAGE]
 		<usetemplate name="okcancelbuttons" notext="Zakończ" yestext="Pokaż IM/czat"/>
 	</notification>
+	<notification name="InventoryUnusable">
+		Wystąpił problem podczas ładowania szafy. Spróbuj się wylogować i zalogować ponownie. Jeśli zobaczysz ten komunikat jeszcze raz, to skontaktuj się z pomocą techniczną, aby rozwiązać problem.
+	</notification>
 	<notification name="OnlyOfficerCanBuyLand">
 		Nie możesz kupić działek dla grupy.
 Nie masz praw kupowania działek dla Twojej aktywnej grupy.
@@ -1156,6 +1164,9 @@ Zaproponować znajomość [NAME]?
 	</notification>
 	<notification label="Nowa lista autokorekty" name="AddAutoReplaceList">
 		Nazwa nowej listy:
+		<form name="form">
+			<button name="Cancel" text="Anuluj" />
+		</form>
 	</notification>
 	<notification label="Zmiana nazwy listy autokorekty" name="RenameAutoReplaceList">
 		Nazwa '[DUPNAME]' jest w użyciu
@@ -1409,7 +1420,7 @@ Czy chcesz przejść na stronę [https://www.firestormviewer.org/join-secondlife
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="Potwierdź i wyloguj się" />
 	</notification>
 	<notification name="LoginPacketNeverReceived">
-		Problemy z połączeniem. Problem może być spowodowany Twoim połączeniem z Internetem albo może istnieć po stronie [SECOND_LIFE_GRID].
+		Problemy z połączeniem. Problem może być spowodowany Twoim połączeniem z Internetem albo może istnieć po stronie [CURRENT_GRID].
 
 Możesz sprawdzić swoje połączenie z Internetem i spróbować ponownie za kilka minut, połączyć się ze stroną pomocy technicznej ([SUPPORT_SITE]) lub wybrać Teleportuj, by teleportować się do swojego miejsca startu.
 		<form name="form">
@@ -1418,7 +1429,7 @@ Możesz sprawdzić swoje połączenie z Internetem i spróbować ponownie za kil
 		</form>
 	</notification>
 	<notification name="LoginPacketNeverReceivedNoTP">
-		Problemy z połączeniem. Problem może być spowodowany Twoim połączeniem z Internetem albo może istnieć po stronie [SECOND_LIFE_GRID].
+		Problemy z połączeniem. Problem może być spowodowany Twoim połączeniem z Internetem albo może istnieć po stronie [CURRENT_GRID].
 
 Możesz sprawdzić swoje połączenie z Internetem i spróbować ponownie za kilka minut lub połączyć się ze stroną pomocy technicznej [SUPPORT_SITE].
 		<form name="form">
@@ -2566,7 +2577,7 @@ URL: [MEDIAURL]
 Domena: [MEDIADOMAIN]
 URL: [MEDIAURL]
 		<form name="form">
-			<button name="Do Now" text="[ACTION] Teraz"/>
+			<button name="Do Now" text="[ACTION] teraz"/>
 			<button name="RememberDomain" text="[CONDITION] Zezwól tej domenie"/>
 			<button name="RememberURL" text="[CONDITION] Zezwól temu URL"/>
 		</form>
@@ -3591,7 +3602,7 @@ Porty, które muszą być otwarte dla połączeń głosowych, to:
 Proszę sprawdź swoją sieć i ustawienia firewall.
 Wyłącz wszelkie funkcjonalności SIP ALG (Application Layer Gateway) w swoim routerze.
 
-[https://wiki.firestormviewer.org/fs_voice]
+https://wiki.firestormviewer.org/fs_voice
 		<usetemplate name="okignore" ignoretext="Ostrzegaj mnie, gdy przeglądarka nie może połączyć się z serwerem głosu" />
 	</notification>
 	<notification name="NoVoiceConnect-GIAB">
@@ -4799,6 +4810,14 @@ Spróbuj zaznaczyć mniejszy obszar ziemi.
 			<ignore name="ignore" text="Potwierdź przed wysłaniem komuś listy moich aktywnych ograniczeń RLV."/>
 		</form>
 	</notification>
+	<notification name="InventoryValidationFailed" label="Błędy walidacji Szafy">
+		Rzeczy w Twojej Szafie uległy uszkodzeniu.
+Skontaktuj się z [HELP] z poniższą listą problemów.
+Będzie można użyć http://opensimulator.org/wiki/inventory aby rozwiązać problemy.
+
+[ERRORS]
+		<usetemplate ignoretext="Ostrzegaj, jeśli wykryto błędy walidacji Szafy." name="okignore" />
+	</notification>
 	<notification name="PreferenceChatClearLog">
 		Ta opcja usunie dzienniki poprzednich rozmów i wszelkie kopie zapasowe tego pliku.
 		<usetemplate ignoretext="Potwierdź, zanim usunę dzienniki poprzednich rozmów." name="okcancelignore" notext="Anuluj" />
@@ -4821,7 +4840,7 @@ Spróbuj zaznaczyć mniejszy obszar ziemi.
 	<notification name="AddPaymentMethod">
 		Na następnej stronie wybierz kwotę L$
 i kliknij przycisk składania zamówienia.
-Będziesz mógł/a dodać metodę płatności w kasie. 
+Będziesz mógł/a dodać metodę płatności w kasie.
 		<form name="form">
 			<button name="Continue" text="Kontyntynuj" />
 			<button name="Cancel" text="Anuluj" />
@@ -5144,6 +5163,18 @@ Skopiuj do własnej szafy i spróbuj ponownie.
 	<notification name="TrackLoadMismatch">
 		Nie można załadować ścieżki z [TRACK1] do [TRACK2].
 	</notification>
+	<notification name="CompressionTestResults">
+Wynik testu kompresji pliku dla gzip na poziomie 6 z [FILE] o rozmiarze [SIZE] KB:
+Pakowanie: [PACK_TIME]s [PSIZE]KB
+Rozpakowywanie: [UNPACK_TIME]s [USIZE]KB
+	</notification>
+	<notification name="PromptMFAToken">
+		[MESSAGE]
+		<form name="form">
+			<button name="continue" text="Kontynuuj" />
+			<button name="cancel" text="Anuluj" />
+		</form>
+	</notification>
 	<notification name="NoValidEnvSettingFound">
 		Nie wybrano prawidłowego ustawienia otoczenia.
 
@@ -5158,5 +5189,20 @@ Pamiętaj, że nie można wybrać "otoczenia współdzielonego" i "bazowanego na
 	<notification name="FSAOScriptedNotification">
 		Animator Firestorma: [AO_MESSAGE]
 		<usetemplate ignoretext="Ostrzegaj mnie, gdy Animator Firestorma jest proszony o dostęp przez oskryptowany obiekt" name="notifyignore" />
+	</notification>
+	<notification name="AttachedRiggedObjectToHUD">
+		Dodatek o nazwie "[NAME]" zawiera riggowany mesz, ale jest dołączony do punktu HUD "[HUD_POINT]". Oznacza to, że Ty co prawda zobaczysz go poprawnie wyrenderowany, ale wszyscy inni nie będą mogli. Rozważ zdjęcie go i ponowne dołączenie do zwykłego punktu doczepienia.
+		<usetemplate ignoretext="Ostrzegaj, gdy dodatek z riggowanym meszem jest dołączany do punktu HUD" name="notifyignore" />
+	</notification>
+	<notification name="WarnForceLoginURL">
+		Wygląda na to, że adres URL ekranu logowania jest zastępowany w celach testowych.
+
+Zresetować adres URL do domyślnego?
+		<usetemplate name="okcancelbuttons" notext="Przypomnij mi potem" yestext="Resetuj" />
+	</notification>
+	<notification name="WarnScriptedCamera">
+		Resetowanie kamery może być zablokowane przez następujące obiekty:
+
+[SOURCES]
 	</notification>
 </notifications>

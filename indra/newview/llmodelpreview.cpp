@@ -259,27 +259,14 @@ LLModelPreview::~LLModelPreview()
     }
 }
 
-U32 LLModelPreview::calcResourceCost()
+void LLModelPreview::updateDimentionsAndOffsets()
 {
     assert_main_thread();
 
     rebuildUploadData();
 
-    //Upload skin is selected BUT check to see if the joints coming in from the asset were malformed.
-    if (mFMP && mFMP->childGetValue("upload_skin").asBoolean())
-    {
-        bool uploadingJointPositions = mFMP->childGetValue("upload_joints").asBoolean();
-        if (uploadingJointPositions && !isRigValidForJointPositionUpload())
-        {
-            mFMP->childDisable("ok_btn");
-        }
-    }
-
     std::set<LLModel*> accounted;
-    U32 num_points = 0;
-    U32 num_hulls = 0;
 
-    F32 debug_scale = mFMP ? mFMP->childGetValue("import_scale").asReal() : 1.f;
     mPelvisZOffset = mFMP ? mFMP->childGetValue("pelvis_offset").asReal() : 3.0f;
 
     if (mFMP && mFMP->childGetValue("upload_joints").asBoolean())
@@ -291,8 +278,6 @@ U32 LLModelPreview::calcResourceCost()
         getPreviewAvatar()->addPelvisFixup(mPelvisZOffset, fake_mesh_id);
     }
 
-    F32 streaming_cost = 0.f;
-    F32 physics_cost = 0.f;
     for (U32 i = 0; i < mUploadData.size(); ++i)
     {
         LLModelInstance& instance = mUploadData[i];
@@ -300,11 +285,6 @@ U32 LLModelPreview::calcResourceCost()
         if (accounted.find(instance.mModel) == accounted.end())
         {
             accounted.insert(instance.mModel);
-
-            LLModel::Decomposition& decomp =
-                instance.mLOD[LLModel::LOD_PHYSICS] ?
-                instance.mLOD[LLModel::LOD_PHYSICS]->mPhysics :
-                instance.mModel->mPhysics;
 
             //update instance skin info for each lods pelvisZoffset 
             for (int j = 0; j<LLModel::NUM_LODS; ++j)
@@ -314,58 +294,14 @@ U32 LLModelPreview::calcResourceCost()
                     instance.mLOD[j]->mSkinInfo.mPelvisOffset = mPelvisZOffset;
                 }
             }
-
-            std::stringstream ostr;
-            LLSD ret = LLModel::writeModel(ostr,
-                instance.mLOD[4],
-                instance.mLOD[3],
-                instance.mLOD[2],
-                instance.mLOD[1],
-                instance.mLOD[0],
-                decomp,
-                mFMP->childGetValue("upload_skin").asBoolean(),
-                mFMP->childGetValue("upload_joints").asBoolean(),
-                mFMP->childGetValue("lock_scale_if_joint_position").asBoolean(),
-                TRUE,
-                FALSE,
-                instance.mModel->mSubmodelID);
-
-            num_hulls += decomp.mHull.size();
-            for (U32 i = 0; i < decomp.mHull.size(); ++i)
-            {
-                num_points += decomp.mHull[i].size();
-            }
-
-            //calculate streaming cost
-            LLMatrix4 transformation = instance.mTransform;
-
-            LLVector3 position = LLVector3(0, 0, 0) * transformation;
-
-            LLVector3 x_transformed = LLVector3(1, 0, 0) * transformation - position;
-            LLVector3 y_transformed = LLVector3(0, 1, 0) * transformation - position;
-            LLVector3 z_transformed = LLVector3(0, 0, 1) * transformation - position;
-            F32 x_length = x_transformed.normalize();
-            F32 y_length = y_transformed.normalize();
-            F32 z_length = z_transformed.normalize();
-            LLVector3 scale = LLVector3(x_length, y_length, z_length);
-
-            F32 radius = scale.length()*0.5f*debug_scale;
-
-            LLMeshCostData costs;
-            if (gMeshRepo.getCostData(ret, costs))
-            {
-                streaming_cost += costs.getRadiusBasedStreamingCost(radius);
-            }
         }
     }
 
     F32 scale = mFMP ? mFMP->childGetValue("import_scale").asReal()*2.f : 2.f;
 
-    mDetailsSignal(mPreviewScale[0] * scale, mPreviewScale[1] * scale, mPreviewScale[2] * scale, streaming_cost, physics_cost);
+    mDetailsSignal((F32)(mPreviewScale[0] * scale), (F32)(mPreviewScale[1] * scale), (F32)(mPreviewScale[2] * scale));
 
     updateStatusMessages();
-
-    return (U32)streaming_cost;
 }
 
 // <FS:Beq> relocate from llmodel and rewrite so it does what it is meant to
@@ -387,6 +323,18 @@ bool LLModelPreview::matchMaterialOrder(LLModel* lod, LLModel* ref, int& refFace
 		out << "LOD model " << lod->getName() << "'s materials are not a subset of the High LOD (reference) model " << ref->getName();
 		LL_DEBUGS() << out.str() << LL_ENDL;
 		LLFloaterModelPreview::addStringToLog(out, true);
+		return false;
+	}
+
+	if (lod->mMaterialList.size() > ref->mMaterialList.size())
+	{
+		LL_DEBUGS("MESHSKININFO") << "Material of model has more materials than a reference." << LL_ENDL;
+		std::ostringstream out;
+		out << "LOD model " << lod->getName() << " has more materials than the High LOD (reference) model " << ref->getName();
+		LL_DEBUGS() << out.str() << LL_ENDL;
+		LLFloaterModelPreview::addStringToLog(out, true);
+		// We passed isMaterialListSubset, so materials are a subset, but subset isn't supposed to be
+		// larger than original and if we keep going, reordering will cause a crash
 		return false;
 	}
 
@@ -1942,8 +1890,6 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation, bool enforce_tri_lim
         }
     }
 
-    mResourceCost = calcResourceCost();
-
     LLVertexBuffer::unbind();
     LLGLSLShader::sNoFixedFunction = no_ff;
     if (shader)
@@ -1963,7 +1909,11 @@ void LLModelPreview::updateStatusMessages()
         NOHAVOK = 1,
         DEGENERATE = 2,
         TOOMANYHULLS = 4,
-        TOOMANYVERTSINHULL = 8
+// <FS:Beq> fIRE-31602 thin mesh physics warning
+        // TOOMANYVERTSINHULL = 8
+        TOOMANYVERTSINHULL = 8,
+        TOOTHIN = 16
+// </FS:Beq>
     };
 
     assert_main_thread();
@@ -2072,10 +2022,22 @@ void LLModelPreview::updateStatusMessages()
         mMaxTriangleLimit = total_tris[LLModel::LOD_HIGH];
     }
 
+// <FS:Beq> fIRE-31602 thin mesh physics warning
+    static const float CONVEXIFICATION_SIZE_MESH {0.5};
+    auto smallest_axis = llmin(mPreviewScale.mV[0], mPreviewScale.mV[1]);
+    smallest_axis = llmin(smallest_axis, mPreviewScale.mV[2]);
+    smallest_axis *= 2.f;
+    if (smallest_axis < CONVEXIFICATION_SIZE_MESH)
+    {
+        has_physics_error |= PhysicsError::TOOTHIN;
+    }
+// </FS:Beq<
+
     mHasDegenerate = false;
     {//check for degenerate triangles in physics mesh
         U32 lod = LLModel::LOD_PHYSICS;
         const LLVector4a scale(0.5f);
+
         for (U32 i = 0; i < mModel[lod].size() && !mHasDegenerate; ++i)
         { //for each model in the lod
             if (mModel[lod][i] && mModel[lod][i]->mPhysics.mHull.empty())
@@ -2322,6 +2284,14 @@ void LLModelPreview::updateStatusMessages()
             LLUIImagePtr img = LLUI::getUIImage("ModelImport_Status_Error");
             physStatusIcon->setImage(img);
         }
+// <FS:Beq> fIRE-31602 thin mesh physics warning
+        else if (has_physics_error & PhysicsError::TOOTHIN)
+        {
+            mFMP->childSetValue("physics_status_message_text", mFMP->getString("phys_status_too_thin"));
+            LLUIImagePtr img = LLUI::getUIImage("ModelImport_Status_Warning");
+            physStatusIcon->setImage(img);
+        }
+// </FS:Beq>
         else if (has_physics_error & PhysicsError::NOHAVOK)
         {
             mFMP->childSetValue("physics_status_message_text", mFMP->getString("phys_status_no_havok"));
@@ -2913,9 +2883,8 @@ void LLModelPreview::update()
     if (mDirty && mLodsQuery.empty())
     {
         mDirty = false;
-        mResourceCost = calcResourceCost();
+        updateDimentionsAndOffsets();
         refresh();
-        updateStatusMessages();
     }
 }
 
@@ -3004,6 +2973,7 @@ void LLModelPreview::lookupLODModelFiles(S32 lod)
     std::string lod_filename = mLODFile[LLModel::LOD_HIGH];
     // <FS:Beq> BUG-230890 fix case-sensitive filename handling
     // std::string ext = ".dae";
+    // LLStringUtil::toLower(lod_filename_lower);
     // std::string::size_type i = lod_filename.rfind(ext);
     // if (i != std::string::npos)
     // {
@@ -3248,8 +3218,6 @@ BOOL LLModelPreview::render()
                     // auto enable weight upload if weights are present
                     // (note: all these UI updates need to be somewhere that is not render)
                     // <FS:Beq> BUG-229632 auto enable weights slows manual workflow
-                    // mViewOption["show_skin_weight"] = true;
-                    // skin_weight = true;
                     // fmp->childSetValue("upload_skin", true);
                     LL_DEBUGS("MeshUpload") << "FSU auto_enable_weights_upload = " << auto_enable_weight_upload() << LL_ENDL;
                     LL_DEBUGS("MeshUpload") << "FSU auto_enable_show_weights = " << auto_enable_show_weights() << LL_ENDL;
@@ -4087,6 +4055,7 @@ void LLModelPreview::onLODParamCommit(S32 lod, bool enforce_tri_limit)
     if (!mLODFrozen)
     {
         genLODs(lod, 3, enforce_tri_limit);
+        mFMP->refresh(); // <FS:Beq/> BUG-231970 Fix b0rken upload floater refresh
         refresh();
     }
 }

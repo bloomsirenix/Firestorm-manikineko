@@ -203,7 +203,7 @@
   <key>FSAvatarTurnSpeed</key>
   <map>
     <key>Comment</key>
-    <string>Modify the speed at which the avatar responds to turning movements. 0-100 percent of max rate</string>
+    <string>Modify the speed at which the avatar responds to turning movements. 0-100 percent of max rate. Default is 0.</string>
     <key>Persist</key>
     <integer>1</integer>
     <key>Type</key>
@@ -3187,10 +3187,11 @@
       <key>Value</key>
       <real>1.0</real>
     </map>
-    <key>CameraPreset</key>  <!-- deprecated (see SL-12429) -->
+    <key>CameraPreset</key>
+    <!-- deprecated (see SL-12429) -->
     <map>
       <key>Comment</key>
-      <string>Preset camera position - view (0 - rear, 1 - front, 2 - group)</string>
+      <string>(Deprecated) Preset camera position - view (0 - rear, 1 - front, 2 - group)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -3719,6 +3720,39 @@
       <key>Backup</key>
       <integer>0</integer>
     </map>
+    <key>BrowserFileAccessFromFileUrls</key>
+    <map>
+      <key>Comment</key>
+      <string>Allow access to local files via file urls in the embedded browser</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>BrowserPluginsEnabled</key>
+    <map>
+      <key>Comment</key>
+      <string>Enable Web plugins in the built-in Web browser?</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>BrowserWebSecurityDisabled</key>
+    <map>
+      <key>Comment</key>
+      <string>Disable web security features in the built-in Web browser?</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
     <key>ChatBarCustomWidth</key>
     <map>
       <key>Comment</key>
@@ -4216,10 +4250,11 @@
       <key>Backup</key>
       <integer>0</integer>
     </map>
-    <key>DEPRECATED: DebugShowPrivateMem</key>  <!-- deprecated (see MAINT-8091) -->
+    <key>DebugShowPrivateMem</key>
+    <!-- deprecated (see MAINT-8091) -->
     <map>
       <key>Comment</key>
-      <string>Show Private Mem Info</string>
+      <string>(Deprecated) Show Private Mem Info</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -5608,7 +5643,7 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
-    <key>DoubleClickTeleport</key> 
+    <key>DoubleClickTeleport</key>
     <map>
       <key>Comment</key>
       <string>Enable double-click to teleport where allowed (afects minimap and people panel)</string>
@@ -5847,6 +5882,17 @@
     <map>
       <key>Comment</key>
       <string>Play sounds from gestures</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>EnableCollisionSounds</key>
+    <map>
+      <key>Comment</key>
+      <string>Play sounds on collision</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -6905,11 +6951,11 @@
       <key>Type</key>
       <string>String</string>
       <key>Value</key>
-      <string>https://search.[GRID]/viewer/[CATEGORY]/?q=[QUERY]&amp;p=[AUTH_TOKEN]&amp;r=[MATURITY]&amp;lang=[LANGUAGE]&amp;sid=[SESSION_ID]</string>
+      <string>https://search.[GRID]/viewer/[CATEGORY]/?q=[QUERY]&amp;r=[MATURITY]&amp;lang=[LANGUAGE]&amp;sid=[SESSION_ID]</string>
       <key>Backup</key>
       <integer>0</integer>
       <!-- LL, possibly privacy leaking search string 
-      <string>https://search.[GRID]/viewer/[CATEGORY]/?q=[QUERY]&amp;p=[AUTH_TOKEN]&amp;r=[MATURITY]&amp;lang=[LANGUAGE]&amp;g=[GODLIKE]&amp;sid=[SESSION_ID]&amp;rid=[REGION_ID]&amp;pid=[PARCEL_ID]&amp;channel=[CHANNEL]&amp;version=[VERSION]&amp;major=[VERSION_MAJOR]&amp;minor=[VERSION_MINOR]&amp;patch=[VERSION_PATCH]&amp;build=[VERSION_BUILD]</string>
+      <string>https://search.[GRID]/viewer/[CATEGORY]/?q=[QUERY]&amp;r=[MATURITY]&amp;lang=[LANGUAGE]&amp;g=[GODLIKE]&amp;sid=[SESSION_ID]&amp;rid=[REGION_ID]&amp;pid=[PARCEL_ID]&amp;channel=[CHANNEL]&amp;version=[VERSION]&amp;major=[VERSION_MAJOR]&amp;minor=[VERSION_MINOR]&amp;patch=[VERSION_PATCH]&amp;build=[VERSION_BUILD]</string>
 	  -->
     </map>
     <key>GuidebookURL</key>
@@ -8171,7 +8217,7 @@
     <key>Comment</key>
     <string>Duration in seconds of the login SRV request timeout</string>
     <key>Persist</key>
-    <integer>0</integer>
+    <integer>1</integer>
     <key>Type</key>
     <string>F32</string>
     <key>Value</key>
@@ -8180,7 +8226,7 @@
   <key>LoginSRVPump</key>
   <map>
     <key>Comment</key>
-    <string>Name of the message pump that handles SRV request (deprecated)</string>
+    <string>(Deprecated) Name of the message pump that handles SRV request)</string>
     <key>Persist</key>
     <integer>0</integer>
     <key>Type</key>
@@ -8230,19 +8276,6 @@
       <key>Type</key>
       <string>Boolean</string>
       <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>LoginAsGod</key>
-    <map>
-      <key>Comment</key>
-      <string>Attempt to login with god powers (Linden accounts only)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-      <key>Backup</key>
       <integer>0</integer>
     </map>
     <key>LoginLocation</key>
@@ -9038,10 +9071,11 @@
         <key>Value</key>
             <real>600.0</real>
         </map>
-    <key>MemoryPrivatePoolEnabled</key>  <!-- deprecated (see MAINT-8091) -->
+    <key>MemoryPrivatePoolEnabled</key>
+    <!-- deprecated (see MAINT-8091) -->
     <map>
       <key>Comment</key>
-      <string>DEPRECATED: Enable the private memory pool management</string>
+      <string>(Deprecated) Enable the private memory pool management</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -9051,10 +9085,11 @@
       <key>Backup</key>
       <integer>0</integer>
     </map>
-    <key>MemoryPrivatePoolSize</key>  <!-- deprecated (see MAINT-8091) -->
+    <key>MemoryPrivatePoolSize</key>
+    <!-- deprecated (see MAINT-8091) -->
     <map>
       <key>Comment</key>
-      <string>DEPRECATED: Size of the private memory pool in MB (min. value is 256)</string>
+      <string>(Deprecated) Size of the private memory pool in MB (min. value is 256)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -9674,6 +9709,17 @@
       <key>Value</key>
       <integer>1000</integer>
     </map>
+    <key>FakeInitialOutfitName</key>
+    <map>
+      <key>Comment</key>
+      <string>Pretend that this is first time login and specified name was chosen</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>String</string>
+      <key>Value</key>
+      <string />
+    </map>
     <key>NearMeRange</key>
     <map>
       <key>Comment</key>
@@ -9771,7 +9817,7 @@
     <key>NoInventoryLibrary</key>
     <map>
       <key>Comment</key>
-      <string>Do not request inventory library.</string>
+      <string>(Deprecated) Do not request inventory library.</string>
       <key>Persist</key>
       <integer>0</integer>
       <key>Type</key>
@@ -11097,13 +11143,13 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>PushToTalkToggle</key>
     <map>
       <key>Comment</key>
-      <string>Should the push-to-talk button behave as a toggle</string>
+      <string>Should the push-to-talk toolbar button behave as a toggle</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
       <string>Boolean</string>
       <key>Value</key>
-      <integer>0</integer>
+      <integer>1</integer>
     </map>
     <key>QAMode</key>
     <map>
@@ -11119,7 +11165,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>QAModeEventHostPort</key>
     <map>
       <key>Comment</key>
-      <string>DEPRECATED: Port on which lleventhost should listen</string>
+      <string>(Deprecated) Port on which lleventhost should listen</string>
       <key>Persist</key>
       <integer>0</integer>
       <key>Type</key>
@@ -11141,7 +11187,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>QAModeMetrics</key>
     <map>
       <key>Comment</key>
-      <string>"Enables QA features (logging, faster cycling) for metrics collector"</string>
+      <string>Enables QA features (logging, faster cycling) for metrics collector</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -11151,8 +11197,18 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Backup</key>
       <integer>0</integer>
     </map>
-
-   <key>QuitAfterSeconds</key>
+    <key>QAModeFakeSystemFolderIssues</key>
+    <map>
+      <key>Comment</key>
+      <string>Simulates system folder issues in inventory</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>QuitAfterSeconds</key>
     <map>
       <key>Comment</key>
       <string>The duration allowed before quitting.</string>
@@ -11698,7 +11754,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>Value</key>
     <integer>0</integer>
   </map>
-   <key>RenderHiDPI</key>
+    <key>RenderHiDPI</key>
   <map>
     <key>Comment</key>
     <string>Enable support for HiDPI displays, like Retina (MacOS X ONLY, requires restart)</string>
@@ -15673,6 +15729,17 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Backup</key>
       <integer>0</integer>
     </map>
+    <key>TextureFetchMinTimeToLog</key>
+    <map>
+      <key>Comment</key>
+      <string>If texture fetching time exceeds this value, texture fetch tester will log info</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>2.0</real>
+    </map>
   <key>TextureFetchFakeFailureRate</key>
   <map>
     <key>Comment</key>
@@ -15775,6 +15842,17 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Backup</key>
       <integer>0</integer>
     </map>
+    <key>TextureListFetchingThreshold</key>
+    <map>
+      <key>Comment</key>
+      <string>If the ratio between fetched and all textures in the list is greater than this threshold, which we assume that almost all textures are fetched</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>0.97</real>
+    </map>
     <key>TextureLoadFullRes</key>
     <map>
       <key>Comment</key>
@@ -15852,6 +15930,17 @@ Change of this parameter will affect the layout of buttons in notification toast
       <integer>50</integer>
       <key>Backup</key>
       <integer>0</integer>
+    </map>
+    <key>TextureSaveLocation</key>
+    <map>
+      <key>Comment</key>
+      <string>Current location for bulk saving textures to disk</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>String</string>
+      <key>Value</key>
+      <string />
     </map>
     <key>ThrottleBandwidthKBPS</key>
     <map>
@@ -17577,10 +17666,11 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Value</key>
       <string>Default</string>
     </map>
-    <key>UseExternalBrowser</key> <!-- deprecated (see MAINT-4127) -->
+    <key>UseExternalBrowser</key>
+    <!-- deprecated (see MAINT-4127) -->
     <map>
       <key>Comment</key>
-      <string>Use default browser when opening web pages instead of in-world browser.</string>
+      <string>(Deprecated) Use default browser when opening web pages instead of in-world browser.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -18087,6 +18177,7 @@ Change of this parameter will affect the layout of buttons in notification toast
     <integer>0</integer>
   </map>
     <key>VoiceCallsRejectGroup</key>
+    <!-- deprecated (see SL-12871) -->
     <map>
       <key>Comment</key>
       <string>Silently reject all incoming group voice calls.</string>
@@ -19719,7 +19810,7 @@ Change of this parameter will affect the layout of buttons in notification toast
 		<key>FSParticleChat</key>
 		<map>
 			<key>Comment</key>
-			<string>Speak Particle Info on channel 9000</string>
+			<string>Send Selection Info on channel 9000 when editing objects (does not work if PrivatePointAtTarget is enabled)</string>
 			<key>Persist</key>
 			<integer>1</integer>
 			<key>Type</key>
@@ -21862,7 +21953,97 @@ Change of this parameter will affect the layout of buttons in notification toast
       <integer>1</integer>
       <key>Backup</key>
       <integer>0</integer>
+  </map>
+  <key>360CaptureUseInterestListCap</key>
+  <map>
+    <key>Comment</key>
+    <string>Flag if set, uses the new InterestList cap to ask the simulator for full content</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>360CaptureJPEGEncodeQuality</key>
+  <map>
+    <key>Comment</key>
+    <string>Quality value to use in the JPEG encoder (0..100)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>95</integer>
+  </map>
+  <key>360CaptureDebugSaveImage</key>
+  <map>
+    <key>Comment</key>
+    <string>Flag if set, saves off each cube map as an image, as well as the JavaScript data URL, for debugging purposes</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>360CaptureOutputImageWidth</key>
+  <map>
+    <key>Comment</key>
+    <string>Width of the output 360 equirectangular image</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>4096</integer>
+  </map>
+  <key>360CaptureHideAvatars</key>
+  <map>
+    <key>Comment</key>
+    <string>Flag if set, removes all the avatars from the 360 snapshot</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
     </map>
+  <key>360CaptureCameraFOV</key>
+  <map>
+    <key>Comment</key>
+    <string>Field of view of the WebGL camera that converts the cubemap to an equirectangular image</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>75</integer>
+  </map>
+  <key>360CaptureNumRenderPasses</key>
+  <map>
+    <key>Comment</key>
+    <string>Number of times to render the scene while taking a snapshot</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>3</integer>
+  </map>
+  <key>MFAHash</key>
+  <map>
+    <key>Comment</key>
+    <string>Override MFA state hash for authentication</string>
+    <key>Persist</key>
+    <integer>0</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string></string>
+    <key>Backup</key>
+    <integer>0</integer>
+  </map>
     <key>FSShowServerVersionChangeNotice</key>
     <map>
       <key>Comment</key>
@@ -22503,17 +22684,6 @@ Change of this parameter will affect the layout of buttons in notification toast
       <string>Boolean</string>
       <key>Value</key>
       <integer>0</integer>
-    </map>
-    <key>FSPlayCollisionSounds</key>
-    <map>
-      <key>Comment</key>
-      <string>Play collision sounds.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
     </map>
     <key>FSFadeAudioStream</key>
     <map>
@@ -25712,6 +25882,39 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>Value</key>
     <integer>0</integer>
   </map>
+  <key>FSTargetFPS</key>
+  <map>
+    <key>Comment</key>
+    <string>Desired minimum FPS</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>25</integer>
+  </map>
+  <key>FSAutoTuneFPS</key>
+    <map>
+      <key>Comment</key>
+      <string>Allow the viewer to adjust your settings to achieve target FPS</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+  <key>FSPerfFloaterSmoothingPeriods</key>
+    <map>
+      <key>Comment</key>
+      <string>Number of periods to smooth the stats over</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>U32</string>
+      <key>Value</key>
+      <integer>50</integer>
+    </map>
   <key>FSAutoUnmuteSounds</key>
     <map>
       <key>Comment</key>
@@ -25733,6 +25936,160 @@ Change of this parameter will affect the layout of buttons in notification toast
       <string>Boolean</string>
       <key>Value</key>
       <integer>0</integer>
+    </map>
+    <key>RenderJellyDollsAsImpostors</key>
+    <map>
+      <key>Comment</key>
+      <string>Use an impostor instead of a JellyDoll for better visuals (true)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>FSPerfStatsCaptureEnabled</key>
+    <map>
+      <key>Comment</key>
+      <string>Enable/disable render time data to support autotune.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>FSAutoTuneImpostorByDistEnabled</key>
+    <map>
+      <key>Comment</key>
+      <string>Enable/disable using MaxNonImpostor to limit avatar rendering by distance.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FSAutoTuneLock</key>
+    <map>
+      <key>Comment</key>
+      <string>When enabled the viewer will dynamically change settings until auto tune is explicitly turned off.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
+    <key>FSAllowSelfImpostor</key>
+    <map>
+      <key>Comment</key>
+      <string>Allow own render time to impostor your avatar.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FSShowTunedART</key>
+    <map>
+      <key>Comment</key>
+      <string>Show the tuned render time in the avatar display.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FSRenderAvatarMaxART</key>
+    <map>
+      <key>Comment</key>
+      <string>Render Time Limit in microseconds (0.0 = no limit)</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>4.699</real>
+    </map>
+    <key>FSAutoTuneRenderFarClipMin</key>
+    <map>
+      <key>Comment</key>
+      <string>The lowest draw distance that auto tune is allowed to use</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>32.0</real>
+    </map>
+    <key>FSAutoTuneRenderFarClipTarget</key>
+    <map>
+      <key>Comment</key>
+      <string>The draw distance that auto tune will try to achieve</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>256.0</real>
+    </map>
+    <key>FSAutoTuneImpostorFarAwayDistance</key>
+    <map>
+      <key>Comment</key>
+      <string>Avatars beyond this range will automatically be optimized</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>F32</string>
+      <key>Value</key>
+      <real>64.0</real>
+    </map>
+    <key>FSTuningFPSStrategy</key>
+    <map>
+      <key>Comment</key>
+      <string>Strategy to use when tuning FPS. 0=Tune avatar rendering only, 1=Tune both avatar and global scene settings.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>U32</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FSUserTargetReflections</key>
+    <map>
+      <key>Comment</key>
+      <string>Set by auto tune floater on build</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>4</integer>
+    </map>
+    <key>FSReportRegionRestartToChat</key>
+    <map>
+      <key>Comment</key>
+      <string>Announces region restart to a defined chat channel.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
+    <key>FSRegionRestartAnnounceChannel</key>
+    <map>
+      <key>Comment</key>
+      <string>Chat channel where region restart info is announced to.</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>S32</string>
+      <key>Value</key>
+      <integer>473405</integer>
     </map>
 </map>
 </llsd>

@@ -208,6 +208,15 @@ std::string LLGridManager::getAppSLURLBase(const std::string& grid_name)
 {
 	return "myappslurl";
 }
+std::string LLGridManager::getGridId(const std::string& grid)
+{
+    return std::string();
+}
+
+//LLPointer<LLSecAPIHandler> getSecHandler(const std::string& handler_type)
+//{
+//    return nullptr;
+//}
 
 //-----------------------------------------------------------------------------
 #include "../llviewercontrol.h"
@@ -240,6 +249,7 @@ bool llHashedUniqueID(unsigned char* id)
 //-----------------------------------------------------------------------------
 #include "../llappviewer.h"
 void LLAppViewer::forceQuit(void) {}
+bool LLAppViewer::isUpdaterMissing() { return true; }
 LLAppViewer * LLAppViewer::sInstance = 0;
 
 //-----------------------------------------------------------------------------
@@ -247,6 +257,8 @@ LLAppViewer * LLAppViewer::sInstance = 0;
 #include "llfloaterreg.h"
 static std::string gTOSType;
 static LLEventPump * gTOSReplyPump = NULL;
+
+LLPointer<LLSecAPIHandler> gSecAPIHandler;
 
 //static
 LLFloater* LLFloaterReg::showInstance(const std::string& name, const LLSD& key, BOOL focus)
@@ -330,6 +342,10 @@ S32 LLMachineID::getUniqueID(unsigned char *unique_id, size_t len)
 	memcpy(unique_id, gMACAddress, len);
 	return 1;
 }
+S32 LLMachineID::getLegacyID(unsigned char *unique_id, size_t len)
+{
+    return 0;
+}
 //-----------------------------------------------------------------------------
 // misc
 std::string xml_escape_string(const std::string& in)
@@ -361,6 +377,7 @@ namespace tut
 			gSavedSettings.declareString("ClientSettingsFile", "test_settings.xml", "", LLControlVariable::PERSIST_NO);
 			gSavedSettings.declareString("NextLoginLocation", "", "", LLControlVariable::PERSIST_NO);
 			gSavedSettings.declareBOOL("LoginLastLocation", FALSE, "", LLControlVariable::PERSIST_NO);
+            gSavedSettings.declareBOOL("CmdLineSkipUpdater", TRUE, "", LLControlVariable::PERSIST_NO);
 
 			LLSD authenticator = LLSD::emptyMap();
 			LLSD identifier = LLSD::emptyMap();

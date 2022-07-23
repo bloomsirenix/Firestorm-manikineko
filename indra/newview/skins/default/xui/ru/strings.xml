@@ -38,7 +38,7 @@
 		Инициализация графики не удалась. Пожалуйста, обновите драйвер видеокарты!
 	</string>
 	<string name="AboutHeader">
-		[APP_NAME] [VIEWER_VERSION_0].[VIEWER_VERSION_1].[VIEWER_VERSION_2].[VIEWER_VERSION_3] ([CHANNEL] [ADDRESS_SIZE]бит / [SIMD])
+[APP_NAME] [VIEWER_VERSION_0].[VIEWER_VERSION_1].[VIEWER_VERSION_2] ([VIEWER_VERSION_3]) [BUILD_DATE] [BUILD_TIME] ([ADDRESS_SIZE]бит / [SIMD]) ([CHANNEL]) [BUILD_TYPE]
 [[VIEWER_RELEASE_NOTES_URL] [ReleaseNotes]]
 	</string>
 	<string name="AboutCompiler">
@@ -258,6 +258,7 @@ http://secondlife.com/viewer-access-faq
 Пожалуйста, проверьте, правильно ли вы ввели
     * Имя пользователя (например bobsmith12 или steller.sunshine)
     * Пароль
+    * Токен второго фактора (если включен)
 Также, пожалуйста, проверьте что режим Caps Lock отключен
 	</string>
 	<string name="LoginFailedPasswordChanged">
@@ -367,6 +368,10 @@ support@secondlife.com.
 	<string name="LoginFailedLoggingOutSession">
 		Система начала выход из вашего последнего сеанса.
 Пожалуйста, попробуйте зайти снова через минуту.
+	</string>
+	<string name="LoginFailedAuthenticationMFARequired">
+		Чтобы продолжить вход в систему, введите новый токен из приложения многофакторной аутентификации.
+Если вы считаете, что это ошибка, пожалуйста, свяжитесь с support@secondlife.com
 	</string>
 	<string name="AgentLostConnection">
 		Возможно, в этом регионе возникли проблемы. Проверьте подключение к Интернету.
@@ -580,9 +585,6 @@ support@secondlife.com.
 	</string>
 	<string name="TooltipPrimEquivalentЗагрузка">
 		, Загрузка влияния на землю...
-	</string>
-	<string name="TooltipPrimEquivalentUnavailable">
-		, влияние на землю недоступно
 	</string>
 	<string name="TooltipDistance">
 		Расстояние: [DISTANCE] м
@@ -1423,6 +1425,12 @@ https://www.firestormviewer.org/support за помощь в решении эт
 	</string>
 	<string name="recompile_script_verb">
 		Перекомпиляция
+	</string>
+	<string name="jpeg_image_files">
+		Изображения в формате JPEG
+	</string>
+	<string name="executable_files">
+		Исполняемые файлы программы
 	</string>
 	<string name="LSLTipSleepTime">
 		Пауза скрипта на [SLEEP_TIME] секунд.
@@ -5344,7 +5352,7 @@ https://www.firestormviewer.org/support за помощь в решении эт
 	<string name="PremiumMembership">
 		Премиум
 	</string>
-	<string name="Premium PlusMembership">
+	<string name="Premium_PlusMembership">
 		Премиум Плюс
 	</string>
 	<string name="MembershipUpgradeText">
@@ -5485,6 +5493,9 @@ https://www.firestormviewer.org/support за помощь в решении эт
 	<string name="ParticleHiding">
 		Сокрытие частиц
 	</string>
+	<string name="Command_360_Capture_Label">
+		360° Снимок
+	</string>
 	<string name="Command_AboutLand_Label">
 		О земле
 	</string>
@@ -5544,6 +5555,9 @@ https://www.firestormviewer.org/support за помощь в решении эт
 	</string>
 	<string name="Command_People_Label">
 		Люди
+	</string>
+	<string name="Command_Performance_Label">
+		Скорость графики
 	</string>
 	<string name="Command_Picks_Label">
 		Места
@@ -5668,6 +5682,9 @@ https://www.firestormviewer.org/support за помощь в решении эт
 	<string name="Command_Beacons_Label">
 		Маяки
 	</string>
+	<string name="Command_360_Capture_Tooltip">
+		Создание равнопрямоугольного изображения в формате 360°
+	</string>
 	<string name="Command_AboutLand_Tooltip">
 		Информация о посещаемой вами земле
 	</string>
@@ -5727,6 +5744,9 @@ https://www.firestormviewer.org/support за помощь в решении эт
 	</string>
 	<string name="Command_People_Tooltip">
 		Друзья, группы и люди поблизости (CTRL+SHIFT+A)
+	</string>
+	<string name="Command_Performance_Tooltip">
+		Настройте параметры графики
 	</string>
 	<string name="Command_Picks_Tooltip">
 		Места, которые будут показаны в вашем профиле как избранное
@@ -6612,6 +6632,9 @@ ID объекта: [INSPECTING_KEY]
 	<string name="skin_defaults_starlight_navbar">
 		Отображение панели навигации было включено по умолчанию для серии тем Starlight.
 	</string>
+	<string name="fs_preprocessor_truncated">
+		Предупреждение: Выходные данные препроцессора усечены из-за чрезмерного размера текста скрипта. Этот скрипт, скорее всего, не будет работать.
+	</string>
 	<string name="animation_explorer_seconds_ago">
 		[SECONDS] секунд назад
 	</string>
@@ -6762,4 +6785,5 @@ ID объекта: [INSPECTING_KEY]
 	<string name="FSObjectInventoryNoElements">Нет элементов</string>
 	<string name="FSObjectInventoryOneElement">1 элемент</string>
 	<string name="FSObjectInventoryElements">[NUM_ELEMENTS] элементов</string>
+	<string name="OpenSimInventoryValidationErrorGenericHelp">команда поддержки оператора вашей сетки</string>
 </strings>

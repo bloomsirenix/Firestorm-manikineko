@@ -12,12 +12,14 @@ include(bugsplat)
 include(BuildPackagesInfo)
 include(BuildVersion)
 include(CMakeCopyIfDifferent)
-include(DBusGlib)
+include(CubemapToEquirectangularJS)
+include(GLIB)
 include(DragDrop)
 include(EXPAT)
 include(FMODSTUDIO)
 include(GLOD)
 include(Hunspell)
+include(JPEGEncoderBasic)
 include(JsonCpp)
 include(LLAppearance)
 include(LLAudio)
@@ -47,6 +49,7 @@ include(OpenGL)
 include(OpenSSL)
 include(PNG)
 include(TemplateCheck)
+include(ThreeJS)
 include(UI)
 include(UnixInstall)
 include(ViewerMiscLibs)
@@ -314,6 +317,7 @@ set(viewer_SOURCE_FILES
     llfilteredwearablelist.cpp
     llfirstuse.cpp
     llflexibleobject.cpp
+    llfloater360capture.cpp
     llfloaterabout.cpp
     llfloaterbvhpreview.cpp
     llfloateraddpaymentmethod.cpp
@@ -388,7 +392,7 @@ set(viewer_SOURCE_FILES
     llfloaternamedesc.cpp
     llfloaternotificationsconsole.cpp
     llfloaternotificationstabbed.cpp
-    llfloateroutfitphotopreview.cpp 
+    llfloateroutfitphotopreview.cpp
     llfloateroutfitsnapshot.cpp
     llfloaterobjectweights.cpp
     llfloateropenobject.cpp
@@ -397,9 +401,12 @@ set(viewer_SOURCE_FILES
     llfloaterpathfindinglinksets.cpp
     llfloaterpathfindingobjects.cpp
     llfloaterpay.cpp
+    # llfloaterperformance.cpp <FS:Beq/> replaced with fs version due to large changes and likelihood that LL version will not release.
+    fsfloaterperformance.cpp 
     llfloaterperms.cpp
     llfloaterpostprocess.cpp
     llfloaterpreference.cpp
+    # llfloaterpreferencesgraphicsadvanced.cpp
     llfloaterpreferenceviewadvanced.cpp
     llfloaterpreviewtrash.cpp
     llfloaterproperties.cpp
@@ -850,6 +857,7 @@ set(viewer_SOURCE_FILES
     llxmlrpctransaction.cpp
     noise.cpp
     particleeditor.cpp
+    permissionstracker.cpp
     piemenu.cpp
     pieseparator.cpp
     pieslice.cpp
@@ -1090,6 +1098,7 @@ set(viewer_HEADER_FILES
     llfilteredwearablelist.h
     llfirstuse.h
     llflexibleobject.h
+    llfloater360capture.h
     llfloaterabout.h
     llfloaterbvhpreview.h
     llfloateraddpaymentmethod.h
@@ -1176,9 +1185,12 @@ set(viewer_HEADER_FILES
     llfloaterpathfindinglinksets.h
     llfloaterpathfindingobjects.h
     llfloaterpay.h
+    # llfloaterperformance.h <FS:Beq/> replaced with fs version due to large changes and likelihood that LL version will not release.
+    fsfloaterperformance.h
     llfloaterperms.h
     llfloaterpostprocess.h
     llfloaterpreference.h
+    # llfloaterpreferencesgraphicsadvanced.h
     llfloaterpreferenceviewadvanced.h
     llfloaterpreviewtrash.h
     llfloaterproperties.h
@@ -1619,6 +1631,7 @@ set(viewer_HEADER_FILES
     macmain.h
     noise.h
     particleeditor.h
+    permissionstracker.h
     piemenu.h
     pieseparator.h
     pieslice.h
@@ -1678,6 +1691,10 @@ configure_file(
 list(APPEND viewer_HEADER_FILES ${CMAKE_CURRENT_BINARY_DIR}/fsversionvalues.h)
 # </FS:TS>
 
+  # <FS:Beq> Performance stast support
+  list(APPEND viewer_SOURCE_FILES fsperfstats.cpp)
+  list(APPEND viewer_HEADER_FILES fsperfstats.h)
+  # </FS:Beq> 
 source_group("CMake Rules" FILES ViewerInstall.cmake)
 
 #build_data.json creation moved to viewer_manifest.py MAINT-6413
@@ -1686,7 +1703,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/viewer_version.txt"
            "${VIEWER_SHORT_VERSION}.${VIEWER_VERSION_REVISION}\n")
 
 set_source_files_properties(
-   llversioninfo.cpp tests/llversioninfo_test.cpp 
+   llversioninfo.cpp tests/llversioninfo_test.cpp
    PROPERTIES
 # <FS:TS> The next line causes a full rebuild of the entire newview
 #         directory every time the Mercurial revision number changes.
@@ -1782,7 +1799,6 @@ if (LINUX)
 #         fsversionstrings.h with the right numbers in it.
 #      COMPILE_DEFINITIONS "${VIEWER_CHANNEL_VERSION_DEFINES}"
       )
-    LIST(APPEND viewer_SOURCE_FILES llappviewerlinux_api_dbus.cpp)
 # [FS] Growl support
     LIST(APPEND viewer_HEADER_FILES desktopnotifierlinux.h growlmanager.h)
     LIST(APPEND viewer_SOURCE_FILES desktopnotifierlinux.cpp growlmanager.cpp)
@@ -1849,6 +1865,8 @@ if (WINDOWS)
       PROPERTIES
       COMPILE_DEFINITIONS "${VIEWER_CHANNEL_VERSION_DEFINES}"
       )
+
+    set_source_files_properties( llappviewer.cpp llviewermenu.cpp PROPERTIES COMPILE_FLAGS /bigobj )
 
     list(APPEND viewer_HEADER_FILES
          llappviewerwin32.h
@@ -2189,10 +2207,15 @@ add_executable(${VIEWER_BINARY_NAME}
     )
 
 if (SDL_FOUND)
-  set_property(TARGET ${VIEWER_BINARY_NAME}
-    PROPERTY COMPILE_DEFINITIONS LL_SDL=1
-    )
+    set_property(TARGET ${VIEWER_BINARY_NAME}
+            PROPERTY COMPILE_DEFINITIONS LL_SDL=1
+            )
 endif (SDL_FOUND)
+if (SDL2_FOUND)
+    set_property(TARGET ${VIEWER_BINARY_NAME}
+            PROPERTY COMPILE_DEFINITIONS LL_SDL2=1 LL_SDL=1
+            )
+endif ()
 
 if (USE_BUGSPLAT)
   set_property(TARGET ${VIEWER_BINARY_NAME}
@@ -2362,9 +2385,7 @@ if (WINDOWS)
       add_dependencies(${VIEWER_BINARY_NAME} copy_win_scripts)
     endif (EXISTS ${CMAKE_SOURCE_DIR}/copy_win_scripts)
 
-    add_dependencies(${VIEWER_BINARY_NAME}
-      SLPlugin
-    )
+    add_dependencies(${VIEWER_BINARY_NAME} SLPlugin)
 
     # sets the 'working directory' for debugging from visual studio.
     # Condition for version can be moved to requirements once build agents will be updated (see TOOL-3865)
@@ -2456,7 +2477,7 @@ endif (WINDOWS)
 # one of these being libz where you can find four or more versions in play
 # at once.  On Linux, libz can be found at link and run time via a number
 # of paths:
-#     
+#
 #      => -lfreetype
 #        => libz.so.1 (on install machine, not build)
 #      => -lSDL
@@ -2503,7 +2524,7 @@ target_link_libraries(${VIEWER_BINARY_NAME}
     ${BOOST_WAVE_LIBRARY} #FS specific
     ${BOOST_THREAD_LIBRARY} #FS specific
     ${BOOST_CONTEXT_LIBRARY}
-    ${DBUSGLIB_LIBRARIES}
+    ${GLIB_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${FMODWRAPPER_LIBRARY} # must come after LLAudio
     ${OPENAL_LIBRARIES}
@@ -2523,6 +2544,7 @@ target_link_libraries(${VIEWER_BINARY_NAME}
     ${LLPHYSICSEXTENSIONS_LIBRARIES}
     ${LLAPPEARANCE_LIBRARIES}
     ${GROWL_LIBRARY}
+    ${GIO_LIBRARIES}
     )
 
 target_link_libraries(${VIEWER_BINARY_NAME} ${DISCORD_LIBRARY} )
@@ -2550,26 +2572,30 @@ if (LINUX)
   set(product Firestorm-${ARCH}-${VIEWER_SHORT_VERSION}.${VIEWER_VERSION_REVISION})
 
   # These are the generated targets that are copied to package/
-if (NOT ENABLE_MEDIA_PLUGINS)
-  set(COPY_INPUT_DEPENDENCIES
-    ${VIEWER_BINARY_NAME}
-    SLPlugin
-    media_plugin_cef
-    #media_plugin_gstreamer010
-    media_plugin_libvlc
-    llcommon
-    )
-else (NOT ENABLE_MEDIA_PLUGINS)
-  set(COPY_INPUT_DEPENDENCIES
-    ${VIEWER_BINARY_NAME}
-    #linux-crash-logger
-    SLPlugin
-    media_plugin_cef
-    #media_plugin_gstreamer010
-    llcommon
-    )
-endif (NOT ENABLE_MEDIA_PLUGINS)
+  if (NOT ENABLE_MEDIA_PLUGINS)
+	set(COPY_INPUT_DEPENDENCIES
+      ${VIEWER_BINARY_NAME}
+      SLPlugin
+      media_plugin_cef
+      media_plugin_gstreamer10
+      #media_plugin_libvlc
+      llcommon
+	  linux-crash-logger
+      )
+  else (NOT ENABLE_MEDIA_PLUGINS)
+	set(COPY_INPUT_DEPENDENCIES
+      ${VIEWER_BINARY_NAME}
+      #linux-crash-logger
+      SLPlugin
+      media_plugin_cef
+      media_plugin_gstreamer10
+      llcommon
+	  linux-crash-logger
+      )
+  endif (NOT ENABLE_MEDIA_PLUGINS)
 
+  add_dependencies(${VIEWER_BINARY_NAME} SLPlugin media_plugin_gstreamer10 media_plugin_cef linux-crash-logger)
+  
   add_custom_command(
       OUTPUT ${product}.tar.bz2
       COMMAND ${PYTHON_EXECUTABLE}
@@ -2594,7 +2620,6 @@ endif (NOT ENABLE_MEDIA_PLUGINS)
         ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
         ${COPY_INPUT_DEPENDENCIES}
       )
-
 
   add_custom_command(
     OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.copy_touched
@@ -2653,18 +2678,18 @@ if (DARWIN)
   set(MACOSX_EXECUTABLE_NAME "Firestorm")
   set(MACOSX_BUNDLE_INFO_STRING "Firestorm Viewer")
   set(MACOSX_BUNDLE_ICON_FILE "firestorm_icon.icns")
-  set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.phoenixviewer.firestorm.viewer-${ND_VIEWER_FLAVOR}")
+  set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.firestormviewer.firestorm")
   set(MACOSX_BUNDLE_LONG_VERSION_STRING "${VIEWER_CHANNEL} ${VIEWER_SHORT_VERSION}.${VIEWER_VERSION_REVISION}")
   set(MACOSX_BUNDLE_BUNDLE_NAME "Firestorm")
   set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${VIEWER_SHORT_VERSION}.${VIEWER_VERSION_REVISION}")
   set(MACOSX_BUNDLE_BUNDLE_VERSION "${VIEWER_SHORT_VERSION}${VIEWER_MACOSX_PHASE}${VIEWER_REVISION}")
-  set(MACOSX_BUNDLE_COPYRIGHT "Copyright 2010-2021 The Phoenix Firestorm Project, Inc.")
+  set(MACOSX_BUNDLE_COPYRIGHT "Copyright 2010-2022 The Phoenix Firestorm Project, Inc.")
   set(MACOSX_BUNDLE_NSMAIN_NIB_FILE "Firestorm.nib")
   set(MACOSX_BUNDLE_NSPRINCIPAL_CLASS "LLApplication")
 
   # https://blog.kitware.com/upcoming-in-cmake-2-8-12-osx-rpath-support/
   set(CMAKE_MACOSX_RPATH 1)
-  
+
   set_target_properties(
     ${VIEWER_BINARY_NAME}
     PROPERTIES
@@ -2674,10 +2699,8 @@ if (DARWIN)
     # SIGH, as of 2018-05-24 (cmake 3.11.1) the INSTALL_RPATH property simply
     # does not work. Try this:
     LINK_FLAGS "-rpath @loader_path/../Frameworks"
-    MACOSX_BUNDLE_INFO_PLIST
-    # <FS:CR> Use Firestorm plist
-    #"${CMAKE_CURRENT_SOURCE_DIR}/Info-SecondLife.plist"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Info-Firestorm.plist"
+    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info-Firestorm.plist"
+    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${MACOSX_BUNDLE_GUI_IDENTIFIER}"
     )
 
   set(VIEWER_APP_BUNDLE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${product}.app")
@@ -2848,8 +2871,10 @@ if (PACKAGE AND (RELEASE_CRASH_REPORTING OR NON_RELEASE_CRASH_REPORTING) AND VIE
     endif (LINUX)
   endif (USE_BUGSPLAT)
 
-  # for both Bugsplat and Breakpad
-  add_dependencies(llpackage generate_symbols)
+  if (NOT LINUX) #Linux generates symbols via viewer_manifest.py/fs_viewer_manifest.py
+	# for both Bugsplat and Breakpad
+	add_dependencies(llpackage generate_symbols)
+  endif()
 endif ()
 
 if (LL_TESTS)
@@ -2872,7 +2897,7 @@ if (LL_TESTS)
     llworldmap.cpp
     llworldmipmap.cpp
     PROPERTIES
-    LL_TEST_ADDITIONAL_SOURCE_FILES 
+    LL_TEST_ADDITIONAL_SOURCE_FILES
     tests/llviewertexture_stub.cpp
     #llviewertexturelist.cpp
   )
@@ -2915,7 +2940,7 @@ if (LL_TESTS)
     llworldmap.cpp
     llworldmipmap.cpp
     PROPERTIES
-    LL_TEST_ADDITIONAL_SOURCE_FILES 
+    LL_TEST_ADDITIONAL_SOURCE_FILES
     tests/llviewertexture_stub.cpp
     #llviewertexturelist.cpp
     LL_TEST_ADDITIONAL_LIBRARIES "${BOOST_SYSTEM_LIBRARY}"

@@ -31,6 +31,8 @@
 #include "llinitparam.h"
 
 const S32 MAX_KEY_BINDINGS = 128; // was 60
+const S32 keybindings_xml_version = 1;
+const std::string script_mouse_handler_name = "script_trigger_lbutton";
 
 class LLNamedFunction
 {
@@ -100,7 +102,7 @@ public:
 							third_person,
 							sitting,
 							edit_avatar;
-
+		Optional<S32> xml_version; // 'xml', because 'version' appears to be reserved
 		Keys();
 	};
 
@@ -108,6 +110,13 @@ public:
 
 	BOOL			handleKey(KEY key, MASK mask, BOOL repeated);
 	BOOL			handleKeyUp(KEY key, MASK mask);
+
+    // Handle 'global' keybindings that do not consume event,
+    // yet need to be processed early
+    // Example: we want voice to toggle even if some floater is focused
+    bool			handleGlobalBindsKeyDown(KEY key, MASK mask);
+    bool			handleGlobalBindsKeyUp(KEY key, MASK mask);
+    bool			handleGlobalBindsMouse(EMouseClickType clicktype, MASK mask, bool down);
 
 	S32				loadBindingsXML(const std::string& filename);										// returns number bound, 0 on error
 	EKeyboardMode	getMode() const;
@@ -124,7 +133,8 @@ public:
     BOOL            handleMouse(LLWindow *window_impl, LLCoordGL pos, MASK mask, EMouseClickType clicktype, BOOL down);
     void            scanMouse();
 
-    bool            isMouseBindUsed(const EMouseClickType mouse, const MASK mask = MASK_NONE, const S32 mode = MODE_THIRD_PERSON);
+    bool            isMouseBindUsed(const EMouseClickType mouse, const MASK mask, const S32 mode) const;
+    bool            isLMouseHandlingDefault(const S32 mode) const { return mLMouseDefaultHandling[mode]; }
 
 private:
     bool            scanKey(const std::vector<LLKeyboardBinding> &binding,
@@ -149,7 +159,8 @@ private:
                           S32 binding_count,
                           EMouseClickType mouse,
                           MASK mask,
-                          EMouseState state) const;
+                          EMouseState state,
+                          bool ignore_additional_masks) const;
 
     S32				loadBindingMode(const LLViewerInput::KeyMode& keymode, S32 mode);
     BOOL			bindKey(const S32 mode, const KEY key, const MASK mask, const std::string& function_name);
@@ -163,6 +174,11 @@ private:
     // to send what we think function wants based on collection of bools (mKeyRepeated, mKeyLevel, mKeyDown)
     std::vector<LLKeyboardBinding>	mKeyBindings[MODE_COUNT];
     std::vector<LLMouseBinding>		mMouseBindings[MODE_COUNT];
+    bool							mLMouseDefaultHandling[MODE_COUNT]; // Due to having special priority
+
+    // keybindings that do not consume event and are handled earlier, before floaters
+    std::vector<LLKeyboardBinding>	mGlobalKeyBindings[MODE_COUNT];
+    std::vector<LLMouseBinding>		mGlobalMouseBindings[MODE_COUNT];
 
 	typedef std::map<U32, U32> key_remap_t;
 	key_remap_t		mRemapKeys[MODE_COUNT];

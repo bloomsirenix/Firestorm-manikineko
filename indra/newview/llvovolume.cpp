@@ -71,6 +71,8 @@
 #include "llmediaentry.h"
 #include "llmediadataclient.h"
 #include "llmeshrepository.h"
+#include "llnotifications.h"
+#include "llnotificationsutil.h"
 #include "llagent.h"
 #include "llviewermediafocus.h"
 #include "lldatapacker.h"
@@ -91,6 +93,7 @@
 #include "rlvlocks.h"
 // [/RLVa:KB]
 #include "llviewernetwork.h"
+#include "fsperfstats.h" // <FS:Beq> performance stats support
 
 const F32 FORCE_SIMPLE_RENDER_AREA = 512.f;
 const F32 FORCE_CULL_AREA = 8.f;
@@ -397,6 +400,18 @@ U32 LLVOVolume::processUpdateMessage(LLMessageSystem *mesgsys,
 				{
 					delete mTextureAnimp;
 					mTextureAnimp = NULL;
+
+                    for (S32 i = 0; i < getNumTEs(); i++)
+                    {
+                        LLFace* facep = mDrawable->getFace(i);
+                        if (facep && facep->mTextureMatrix)
+                        {
+                            // delete or reset
+                            delete facep->mTextureMatrix;
+                            facep->mTextureMatrix = NULL;
+                        }
+                    }
+
 					gPipeline.markTextured(mDrawable);
 					mFaceMappingChanged = TRUE;
 					mTexAnimMode = 0;
@@ -451,7 +466,6 @@ U32 LLVOVolume::processUpdateMessage(LLMessageSystem *mesgsys,
 		if (TEM_INVALID == result)
 		{
 			// There's something bogus in the data that we're unpacking.
-			dp->dumpBufferToLog();
 			std::string region_name = "unknown region";
 			if (getRegion())
 			{
@@ -593,6 +607,18 @@ U32 LLVOVolume::processUpdateMessage(LLMessageSystem *mesgsys,
 			{
 				delete mTextureAnimp;
 				mTextureAnimp = NULL;
+
+                for (S32 i = 0; i < getNumTEs(); i++)
+                {
+                    LLFace* facep = mDrawable->getFace(i);
+                    if (facep && facep->mTextureMatrix)
+                    {
+                        // delete or reset
+                        delete facep->mTextureMatrix;
+                        facep->mTextureMatrix = NULL;
+                    }
+                }
+
 				gPipeline.markTextured(mDrawable);
 				mFaceMappingChanged = TRUE;
 				mTexAnimMode = 0;
@@ -3128,6 +3154,17 @@ void LLVOVolume::mediaEvent(LLViewerMediaImpl *impl, LLPluginClassMedia* plugin,
 			}
 		}
 		break;
+
+        case LLViewerMediaObserver::MEDIA_EVENT_FILE_DOWNLOAD:
+        {
+            // Media might be blocked, waiting for a file,
+            // send an empty response to unblock it
+            const std::vector<std::string> empty_response;
+            plugin->sendPickFileResponse(empty_response);
+
+            LLNotificationsUtil::add("MediaFileDownloadUnsupported");
+        }
+        break;
 		
 		default:
 		break;
@@ -5545,7 +5582,7 @@ void LLVolumeGeometryManager::registerFace(LLSpatialGroup* group, LLFace* facep,
 			}
 		}
 		
-		if (type == LLRenderPass::PASS_ALPHA)
+		// if (type == LLRenderPass::PASS_ALPHA) // <FS:Beq> allow tracking through pipeline
 		{ //for alpha sorting
 			facep->setDrawInfo(draw_info);
 		}
@@ -5761,6 +5798,7 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 		LL_RECORD_BLOCK_TIME(FTM_REBUILD_VOLUME_FACE_LIST);
 
 		//get all the faces into a list
+		std::unique_ptr<FSPerfStats::RecordAttachmentTime> ratPtr{}; // <FS:Beq/> render time capture
 		for (LLSpatialGroup::element_iter drawable_iter = group->getDataBegin(); 
              drawable_iter != group->getDataEnd(); ++drawable_iter)
 		{
@@ -5783,6 +5821,7 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 				continue;
 			}
 
+
 //<FS:Beq> Stop doing stupid stuff we don;t need to.
 // Moving this inside a debug enabled check
 //			std::string vobj_name = llformat("Vol%p", vobj);
@@ -5793,6 +5832,12 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 			{
 				continue;
 			}
+			// <FS:Beq> Capture render times
+			if(vobj->isAttachment())
+			{
+				trackAttachments( vobj, drawablep->isState(LLDrawable::RIGGED),&ratPtr);
+			}
+			// </FS:Beq>
 
 			LLVolume* volume = vobj->getVolume();
 			if (volume)
@@ -6360,7 +6405,7 @@ static LLTrace::BlockTimerStatHandle FTM_REBUILD_MESH_FLUSH("Flush Mesh");
 void LLVolumeGeometryManager::rebuildMesh(LLSpatialGroup* group)
 {
 	llassert(group);
-	LL_RECORD_BLOCK_TIME(FTM_REBUILD_VOLUME_VB);// <FS:Beq> move out one scope (but are these even useful as dupes?)
+	// LL_RECORD_BLOCK_TIME(FTM_REBUILD_VOLUME_VB);// <FS:Beq> High volume remove (roughly 1000:1 ratio to inside the if statement)
 	if (group && group->hasState(LLSpatialGroup::MESH_DIRTY) && !group->hasState(LLSpatialGroup::GEOM_DIRTY))
 	{
 		// LL_RECORD_BLOCK_TIME(FTM_REBUILD_VOLUME_VB);// <FS:Beq> move out one scope (but are these even useful as dupes?)
@@ -6375,27 +6420,46 @@ void LLVolumeGeometryManager::rebuildMesh(LLSpatialGroup* group)
 		
 		U32 buffer_count = 0;
 
+		std::unique_ptr<FSPerfStats::RecordAttachmentTime> ratPtr{}; // <FS:Beq/> capture render times
 		for (LLSpatialGroup::element_iter drawable_iter = group->getDataBegin(); drawable_iter != group->getDataEnd(); ++drawable_iter)
 		{
 			LLDrawable* drawablep = (LLDrawable*)(*drawable_iter)->getDrawable();
 
 			if (drawablep && !drawablep->isDead() && drawablep->isState(LLDrawable::REBUILD_ALL) && !drawablep->isState(LLDrawable::RIGGED) )
 			{
+				FSZoneN("Rebuild all non-Rigged");
 				LLVOVolume* vobj = drawablep->getVOVolume();
+				// <FS:Beq> capture render times
+				if( vobj && vobj->isAttachment() )
+				{
+					trackAttachments( vobj, drawablep->isState(LLDrawable::RIGGED), &ratPtr );
+				}
+				// </FS:Beq>
 				//<FS:Beq> avoid unfortunate sleep during trylock by static check
 				//if(debugLoggingEnabled("AnimatedObjectsLinkset"))
 				static auto debug_logging_on = debugLoggingEnabled("AnimatedObjectsLinkset");
 				if (debug_logging_on)
 				//</FS:Beq>
 				{
-                    if (vobj->isAnimatedObject() && vobj->isRiggedMesh())
+                    if (vobj && vobj->isAnimatedObject() && vobj->isRiggedMesh())
                     {
                         std::string vobj_name = llformat("Vol%p", vobj);
                         F32 est_tris = vobj->getEstTrianglesMax();
-                        LL_DEBUGS("AnimatedObjectsLinkset") << vobj_name << " rebuildMesh, tris " << est_tris << LL_ENDL; 
+                        LL_DEBUGS("AnimatedObjectsLinkset") << vobj_name << " rebuildMesh, tris " << est_tris << LL_ENDL;
                     }
                 }
-				if (vobj->isNoLOD()) continue;
+
+                if (!vobj || vobj->isNoLOD())
+                {
+                    continue;
+                }
+
+                LLVolume* volume = vobj->getVolume();
+
+                if (!volume)
+                {
+                    continue;
+                }
 
 				vobj->preRebuild();
 
@@ -6404,7 +6468,6 @@ void LLVolumeGeometryManager::rebuildMesh(LLSpatialGroup* group)
 					vobj->updateRelativeXform(true);
 				}
 
-				LLVolume* volume = vobj->getVolume();
 				for (S32 i = 0; i < drawablep->getNumFaces(); ++i)
 				{
 					LLFace* face = drawablep->getFace(i);
@@ -6794,10 +6857,18 @@ U32 LLVolumeGeometryManager::genDrawInfo(LLSpatialGroup* group, U32 mask, LLFace
 		U32 indices_index = 0;
 		U16 index_offset = 0;
 
+		std::unique_ptr<FSPerfStats::RecordAttachmentTime> ratPtr; // <FS:Beq/> capture render times
 		while (face_iter < i)
 		{
 			//update face indices for new buffer
 			facep = *face_iter;
+			LLViewerObject* vobj = facep->getViewerObject();
+			// <FS:Beq> capture render times
+			if(vobj && vobj->isAttachment())
+			{
+				trackAttachments(vobj, LLPipeline::sShadowRender, &ratPtr);
+			}
+			// </FS:Beq>
 			if (buffer.isNull())
 			{
 				// Bulk allocation failed
@@ -7013,8 +7084,12 @@ U32 LLVolumeGeometryManager::genDrawInfo(LLSpatialGroup* group, U32 mask, LLFace
 			else if (is_alpha)
 			{
 				// can we safely treat this as an alpha mask?
-				if (facep->getFaceColor().mV[3] <= 0.f)
+				// <FS:Beq> Nothing actually sets facecolor use the TE alpha instead.
+				// if (facep->getFaceColor().mV[3] <= 0.f)
+				if ((te->getAlpha() <=0.f || facep->getFaceColor().mV[3] <= 0.f) && te->getGlow() == 0.0 )
+				// </FS:Beq>
 				{ //100% transparent, don't render unless we're highlighting transparent
+					FSZoneN("facep->alpha -> invisible");
 					registerFace(group, facep, LLRenderPass::PASS_ALPHA_INVISIBLE);
 				}
 				else if (facep->canRenderAsMask())

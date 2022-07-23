@@ -159,6 +159,7 @@ http://secondlife.com/viewer-access-faq</string>
 Please check to make sure you entered the right
     * Username (like bobsmith12 or steller.sunshine)
     * Password
+    * Second Factor Token (if enabled)
 Also, please make sure your Caps Lock key is off.</string>
 	<string name="LoginFailedPasswordChanged">As a security precaution your password has been changed.
 Please go to your account page at http://secondlife.com/password
@@ -218,7 +219,8 @@ Please try logging in again in a minute.</string>
 Please try logging in again in a minute.</string>
 	<string name="LoginFailedLoggingOutSession">The system has begun logging out your last session.
 Please try logging in again in a minute.</string>
-
+        <string name="LoginFailedAuthenticationMFARequired">To continue logging in, enter a new token from your multifactor authentication app.
+If you feel this is an error, please contact support@secondlife.com</string>
 
 	<!-- Disconnection -->
 	<string name="AgentLostConnection">This region may be experiencing trouble.  Please check your connection to the Internet.</string>
@@ -299,7 +301,6 @@ Please try logging in again in a minute.</string>
 	<string name="TooltipPrimCount">Prims: [COUNT]</string>
 	<string name="TooltipPrimEquivalent">, Land Impact: [PEWEIGHT]</string>
 	<string name="TooltipPrimEquivalentLoading">, loading Land Impact...</string>
-	<string name="TooltipPrimEquivalentUnavailable">, Land Impact unavailable</string>
 	<string name="TooltipDistance">Distance: [DISTANCE] m</string>
 	<string name="TooltipPosition">Position: [POSITION]</string>
 
@@ -391,7 +392,7 @@ can be attached to notecards.
 
 	<string name="ReleaseNotes">Release Notes</string>
 	<!-- Always mark translate="false" for strings that are nothing but URLs, as they don't need translation. -->
-	<string name="RELEASE_NOTES_BASE_URL" translate="false">https://wiki.firestormviewer.org/firestorm_change_log_</string>
+	<string name="RELEASE_NOTES_BASE_URL" translate="false">https://wiki.firestormviewer.org/changelog:firestorm_change_log_</string>
 
 	<!-- Indicates something is being loaded. Maybe should be merged with RetrievingData -->
 	<string name="LoadingData">Loading...</string>
@@ -655,6 +656,10 @@ https://www.firestormviewer.org/support for help fixing this problem.
 	<string name="collada_files">COLLADA Models</string>
 	<string name="csv_files">Comma separated values</string>
 	<string name="recompile_script_verb">Recompile</string>
+
+<!-- FS:Zi: add missing file picker translations -->
+	<string name="jpeg_image_files">JPEG Images</string>
+	<string name="executable_files">Executable Program Files</string>
 
   <!-- LSL Usage Hover Tips -->
 	<string name="LSLTipSleepTime" translate="false">Sleeps script for [SLEEP_TIME] seconds.</string>
@@ -2484,7 +2489,7 @@ If you continue to experience problems, please check your network and firewall s
   <!-- SL Membership -->
   <string name="BaseMembership">Base</string>
   <string name="PremiumMembership">Premium</string>
-  <string name="Premium PlusMembership">Premium Plus</string>
+  <string name="Premium_PlusMembership">Premium Plus</string>
   <string name="InternalMembership">Internal</string> <!-- No need to translate -->
 
   <string name="MembershipUpgradeText">Upgrade to Premium</string>
@@ -2645,6 +2650,8 @@ Try enclosing path to the editor with double quotes.
 
   <!-- commands -->
 
+  <string 
+name="Command_360_Capture_Label">360° Snapshot</string>
   <string name="Command_AboutLand_Label">About land</string>
   <string name="Command_Appearance_Label">Appearance</string>
   <string name="Command_Avatar_Label">Avatar</string>
@@ -2665,6 +2672,7 @@ Try enclosing path to the editor with double quotes.
   <string name="Command_MiniMap_Label">Mini-map</string>
   <string name="Command_Move_Label">Walk / run / fly</string>
   <string name="Command_People_Label">People</string>
+  <string name="Command_Performance_Label">Graphics speed</string>
   <string name="Command_Picks_Label">Picks</string>
   <string name="Command_Places_Label">Places</string>
   <string name="Command_Preferences_Label">Preferences</string>
@@ -2710,6 +2718,8 @@ Try enclosing path to the editor with double quotes.
   <string name="Command_DAO_Label">Derender Animesh</string>
   <string name="Command_Beacons_Label">Beacons</string>
 
+  <string 
+name="Command_360_Capture_Tooltip">Capture a 360° equirectangular image</string>
   <string name="Command_AboutLand_Tooltip">Information about the land you're visiting</string>
   <string name="Command_Appearance_Tooltip">Change your avatar</string>
   <string name="Command_Avatar_Tooltip">Choose a complete avatar</string>
@@ -2730,6 +2740,7 @@ Try enclosing path to the editor with double quotes.
   <string name="Command_MiniMap_Tooltip">Show nearby people (CTRL+SHIFT+M)</string>
   <string name="Command_Move_Tooltip">Moving your avatar</string>
   <string name="Command_People_Tooltip">Friends, groups, and nearby people (CTRL+SHIFT+A)</string>
+  <string name="Command_Performance_Tooltip">Tune graphics settings</string>
   <string name="Command_Picks_Tooltip">Places to show as favorites in your profile</string>
   <string name="Command_Places_Tooltip">Places you've saved (ALT+H)</string>
   <string name="Command_Preferences_Tooltip">Preferences (CTRL+P)</string>
@@ -2928,7 +2939,7 @@ Try enclosing path to the editor with double quotes.
   <string name="preset_combo_label">-Empty list-</string>
   <string name="Default">Default</string>
   <string name="none_paren_cap">(None)</string>
-  <string name="no_limit">No Limit</string>
+  <string name="no_limit">No limit</string>
   
   <string name="Mav_Details_MAV_FOUND_DEGENERATE_TRIANGLES">
       The physics shape contains triangles which are too small. Try simplifying the physics model.
@@ -3142,6 +3153,7 @@ Your current position: [AVATAR_POS]
   <string name="fs_preprocessor_cache_completed">Caching completed for '[FILENAME]'</string>
   <string name="fs_preprocessor_cache_unsafe">Error: script named '[FILENAME]' isn't safe to copy to the filesystem. This include will fail.</string>
   <string name="fs_preprocessor_caching_err">Error caching included file '[FILENAME]'</string>
+  <string name="fs_preprocessor_truncated">Warning: Preprocessor output truncated due to excessive script text size. This script will most likely not work.</string>
   <!-- </FS:Cron> -->
 
   <!-- <FS:Zi> Notify user about preferences settings changes to skin defaults -->
@@ -3221,7 +3233,6 @@ Your current position: [AVATAR_POS]
   <string name="mode_settings_phoenix.xml">Phoenix</string>
   <string name="mode_settings_v3.xml">[VIEWER_GENERATION]</string>
   <string name="mode_settings_hybrid.xml">Hybrid</string>
-  <string name="mode_settings_latency.xml">Latency</string>
   <string name="mode_settings_text.xml">Text</string>
 
   <string name="Asset_Uploading">Uploading...
@@ -3240,4 +3251,5 @@ Your current position: [AVATAR_POS]
   <string name="FSObjectInventoryNoElements">No Elements</string>
   <string name="FSObjectInventoryOneElement">1 Element</string>
   <string name="FSObjectInventoryElements">[NUM_ELEMENTS] Elements</string>
+  <string name="OpenSimInventoryValidationErrorGenericHelp">your Grid Operator's support team</string>
 </strings>

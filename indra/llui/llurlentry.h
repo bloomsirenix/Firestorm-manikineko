@@ -105,7 +105,7 @@ public:
 
 	bool isLinkDisabled() const;
 
-	bool isWikiLinkCorrect(std::string url);
+	bool isWikiLinkCorrect(const std::string &url) const;
 
 	virtual bool isSLURLvalid(const std::string &url) const { return TRUE; };
 
@@ -416,6 +416,17 @@ public:
 	/*virtual*/ std::string getLabel(const std::string &url, const LLUrlLabelCallback &cb);
 	/*virtual*/ std::string getLocation(const std::string &url) const;
 private:
+};
+
+//
+// LLUrlEntryChat Describes a Second Life chat Url, e.g.,
+// secondlife:///app/chat/42/This%20Is%20a%20test
+//
+class LLUrlEntryChat : public LLUrlEntryBase
+{
+public:
+    LLUrlEntryChat();
+    /*virtual*/ std::string getLabel(const std::string &url, const LLUrlLabelCallback &cb);
 };
 
 ///

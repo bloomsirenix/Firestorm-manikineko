@@ -26,10 +26,10 @@
  */
 
 #include "linden_common.h"
+#include "llregex.h"
 #include "llurlregistry.h"
 #include "lluriparser.h"
 
-#include <boost/regex.hpp>
 #include <boost/algorithm/string/find.hpp> //for boost::ifind_first -KC
 
 // default dummy callback that ignores any label updates from the server
@@ -75,6 +75,7 @@ LLUrlRegistry::LLUrlRegistry()
 	// LLUrlEntryAgent*Name must appear before LLUrlEntryAgent since 
 	// LLUrlEntryAgent is a less specific (catchall for agent urls)
 	registerUrl(new LLUrlEntryAgent());
+    registerUrl(new LLUrlEntryChat());
 	registerUrl(new LLUrlEntryGroup());
 	registerUrl(new LLUrlEntryParcel());
 	registerUrl(new LLUrlEntryTeleport());
@@ -127,15 +128,7 @@ static bool matchRegex(const char *text, boost::regex regex, U32 &start, U32 &en
 	boost::cmatch result;
 	bool found;
 
-	// regex_search can potentially throw an exception, so check for it
-	try
-	{
-		found = boost::regex_search(text, result, regex);
-	}
-	catch (std::runtime_error &)
-	{
-		return false;
-	}
+	found = ll_regex_search(text, result, regex);
 
 	if (! found)
 	{

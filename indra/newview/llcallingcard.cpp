@@ -723,7 +723,8 @@ void LLAvatarTracker::processChange(LLMessageSystem* msg)
 		{
 			if(mBuddyInfo.find(agent_id) != mBuddyInfo.end())
 			{
-				if((mBuddyInfo[agent_id]->getRightsGrantedFrom() ^  new_rights) & LLRelationship::GRANT_MODIFY_OBJECTS)
+                if (((mBuddyInfo[agent_id]->getRightsGrantedFrom() ^  new_rights) & LLRelationship::GRANT_MODIFY_OBJECTS)
+                    && !gAgent.isDoNotDisturb())
 				{
 					LLSD args;
 					// <FS:Ansariel> Always show complete name in rights dialogs
@@ -885,6 +886,7 @@ static void on_avatar_name_cache_notify(const LLUUID& agent_id,
 		}
 		else
 		{
+			args["ONLINE_STATUS"] = true;
 			LLNotificationsUI::LLNotificationManager::instance().onChat(chat, args);
 		}
 

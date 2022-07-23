@@ -264,7 +264,9 @@ public:
 	virtual void validate(int validation_policy,
 						  LLPointer<LLCertificateChain> cert_chain,
 						  const LLSD& validation_params) =0;
-	
+
+    // Clear cache if any
+    virtual void clearSertCache()=0;
 };
 
 
@@ -482,6 +484,9 @@ public:
 	virtual void removeFromProtectedMap(const std::string& data_type,
 										const std::string& data_id,
 										const std::string& map_elem)=0;
+
+	// ensure protected store's map is written to storage
+	virtual void syncProtectedMap() = 0;
 
 public:
 	virtual LLPointer<LLCredential> createCredential(const std::string& grid,

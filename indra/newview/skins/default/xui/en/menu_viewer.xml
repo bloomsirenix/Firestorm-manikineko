@@ -554,6 +554,13 @@
              function="Floater.Show"
              parameter="snapshot" />
         </menu_item_call>
+        <menu_item_call
+         label="360° Snapshot"
+         name="Capture 360">
+            <menu_item_call.on_click
+             function="Floater.Show"
+             parameter="360capture" />
+        </menu_item_call>
 
       <menu_item_call
         label="Money Tracker"
@@ -1198,7 +1205,16 @@
                parameter="UseDebugMenus" />
           </menu_item_check>
         </menu>
-
+        <menu_item_check
+          label="Improve graphics speed..."
+          name="Performance">
+          <menu_item_check.on_click
+           function="Floater.Toggle"
+           parameter="performance" />
+          <menu_item_check.on_check
+           function="Floater.Visible"
+           parameter="performance" />
+        </menu_item_check>
         <menu_item_separator/>
 
 	    <menu_item_call
@@ -2228,8 +2244,7 @@
              label="Search"
              name="Search">
              <menu_item_call.on_click
-                 function="Floater.Show"
-                 parameter="search"/>
+                 function="Avatar.ToggleSearch"/>
        </menu_item_call>
 -->
         <menu_item_check
@@ -2240,8 +2255,7 @@
              function="Floater.Visible"
              parameter="search" />
             <menu_item_check.on_click
-             function="Floater.Toggle"
-             parameter="search" />
+             function="Avatar.ToggleSearch"/>
             </menu_item_check>
 
     	<menu_item_call
@@ -2391,13 +2405,16 @@
              parameter="WebLaunchExternalTarget,https://teamup.com/ksxdajnbw9mvw7cbwz" />
         </menu_item_call>
 
-        <menu_item_call
+        <menu_item_check
          label="Guidebook"
          name="How To">
-            <menu_item_call.on_click
+            <menu_item_check.on_click
              function="Help.ToggleHowTo"
              parameter="" />
-        </menu_item_call>
+            <menu_item_check.on_check
+             function="Floater.Visible"
+             parameter="guidebook" />
+        </menu_item_check>
 
 <!--       <menu_item_call
          label="Second Life Help"
@@ -2482,9 +2499,6 @@
             <menu_item_check.on_check
              function="Floater.Visible"
              parameter="grid_status" />
-            <menu_item_check.on_visible
-             function="GridCheck"
-             parameter="secondlife"/>
         </menu_item_check>
         <menu_item_call
              label="Report Abuse"
@@ -2868,6 +2882,17 @@
                  function="Floater.Toggle"
                  parameter="scene_load_stats" />
             </menu_item_check>
+            <menu_item_check
+            label="Improve graphics speed..."
+            name="Performance">
+            <menu_item_check.on_click
+             function="Floater.Toggle"
+             parameter="performance" />
+            <menu_item_check.on_check
+             function="Floater.Visible"
+             parameter="performance" />
+            </menu_item_check>
+  
       <menu_item_check
         label="Show avatar complexity information"
         name="Avatar Draw Info">
@@ -3325,10 +3350,11 @@
            name="DoubleClick Teleport"
            shortcut="control|shift|D">
             <on_check
-               function="CheckControl"
-               parameter="DoubleClickTeleport" />
+               function="Advanced.CheckEnabledDoubleClickAction"
+               parameter="teleport_to"/>
             <on_click
-               function="Advanced.ToggleDoubleClickTeleport"/>
+               function="Advanced.SetDoubleClickAction"
+               parameter="teleport_to"/>
           </menu_item_check>
           <!--   	//[FIX FIRE-1927 - enable DoubleClickTeleport shortcut : SJ] -->
 
@@ -3365,6 +3391,15 @@
                  function="File.CloseWindow" />
                 <menu_item_call.on_enable
                  function="File.EnableCloseWindow" />
+            </menu_item_call>
+            <menu_item_call
+             label="Close Window Group"
+             name="Close Window Group"
+             shortcut="control|alt|W">
+                <menu_item_call.on_click
+                 function="File.CloseWindowGroup" />
+                <menu_item_call.on_enable
+                 function="File.EnableCloseWindowGroup" />
             </menu_item_call>
             <menu_item_call
              label="Close All Windows"
@@ -4664,6 +4699,14 @@
                 <menu_item_call.on_click
                  function="Advanced.DumpRegionObjectCache" />
             </menu_item_call>
+        
+            <menu_item_call
+             label="Interest List: Full Update"
+             name="Interest List: Full Update"
+             shortcut="alt|shift|I">
+                <menu_item_call.on_click
+                 function="Advanced.InterestListFullUpdate" />
+            </menu_item_call>
             <menu_item_call
              label="Dump Simulator Features to Nearby Chat"
              name="DumpSimFeaturesToChat">
@@ -4750,21 +4793,21 @@
              label="Double-Click Auto-Pilot"
              name="Double-ClickAuto-Pilot">
                 <menu_item_check.on_check
-                 function="CheckControl"
-                 parameter="DoubleClickAutoPilot" />
+                 function="Advanced.CheckEnabledDoubleClickAction"
+                 parameter="walk_to" />
                 <menu_item_check.on_click
-                 function="ToggleControl"
-                 parameter="DoubleClickAutoPilot" />
+                 function="Advanced.SetDoubleClickAction"
+                 parameter="walk_to" />
             </menu_item_check>
             <menu_item_check
              label="Double-Click Teleport"
              name="DoubleClick Teleport">
                 <menu_item_check.on_check
-                 function="CheckControl"
-                 parameter="DoubleClickTeleport" />
+                 function="Advanced.CheckEnabledDoubleClickAction"
+                 parameter="teleport_to" />
                 <menu_item_check.on_click
-                 function="ToggleControl"
-                 parameter="DoubleClickTeleport" />
+                 function="Advanced.SetDoubleClickAction"
+                 parameter="teleport_to" />
             </menu_item_check>
             <menu_item_separator />
 
@@ -5207,6 +5250,12 @@
             <menu_item_call.on_click
              function="Advanced.CompressImage" />
         </menu_item_call>
+      <menu_item_call
+       label="Compress File Test"
+       name="Compress File Test">
+        <menu_item_call.on_click
+         function="Advanced.CompressFileTest" />
+      </menu_item_call>
 
       <menu_item_call
          label="Enable Visual Leak Detector"

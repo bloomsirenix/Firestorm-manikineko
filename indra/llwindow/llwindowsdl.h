@@ -24,6 +24,10 @@
  * $/LicenseInfo$
  */
 
+#ifdef LL_SDL2
+#include "llwindowsdl2.h"
+#else
+
 #ifndef LL_LLWINDOWSDL_H
 #define LL_LLWINDOWSDL_H
 
@@ -220,6 +224,24 @@ private:
 	U32 mSDLSym; // <FS:ND/> Store the SDL Keysym too.
 
 	BOOL mUseLegacyCursors; // <FS:LO> Legacy cursor setting from main program
+
+public:
+#if LL_X11
+    static Display* getSDLDisplay();
+    LLWString const& getPrimaryText() const { return mPrimaryClipboard; }
+    LLWString const& getSecondaryText() const { return mSecondaryClipboard; }
+    void clearPrimaryText()  { mPrimaryClipboard.clear(); }
+    void clearSecondaryText() { mSecondaryClipboard.clear(); }
+private:
+    void initialiseX11Clipboard();
+
+    bool getSelectionText(Atom selection, LLWString& text);
+    bool getSelectionText( Atom selection, Atom type, LLWString &text );
+
+    bool setSelectionText(Atom selection, const LLWString& text);
+#endif
+	LLWString mPrimaryClipboard;
+	LLWString mSecondaryClipboard;
 };
 
 
@@ -237,3 +259,4 @@ public:
 S32 OSMessageBoxSDL(const std::string& text, const std::string& caption, U32 type);
 
 #endif //LL_LLWINDOWSDL_H
+#endif

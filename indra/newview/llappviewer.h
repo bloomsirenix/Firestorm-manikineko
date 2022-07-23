@@ -58,8 +58,8 @@ class LLImageDecodeThread;
 class LLTextureFetch;
 class LLWatchdogTimeout;
 class LLViewerJoystick;
+class LLPurgeDiskCacheThread;
 class LLViewerRegion;
-class FSPurgeDiskCacheThread; // <FS:Ansariel> Regular disk cache cleanup
 
 extern LLTrace::BlockTimerStatHandle FTM_FRAME;
 
@@ -98,7 +98,7 @@ public:
     bool quitRequested() { return mQuitRequested; }
     bool logoutRequestSent() { return mLogoutRequestSent; }
 	bool isSecondInstance() { return mSecondInstance; }
-    bool isUpdaterMissing() { return mUpdaterNotFound; }
+    bool isUpdaterMissing(); // In use by tests
 
 	void writeDebugInfo(bool isStatic=true);
 
@@ -118,7 +118,7 @@ public:
 	static LLTextureCache* getTextureCache() { return sTextureCache; }
 	static LLImageDecodeThread* getImageDecodeThread() { return sImageDecodeThread; }
 	static LLTextureFetch* getTextureFetch() { return sTextureFetch; }
-	static FSPurgeDiskCacheThread* getPurgeDiskCacheThread() { return sPurgeDiskCacheThread; } // <FS:Ansariel> Regular disk cache cleanup
+	static LLPurgeDiskCacheThread* getPurgeDiskCacheThread() { return sPurgeDiskCacheThread; }
 
 	static U32 getTextureCacheVersion() ;
 	static U32 getObjectCacheVersion() ;
@@ -306,7 +306,7 @@ private:
 	static LLTextureCache* sTextureCache; 
 	static LLImageDecodeThread* sImageDecodeThread; 
 	static LLTextureFetch* sTextureFetch;
-	static FSPurgeDiskCacheThread* sPurgeDiskCacheThread; // <FS:Ansariel> Regular disk cache cleanup
+	static LLPurgeDiskCacheThread* sPurgeDiskCacheThread;
 
 	S32 mNumSessions;
 

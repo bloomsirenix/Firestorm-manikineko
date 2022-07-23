@@ -103,6 +103,37 @@ LLFloater* LLFloaterReg::getLastFloaterInGroup(const std::string& name)
 	return NULL;
 }
 
+// <FS:Ansariel> FIRE-24125: Add option to close all floaters of a group
+//static
+LLFloaterReg::instance_list_t LLFloaterReg::getAllFloatersInGroup(LLFloater* floater)
+{
+	if (floater)
+	{
+		for (const auto& group : sGroupMap)
+		{
+			const std::string& group_name = group.second;
+
+			if (group_name.empty())
+			{
+				continue;
+			}
+
+			instance_list_t& instances = sInstanceMap[group_name];
+
+			for (auto instance : instances)
+			{
+				if (instance == floater)
+				{
+					return sInstanceMap[group_name];
+				}
+			}
+		}
+	}
+
+	return {};
+}
+// </FS:Ansariel>
+
 LLFloater* LLFloaterReg::getLastFloaterCascading()
 {
 	LLRect candidate_rect;
@@ -573,6 +604,58 @@ void LLFloaterReg::toggleInstanceOrBringToFront(const LLSD& sdname, const LLSD& 
 			instance->closeHostedFloater();
 		}
 	}
+}
+
+// static
+// Same as toggleInstanceOrBringToFront but does not close floater.
+// unlike showInstance() does not trigger onOpen() if already open
+void LLFloaterReg::showInstanceOrBringToFront(const LLSD& sdname, const LLSD& key)
+{
+    std::string name = sdname.asString();
+    LLFloater* instance = getInstance(name, key);
+
+
+    if (!instance)
+    {
+        LL_DEBUGS() << "Unable to get instance of floater '" << name << "'" << LL_ENDL;
+        return;
+    }
+
+    // If hosted, we need to take that into account
+    LLFloater* host = instance->getHost();
+
+    if (host)
+    {
+        if (host->isMinimized() || !host->isShown() || !host->isFrontmost())
+        {
+            host->setMinimized(FALSE);
+            instance->openFloater(key);
+            instance->setVisibleAndFrontmost(true, key);
+        }
+        else if (!instance->getVisible())
+        {
+            instance->openFloater(key);
+            instance->setVisibleAndFrontmost(true, key);
+            instance->setFocus(TRUE);
+        }
+    }
+    else
+    {
+        if (instance->isMinimized())
+        {
+            instance->setMinimized(FALSE);
+            instance->setVisibleAndFrontmost(true, key);
+        }
+        else if (!instance->isShown())
+        {
+            instance->openFloater(key);
+            instance->setVisibleAndFrontmost(true, key);
+        }
+        else if (!instance->isFrontmost())
+        {
+            instance->setVisibleAndFrontmost(true, key);
+        }
+    }
 }
 
 // static
