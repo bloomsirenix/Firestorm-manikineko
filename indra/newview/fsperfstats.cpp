@@ -142,7 +142,7 @@ namespace FSPerfStats
     // static
     void StatsRecorder::toggleBuffer()
     {
-        FSZone;
+        LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
         using ST = StatType_t;
 
         bool unreliable{false};
@@ -222,18 +222,18 @@ namespace FSPerfStats
 
         // clean the write maps in all cases.
         auto& statsTypeMatrix = statsDoubleBuffer[writeBuffer];
-        for(auto& statsMap : statsTypeMatrix)
+        for(auto& statsMapByType : statsTypeMatrix)
         {
-            FSZoneN("Clear stats maps");
-            for(auto& stat_entry : statsMap)
+            LL_PROFILE_ZONE_NAMED_CATEGORY_STATS("Clear stats maps");
+            for(auto& stat_entry : statsMapByType)
             {
                 std::fill_n(stat_entry.second.begin() ,static_cast<size_t>(ST::STATS_COUNT),0);
             }
-            statsMap.clear();
+            statsMapByType.clear();
         }
         for(int i=0; i< static_cast<size_t>(ObjType_t::OT_COUNT); i++)
         {
-            FSZoneN("clear max/sum");
+            LL_PROFILE_ZONE_NAMED_CATEGORY_STATS("clear max/sum");
             max[writeBuffer][i].fill(0);
             sum[writeBuffer][i].fill(0);
         }
@@ -249,13 +249,13 @@ namespace FSPerfStats
     // static 
     void StatsRecorder::clearStatsBuffers()
     {
-        FSZone;
+        LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
         using ST = StatType_t;
 
         auto& statsTypeMatrix = statsDoubleBuffer[writeBuffer];
         for(auto& statsMap : statsTypeMatrix)
         {
-            FSZoneN("Clear stats maps");
+            LL_PROFILE_ZONE_NAMED_CATEGORY_STATS("Clear stats maps");
             for(auto& stat_entry : statsMap)
             {
                 std::fill_n(stat_entry.second.begin() ,static_cast<size_t>(ST::STATS_COUNT),0);
@@ -264,7 +264,7 @@ namespace FSPerfStats
         }
         for(int i=0; i< static_cast<size_t>(ObjType_t::OT_COUNT); i++)
         {
-            FSZoneN("clear max/sum");
+            LL_PROFILE_ZONE_NAMED_CATEGORY_STATS("clear max/sum");
             max[writeBuffer][i].fill(0);
             sum[writeBuffer][i].fill(0);
         }
@@ -277,7 +277,7 @@ namespace FSPerfStats
         // repeat before we start processing new stuff
         for(auto& statsMap : statsTypeMatrix)
         {
-            FSZoneN("Clear stats maps");
+            LL_PROFILE_ZONE_NAMED_CATEGORY_STATS("Clear stats maps");
             for(auto& stat_entry : statsMap)
             {
                 std::fill_n(stat_entry.second.begin() ,static_cast<size_t>(ST::STATS_COUNT),0);
@@ -286,7 +286,7 @@ namespace FSPerfStats
         }
         for(int i=0; i< static_cast<size_t>(ObjType_t::OT_COUNT); i++)
         {
-            FSZoneN("clear max/sum");
+            LL_PROFILE_ZONE_NAMED_CATEGORY_STATS("clear max/sum");
             max[writeBuffer][i].fill(0);
             sum[writeBuffer][i].fill(0);
         }
@@ -363,7 +363,7 @@ namespace FSPerfStats
             // if so we've got work to do
 
             // how much of the frame was spent on non avatar related work?
-            U32 non_avatar_time_raw = tot_frame_time_raw - tot_avatar_time_raw;
+            U64 non_avatar_time_raw = tot_frame_time_raw - tot_avatar_time_raw;
 
             // If the target frame time < scene time (estimated as non_avatar time)
             U64 target_avatar_time_raw;
