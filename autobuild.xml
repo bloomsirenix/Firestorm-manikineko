@@ -1046,11 +1046,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>611c5389b0354e6b64a7de50b93fafdb</string>
+              <string>2e59bf4ca94cc8da73bd58cef55895a5</string>
               <key>hash_algorithm</key>
               <string>md5</string>
               <key>url</key>
-              <string>file:///c:/cygwin/opt/firestorm/fmodstudio-2.02.07-windows-222041046.tar.bz2</string>
+              <string>file://C:/Users/User/Desktop/firestorm/3p-fmodstudio/fmodstudio-2.02.07-windows-222091825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -1060,11 +1060,11 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1b0b4d70d172c9b1eaac211f051ca599</string>
+              <string>2e59bf4ca94cc8da73bd58cef55895a5</string>
               <key>hash_algorithm</key>
               <string>md5</string>
               <key>url</key>
-              <string>file:///c:/cygwin/opt/firestorm/fmodstudio-2.02.07-windows64-222041047.tar.bz2</string>
+              <string>file://C:/Users/User/Desktop/firestorm/3p-fmodstudio/fmodstudio-2.02.07-windows-222091825.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
@@ -3337,11 +3337,7 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
       <key>canonical_repo</key>
       <string>https://bitbucket.org/lindenlab/viewer</string>
       <key>copyright</key>
-<<<<<<< HEAD
       <string>Copyright (c) 2021, The Phoenix Manikineko Viewer Project, Inc. and manikineko.nl</string>
-=======
-      <string>Copyright (c) 2022, The Phoenix Firestorm Project, Inc.</string>
->>>>>>> fs/master
       <key>description</key>
       <string>Manikineko Viewer</string>
       <key>license</key>
