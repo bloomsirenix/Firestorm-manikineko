@@ -17,55 +17,55 @@ LangString MULTIUSER_INNERTEXT_INSTALLMODE_CURRENTUSER ${LANG_GERMAN} "Nur für 
 
 ; installation directory text
 LangString DirectoryChooseTitle ${LANG_GERMAN} "Installations-Ordner"
-LangString DirectoryChooseUpdate ${LANG_GERMAN} "Wählen Sie den Firestorm Ordner für dieses Update:"
-LangString DirectoryChooseSetup ${LANG_GERMAN} "Pfad in dem Firestorm installiert werden soll:"
+LangString DirectoryChooseUpdate ${LANG_GERMAN} "Wählen Sie den Manikineko Viewer Ordner für dieses Update:"
+LangString DirectoryChooseSetup ${LANG_GERMAN} "Pfad in dem Manikineko Viewer installiert werden soll:"
 
 LangString MUI_TEXT_DIRECTORY_TITLE ${LANG_GERMAN} "Installationsverzeichnis"
-LangString MUI_TEXT_DIRECTORY_SUBTITLE ${LANG_GERMAN} "Wählen Sie das Verzeichnis aus, in dem Firestorm installiert werden soll:"
+LangString MUI_TEXT_DIRECTORY_SUBTITLE ${LANG_GERMAN} "Wählen Sie das Verzeichnis aus, in dem Manikineko Viewer installiert werden soll:"
 
-LangString MUI_TEXT_INSTALLING_TITLE ${LANG_GERMAN} "Firestorm wird installiert..."
-LangString MUI_TEXT_INSTALLING_SUBTITLE ${LANG_GERMAN} "Firestorm wird im Verzeichnis $INSTDIR installiert"
+LangString MUI_TEXT_INSTALLING_TITLE ${LANG_GERMAN} "Manikineko Viewer wird installiert..."
+LangString MUI_TEXT_INSTALLING_SUBTITLE ${LANG_GERMAN} "Manikineko Viewer wird im Verzeichnis $INSTDIR installiert"
 
-LangString MUI_TEXT_FINISH_TITLE ${LANG_GERMAN} "Firestorm wird installiert"
-LangString MUI_TEXT_FINISH_SUBTITLE ${LANG_GERMAN} "Firestorm wurde im Verzeichnis $INSTDIR installiert."
+LangString MUI_TEXT_FINISH_TITLE ${LANG_GERMAN} "Manikineko Viewer wird installiert"
+LangString MUI_TEXT_FINISH_SUBTITLE ${LANG_GERMAN} "Manikineko Viewer wurde im Verzeichnis $INSTDIR installiert."
 
 LangString MUI_TEXT_ABORT_TITLE ${LANG_GERMAN} "Installation abgebrochen"
-LangString MUI_TEXT_ABORT_SUBTITLE ${LANG_GERMAN} "Firestorm wird nicht im Verzeichnis $INSTDIR installiert."
+LangString MUI_TEXT_ABORT_SUBTITLE ${LANG_GERMAN} "Manikineko Viewer wird nicht im Verzeichnis $INSTDIR installiert."
 
 ; CheckStartupParams message box
 LangString CheckStartupParamsMB ${LANG_GERMAN} "Konnte Programm '$INSTNAME' nicht finden. Stilles Update fehlgeschlagen."
 
 ; installation success dialog
-LangString InstSuccesssQuestion ${LANG_GERMAN} "Firestorm starten?"
+LangString InstSuccesssQuestion ${LANG_GERMAN} "Manikineko Viewer starten?"
 
 ; remove old NSIS version
 LangString RemoveOldNSISVersion ${LANG_GERMAN} "Überprüfe alte Version ..."
 
 ; check windows version
 LangString CheckWindowsVersionDP ${LANG_GERMAN} "Überprüfung der Windows Version ..."
-LangString CheckWindowsVersionMB ${LANG_GERMAN} 'Firestorm unterstützt nur Windows Vista mit Service Pack 2 und höher.$\nEine Installation auf diesem Betriebssystem wird nicht unterstützt. Installation wird beendet...'
-LangString CheckWindowsServPackMB ${LANG_GERMAN} "Es wird empfohlen, das aktuellste Service Pack des Betriebssystems für Firestorm zu verwenden.$\nEs ist hilftreich für Performance und Stabilität des Programms."
+LangString CheckWindowsVersionMB ${LANG_GERMAN} 'Manikineko Viewer unterstützt nur Windows Vista mit Service Pack 2 und höher.$\nEine Installation auf diesem Betriebssystem wird nicht unterstützt. Installation wird beendet...'
+LangString CheckWindowsServPackMB ${LANG_GERMAN} "Es wird empfohlen, das aktuellste Service Pack des Betriebssystems für Manikineko Viewer zu verwenden.$\nEs ist hilftreich für Performance und Stabilität des Programms."
 LangString UseLatestServPackDP ${LANG_GERMAN} "Bitte Windows Update benutzen, um das aktuellste Service Pack zu installieren."
 
 ; checkifadministrator function (install)
 LangString CheckAdministratorInstDP ${LANG_GERMAN} "Überprüfung der Installations-Berechtigungen ..."
-LangString CheckAdministratorInstMB ${LANG_GERMAN} 'Sie besitzen ungenügende Berechtigungen.$\nSie müssen ein "administrator" sein, um Firestorm installieren zu können.'
+LangString CheckAdministratorInstMB ${LANG_GERMAN} 'Sie besitzen ungenügende Berechtigungen.$\nSie müssen ein "administrator" sein, um Manikineko Viewer installieren zu können.'
 
 ; checkifadministrator function (uninstall)
 LangString CheckAdministratorUnInstDP ${LANG_GERMAN} "Überprüfung der Entfernungs-Berechtigungen ..."
-LangString CheckAdministratorUnInstMB ${LANG_GERMAN} 'Sie besitzen ungenügende Berechtigungen.$\nSie müssen ein "administrator" sein, um Firestorm entfernen zu können..'
+LangString CheckAdministratorUnInstMB ${LANG_GERMAN} 'Sie besitzen ungenügende Berechtigungen.$\nSie müssen ein "administrator" sein, um Manikineko Viewer entfernen zu können..'
 
 ; checkcpuflags
-LangString MissingSSE2 ${LANG_GERMAN} "Dieser PC besitzt möglicherweise keinen Prozessor mit SSE2-Unterstützung, die für die Ausführung von Firestorm ${VERSION_LONG} benötigt wird. Trotzdem installieren?"
+LangString MissingSSE2 ${LANG_GERMAN} "Dieser PC besitzt möglicherweise keinen Prozessor mit SSE2-Unterstützung, die für die Ausführung von Manikineko Viewer ${VERSION_LONG} benötigt wird. Trotzdem installieren?"
 
 ; closesecondlife function (install)
-LangString CloseSecondLifeInstDP ${LANG_GERMAN} "Warten auf die Beendigung von Firestorm ..."
-LangString CloseSecondLifeInstMB ${LANG_GERMAN} "Firestorm kann nicht installiert oder ersetzt werden, wenn es bereits läuft.$\n$\nBeenden Sie, was Sie gerade tun und klicken Sie OK, um Firestorm zu beenden.$\nKlicken Sie ABBRECHEN, um die Installation abzubrechen."
-LangString CloseSecondLifeInstRM ${LANG_GERMAN} "Firestorm konnte einige Dateien einer vorherigen Installation nicht entfernen."
+LangString CloseSecondLifeInstDP ${LANG_GERMAN} "Warten auf die Beendigung von Manikineko Viewer ..."
+LangString CloseSecondLifeInstMB ${LANG_GERMAN} "Manikineko Viewer kann nicht installiert oder ersetzt werden, wenn es bereits läuft.$\n$\nBeenden Sie, was Sie gerade tun und klicken Sie OK, um Manikineko Viewer zu beenden.$\nKlicken Sie ABBRECHEN, um die Installation abzubrechen."
+LangString CloseSecondLifeInstRM ${LANG_GERMAN} "Manikineko Viewer konnte einige Dateien einer vorherigen Installation nicht entfernen."
 
 ; closesecondlife function (uninstall)
-LangString CloseSecondLifeUnInstDP ${LANG_GERMAN} "Warten auf die Beendigung von Firestorm ..."
-LangString CloseSecondLifeUnInstMB ${LANG_GERMAN} "Firestorm kann nicht entfernt werden, wenn es bereits läuft.$\n$\nBeenden Sie, was Sie gerade tun und klicken Sie OK, um Firestorm zu beenden.$\nKlicken Sie CANCEL, um abzubrechen."
+LangString CloseSecondLifeUnInstDP ${LANG_GERMAN} "Warten auf die Beendigung von Manikineko Viewer ..."
+LangString CloseSecondLifeUnInstMB ${LANG_GERMAN} "Manikineko Viewer kann nicht entfernt werden, wenn es bereits läuft.$\n$\nBeenden Sie, was Sie gerade tun und klicken Sie OK, um Manikineko Viewer zu beenden.$\nKlicken Sie CANCEL, um abzubrechen."
 
 ; CheckNetworkConnection
 LangString CheckNetworkConnectionDP ${LANG_GERMAN} "Prüfe Netzwerkverbindung..."
@@ -74,16 +74,16 @@ LangString CheckNetworkConnectionDP ${LANG_GERMAN} "Prüfe Netzwerkverbindung...
 LangString RemoveDataFilesMB ${LANG_GERMAN} "Einstellungs- und Cache-Dateien in Dokumente und Einstellungen löschen?"
 
 ; delete program files
-LangString DeleteProgramFilesMB ${LANG_GERMAN} "Es existieren weiterhin Dateien in Ihrem Firestorm Programm-Ordner.$\n$\nDies sind möglicherweise Dateien, die sie modifiziert oder bewegt haben:$\n$INSTDIR$\n$\nMöchten Sie diese ebenfalls löschen?"
+LangString DeleteProgramFilesMB ${LANG_GERMAN} "Es existieren weiterhin Dateien in Ihrem Manikineko Viewer Programm-Ordner.$\n$\nDies sind möglicherweise Dateien, die sie modifiziert oder bewegt haben:$\n$INSTDIR$\n$\nMöchten Sie diese ebenfalls löschen?"
 
 ; uninstall text
-LangString UninstallTextMsg ${LANG_GERMAN} "Dies wird Firestorm ${VERSION_LONG} von Ihrem System entfernen."
+LangString UninstallTextMsg ${LANG_GERMAN} "Dies wird Manikineko Viewer ${VERSION_LONG} von Ihrem System entfernen."
 
 ; ask to remove protocol handler registry entries registry keys that still might be needed by other viewers that are installed
-LangString DeleteRegistryKeysMB ${LANG_GERMAN} "Möchten Sie Firestorm als Standardverknüpfung zum Öffnen von Virtuelle-Welten-Protokollen entfernen?$\n$\nEs wird empfohlen, diese zu behalten, falls Sie noch andere Versionen von Firestorm installiert haben."
+LangString DeleteRegistryKeysMB ${LANG_GERMAN} "Möchten Sie Manikineko Viewer als Standardverknüpfung zum Öffnen von Virtuelle-Welten-Protokollen entfernen?$\n$\nEs wird empfohlen, diese zu behalten, falls Sie noch andere Versionen von Manikineko Viewer installiert haben."
 
 ; <FS:Ansariel> Ask to create protocol handler registry entries
-LangString CreateUrlRegistryEntries ${LANG_GERMAN} "Möchten Sie Firestorm als Standardverknüpfung zum Öffnen von Virtuelle-Welten-Protokollen festlegen?$\n$\nFalls Sie andere Versionen von Firestorm installiert haben, werden bereits bestehenden Verknüpfungen überschrieben."
+LangString CreateUrlRegistryEntries ${LANG_GERMAN} "Möchten Sie Manikineko Viewer als Standardverknüpfung zum Öffnen von Virtuelle-Welten-Protokollen festlegen?$\n$\nFalls Sie andere Versionen von Manikineko Viewer installiert haben, werden bereits bestehenden Verknüpfungen überschrieben."
 
 ; <FS:Ansariel> Optional start menu entry
 LangString CreateStartMenuEntry ${LANG_GERMAN} "Eintrag im Startmenü erstellen?"
@@ -92,8 +92,8 @@ LangString CreateStartMenuEntry ${LANG_GERMAN} "Eintrag im Startmenü erstellen?
 LangString ForOpenSimSuffix ${LANG_GERMAN} "für OpenSimulator"
 
 LangString DeleteDocumentAndSettingsDP ${LANG_GERMAN} 'Dateien unterhalb von "Dokumente und Einstellungen werden gelöscht.'
-LangString UnChatlogsNoticeMB ${LANG_GERMAN} "Diese Deinstallation löscht NICHT die Firestorm-Chatprotokolle und andere private Dateien. Sollen diese gelöscht werden, muss das Firestorm-Verzeichnis im Anwendungsdaten-Verzeichnis manuell gelöscht werden."
-LangString UnRemovePasswordsDP ${LANG_GERMAN} "Lösche gespeicherte Firestorm-Passwörter."
+LangString UnChatlogsNoticeMB ${LANG_GERMAN} "Diese Deinstallation löscht NICHT die Manikineko Viewer-Chatprotokolle und andere private Dateien. Sollen diese gelöscht werden, muss das Manikineko Viewer-Verzeichnis im Anwendungsdaten-Verzeichnis manuell gelöscht werden."
+LangString UnRemovePasswordsDP ${LANG_GERMAN} "Lösche gespeicherte Manikineko Viewer-Passwörter."
 
 LangString MUI_TEXT_LICENSE_TITLE ${LANG_GERMAN} "VivoxVoice System Lizenz-Vereinbarung"
 LangString MUI_TEXT_LICENSE_SUBTITLE ${LANG_GERMAN} "Zusätzliche Lizenz-Vereinbarung für die Vivox-Voice-System-Komponenten."
