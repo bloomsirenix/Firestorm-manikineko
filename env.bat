@@ -1,0 +1,1 @@
+set AUTOBUILD_CONFIG_FILE=my_autobuild.xml

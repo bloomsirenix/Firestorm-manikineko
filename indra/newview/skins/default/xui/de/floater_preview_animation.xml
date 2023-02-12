@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<floater name="preview_anim">
+	<floater.string name="Title">
+		Animation: [NAME]
+	</floater.string>
+	<text name="desc txt" width="90">
+		Beschreibung:
+	</text>
+	<line_editor name="desc"/>
+	<button label="Inworld abspielen" label_selected="Stopp" name="Inworld" tool_tip="Diese Animation so wiedergeben, dass andere sie sehen können."/>
+	<button label="Lokal wiedergeben" label_selected="Stopp" name="Locally" tool_tip="Diese Animation so wiedergeben, dass nur Sie sie sehen."/>
+	<text name="AdvancedStatsLeft">
+Priorität: [PRIORITY]
+Dauer: [DURATION]s
+Schleife: [IS_LOOP]
+	</text>
+	<text name="AdvancedStatsRight">
+Einblenden: [EASE_IN]s
+Ausblenden: [EASE_OUT]s
+Gelenke: [NUM_JOINTS]
+	</text>
+</floater>

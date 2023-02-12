@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<floater name="Map" title="Minimappa">
+	<floater.string name="mini_map_caption">
+		Minimappa
+	</floater.string>
+</floater>
