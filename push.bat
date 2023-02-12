@@ -1,1 +1,0 @@
-git push --mirror git@github.com:bloomsirenix/Firestorm-manikineko.git 
