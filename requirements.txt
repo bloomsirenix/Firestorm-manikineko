@@ -1,2 +1,0 @@
-llbase==1.2.11
-git+https://github.com/Nicky-D/autobuild@main_nd#egg=autobuild
