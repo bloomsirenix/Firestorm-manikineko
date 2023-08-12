@@ -315,8 +315,8 @@
       <combo_box.drop_down_button
         font="SansSerifLarge"/>
       <combo_box.item
-        label="Firestorm"
-        name="Firestorm"
+        label="Manikineko Online"
+        name="Manikineko Online"
         value="settings_firestorm.xml" />
       <combo_box.item
         label="Phoenix"

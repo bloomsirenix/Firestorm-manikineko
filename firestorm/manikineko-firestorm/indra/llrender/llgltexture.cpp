@@ -26,7 +26,7 @@
 #include "linden_common.h"
 #include "llgltexture.h"
 
-
+//Optimize this code for performance
 // static
 S32 LLGLTexture::getTotalNumOfCategories() 
 {
@@ -231,11 +231,11 @@ S8  LLGLTexture::getComponents() const
 
 LLGLuint LLGLTexture::getTexName() const 
 { 
-	llassert(mGLTexturep.notNull()) ;
+	
 
-	return mGLTexturep->getTexName() ; 
+	 return mGLTexturep->getTexName();
 }
-
+	
 BOOL LLGLTexture::hasGLTexture() const 
 {
 	if(mGLTexturep.notNull())

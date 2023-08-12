@@ -967,14 +967,41 @@
             <key>web_profile_url</key>
             <string>https://my.aditi.lindenlab.com/</string>
         </map>
+      <key>Manikineko Online</key>
+      <map>
+        <key>LastModified</key>
+        <date>2023-08-26T20:15:00Z</date>
+        <key>gridname</key>
+        <string>Manikineko Online</string>
+        <key>gridnick</key>
+        <string>manikineko</string>
+        <key>helperuri</key>
+        <string>https://manikineko.nl/secondlife/helpers/</string>
+        <key>login_identifier_types</key>
+        <array>
+          <string>agent</string>
+        </array>
+        <key>loginpage</key>
+        <string>https://manikineko.nl</string>
+        <key>loginuri</key>
+        <array>
+          <string>http://master.manikineko.nl:9000</string>
+        </array>
+        <key>name</key>
+        <string>Manikineko Online</string>
+        <key>system_grid</key>
+        <integer>1</integer>
+        <key>favorite</key>
+        <integer>1</integer>
+        <key>web_profile_url</key>
+        <string>https://master.manikineko.nl</string>
+      </map>
         <key>util.agni.lindenlab.com</key>
         <map>
             <key>LastModified</key>
             <date>2018-06-22T22:15:00Z</date>
             <key>app_slurl_base</key>
             <string>secondlife:///app</string>
-            <key>favorite</key>
-            <integer>1</integer>
             <key>gridname</key>
             <string>Second Life</string>
             <key>gridnick</key>

@@ -690,7 +690,7 @@ with the same filename but different name
   <texture name="SpeakBtn_Right_Selected_Press" file_name="widgets/SpeakBtn_Right_Selected_Press.png" preload="true" scale.left="4" scale.top="19" scale.right="22" scale.bottom="4" />
   <texture name="SpeakBtn_Right_Off" file_name="widgets/SpeakBtn_Right_Off.png" preload="true" scale.left="4" scale.top="19" scale.right="22" scale.bottom="4" />
 
-<!-- Firestorm Textures -->
+<!-- Manikineko Online Textures -->
 
 <texture name="profile_icon_24x24" file_name="icons/profile_icon_24x24.png" preload="false" />
 <texture name="sale_icon_24x24" file_name="icons/sale_icon_24x24.png" preload="false" />

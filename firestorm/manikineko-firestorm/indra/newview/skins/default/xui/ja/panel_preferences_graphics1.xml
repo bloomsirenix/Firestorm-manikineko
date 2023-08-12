@@ -35,7 +35,7 @@
 		<text name="ShadersPrefText4">
 			超高
 		</text>
-		<check_box label="フルスクリーンモード（再起動が必要）" name="Fullscreen Mode" tool_tip="Firestormをフルスクリーンモードで起動します。" />
+		<check_box label="フルスクリーンモード（再起動が必要）" name="Fullscreen Mode" tool_tip="Manikineko Onlineをフルスクリーンモードで起動します。" />
 		
 		<text name="ShadersText">
 			シェーダー：

@@ -294,8 +294,8 @@
           name="mode_combo"
           width="110">
            <combo_box.item
-            label="Firestorm"
-            name="Firestorm"
+            label="Manikineko Online"
+            name="Manikineko Online"
             value="settings_firestorm.xml" />
            <combo_box.item
             label="Phoenix"

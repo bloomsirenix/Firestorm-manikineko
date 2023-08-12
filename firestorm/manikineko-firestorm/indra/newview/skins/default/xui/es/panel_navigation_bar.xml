@@ -21,8 +21,8 @@
 			</layout_stack>
 		</layout_panel>
 		<layout_panel name="favorites_bar_visibility_panel">
-			<favorites_bar name="favorite" tool_tip="¡Arrastra hitos aquí para acceder más velozmente a tus lugares favoritos de Second Life!">
-				<label name="favorites_bar_label" tool_tip="¡Arrastra hitos aquí para acceder más velozmente a tus lugares favoritos de Second Life!">
+			<favorites_bar name="favorite" tool_tip="¡Arrastra hitos aquí para acceder más velozmente a tus lugares favoritos de Manikineko Online!">
+				<label name="favorites_bar_label" tool_tip="¡Arrastra hitos aquí para acceder más velozmente a tus lugares favoritos de Manikineko Online!">
 					Barra de Favoritos
 				</label>
 				<chevron_button name="more_btn" tool_tip="Mostrar más de Mis favoritos"/>

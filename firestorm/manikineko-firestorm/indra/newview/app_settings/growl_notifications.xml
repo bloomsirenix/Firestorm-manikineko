@@ -1,5 +1,5 @@
 <!-- 
-  Not all possible growl notifications are defined here; Firestorm Keyword Alerts and incoming IMs are hardcoded.
+  Not all possible growl notifications are defined here; Manikineko Online Keyword Alerts and incoming IMs are hardcoded.
   
   The following options are available:
   GrowlName (string): The name used by Growl for this notification. Should be human-readable. REQUIRED.

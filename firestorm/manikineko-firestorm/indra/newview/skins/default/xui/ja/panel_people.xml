@@ -51,7 +51,7 @@
 	<!--  NEARBY tab  -->
 	
 		<panel label="近く" name="nearby_panel">
-		<!-- FS:Ansariel: Firestorm radar
+		<!-- FS:Ansariel: Manikineko Online radar
             <panel name="nearby_buttons_panel">
                 <filter_editor label="Filter People" name="nearby_filter_input" />
                 <button name="gear_btn" tool_tip="Actions on selected person" />

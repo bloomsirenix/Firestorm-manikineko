@@ -10,7 +10,7 @@
 		マウスボタン 5
 	</panel.string>
 
-<tab_container label="Firestorm環境設定" name="tabs">
+<tab_container label="Manikineko Online環境設定" name="tabs">
 
 	<!-- Sounds -->
 	
@@ -186,7 +186,7 @@
 有効、無効にすることができます。初期設定値を確認するにはマウスをUUIDフィールドの上に乗せて下さい。
 		</text>
 		
-		<text tool_tip="Firestorm が通知／警告する時に再生するデフォルトのサウンドUUIDです。" name="textFSSndAlert">
+		<text tool_tip="Manikineko Online が通知／警告する時に再生するデフォルトのサウンドUUIDです。" name="textFSSndAlert">
 			デフォルトの警告音：
 		</text>
 		<line_editor name="UISndAlert" />

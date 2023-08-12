@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater name="floater_fs_search" title="Firestorm 検索">
+<floater name="floater_fs_search" title="Manikineko Online 検索">
 
 	<!-- Strings -->
 	<floater.string name="string.location">

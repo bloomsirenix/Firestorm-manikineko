@@ -302,7 +302,7 @@
            is_running_parameters="grid_status"
            />
 
-<!-- Firestorm command buttons -->
+<!-- Manikineko Online command buttons -->
   <command name="voice"
            available_in_toybox="true"
            icon="Command_Voice_Icon"

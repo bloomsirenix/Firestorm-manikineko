@@ -21,7 +21,7 @@
 	<panel left="-446" name="balance_bg" width="215">
 		<text name="balance" tool_tip="L$ bakiyenizi yenilemek iÃ§in buraya tÄ±klayÄ±n" value="L$??"/>
 		<button label="L$ SatÄ±n Al" name="buyL" tool_tip="Daha fazla L$ satÄ±n almak iÃ§in tÄ±klayÄ±n"/>
-		<button label="AlÄ±ÅŸveriÅŸ yap" name="goShop" tool_tip="Second Life Pazaryeri AÃ§" width="95"/>
+		<button label="AlÄ±ÅŸveriÅŸ yap" name="goShop" tool_tip="Manikineko Online Pazaryeri AÃ§" width="95"/>
 	</panel>
 	<text name="TimeText" tool_tip="GeÃ§erli zaman (Pasifik)">
 		24:00 AM PST

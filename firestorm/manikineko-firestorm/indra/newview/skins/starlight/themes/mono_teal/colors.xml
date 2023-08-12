@@ -1008,7 +1008,7 @@
     name="ResizebarBody"
     value="0.208 0.208 0.208 0"/>
 
-   <!-- Colours for Firestorm - change for each theme as necessary -->	
+   <!-- Colours for Manikineko Online - change for each theme as necessary -->	
 	<color
      name="ScriptDialog"
      reference="DkGray" />
@@ -1038,7 +1038,7 @@
 	 name="GroupHiddenInProfile"
 	 reference="EmphasisColorLight" />
 	 
-    <!-- Colours for Firestorm - same for all themes -->
+    <!-- Colours for Manikineko Online - same for all themes -->
     <color
      name="AgentIMColor"
      reference="White" />

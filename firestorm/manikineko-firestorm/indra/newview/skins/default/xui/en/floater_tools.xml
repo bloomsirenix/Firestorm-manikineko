@@ -2628,7 +2628,7 @@ Lowest:
           value="LOD Swap"
           visible="false"
           width="60" />
-        <string name="ll_lod_tooltip_msg">Linden Lab Second Life Viewer default ([FACTOR])</string>
+        <string name="ll_lod_tooltip_msg">Linden Lab Manikineko Online Viewer default ([FACTOR])</string>
         <text
           follows="left|top"
           height="16"
