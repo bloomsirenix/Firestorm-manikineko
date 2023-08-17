@@ -831,7 +831,7 @@ with the same filename but different name
   <texture name="Windlight_btn" file_name="icons/Inv_WindLight.png" preload="false" />
   <texture name="Prefs_btn" file_name="icons/Edit_Wrench.png" preload="false" />
     
-  <!-- Manikineko Online viewer Art --> 
+  <!-- Firestorm viewer Art --> 
   <texture name="Inv_CallingCardOffline" file_name="icons/Inv_CallingCard.png" preload="false" />
   <texture name="Inv_LandmarkVisited" file_name="icons/Inv_Landmark.png" preload="false" />
   <texture name="Inv_TexturesOpen"		file_name="icons/Inv_SysOpen.png" />
@@ -960,8 +960,8 @@ with the same filename but different name
 
 
   <!-- Firstorm virtual system folders - added in FS 2.6.1 -->
-  <texture name="Inv_Manikineko OnlineOpen"		file_name="icons/Inv_SysOpen.png" />
-  <texture name="Inv_Manikineko OnlineClosed"	file_name="icons/Inv_SysClosed.png" />
+  <texture name="Inv_FirestormOpen"		file_name="icons/Inv_SysOpen.png" />
+  <texture name="Inv_FirestormClosed"	file_name="icons/Inv_SysClosed.png" />
   <texture name="Inv_PhoenixOpen"		file_name="icons/Inv_SysOpen.png" />
   <texture name="Inv_PhoenixClosed"		file_name="icons/Inv_SysClosed.png" />
   <texture name="Inv_RLVOpen"			file_name="icons/Inv_SysOpen.png" />
@@ -987,7 +987,7 @@ with the same filename but different name
   <texture name="Edit_Prefs_Wrench" file_name="icons/Edit_Prefs_Wrench.png" preload="false" />
   <texture name="inventory_18" file_name="bottomtray/inventory_18.png" preload="false" />
 
-<!-- REMOVE When Manikineko Online adopts newer Outbox graphic system -->
+<!-- REMOVE When Firestorm adopts newer Outbox graphic system -->
 
   <texture name="OutboxPush_Disabled" file_name="icons/OutboxPush_Disabled.png" preload="true" />
   <texture name="OutboxPush_Off" file_name="icons/OutboxPush_Off.png" preload="true" />

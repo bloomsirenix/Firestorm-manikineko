@@ -984,7 +984,7 @@
     name="blue"
     value="0 0 1 1"/>
 		    
-    <!-- Colours for Manikineko Online - change for each theme as necessary -->	
+    <!-- Colours for Firestorm - change for each theme as necessary -->	
 	<color
      name="ScriptDialog"
      value="0.81 0.325 0 1" />
@@ -1007,7 +1007,7 @@
      name="LindenChatColor"
      reference="LtBlue" />
 	 
-    <!-- Colours for Manikineko Online - same for all themes -->
+    <!-- Colours for Firestorm - same for all themes -->
     <color
      name="AgentIMColor"
      reference="White" />

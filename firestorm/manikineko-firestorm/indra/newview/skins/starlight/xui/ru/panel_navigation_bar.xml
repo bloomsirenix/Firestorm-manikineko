@@ -21,7 +21,7 @@
 			</layout_stack>
 		</layout_panel>
 		<layout_panel name="favorites_bar_visibility_panel">
-			<favorites_bar name="favorite" tool_tip="Перетащите закладку для быстрого доступа к вашим любимым местам в Manikineko Online!">
+			<favorites_bar name="favorite" tool_tip="Перетащите закладку для быстрого доступа к вашим любимым местам в Second Life!">
 				<more_button name="more_btn_stl" tool_tip="Показать больше в 'Избранные'">
 					Больше &#9660;
 				</more_button>

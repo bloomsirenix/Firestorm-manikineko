@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<colors>
+  <!-- Colors in this scheme -->
+  <!-- New Color Definitions for Sci-fi Theme -->
+  <color name="NebulaBlue" value="0.1 0.4 0.8 1.0" />
+  <color name="NebulaBlue_50" value="0.1 0.4 0.8 0.5" />
+  <color name="GalacticPurple" value="0.5 0 0.8 1.0" />
+  <color name="StellarGreen" value="0 1 0.2 1.0" />
+  <color name="StellarGreen_50" value="0 1 0.2 0.5" />
+
+  <!-- Text and Background Colors -->
+  <color name="TextFgColor" value="0.8 0.8 0.85 1" />
+  <color name="ScriptDialog" value="0.1 0.1 0.6 1" />
+  <color name="ScriptDialogFg" value=".05 .05 .05 1" />
+  <color name="AccentColor" value="0.2 0.5 0.7 1.0" />
+  <color name="EmphasisColor" value="0.2 0.2 0.5 1.0" />
+  <color name="EmphasisColorLight" value="0.4 0.4 0.8 1.0" />
+  <color name="SchemeLightest" value="0.5 0.5 0.9 1.0" />
+  <color name="SchemeLightest_35" value="0.5 0.5 0.9 0.35" />
+  <color name="SchemeDark" value="0.05 0.05 0.2 1.0" />
+  <color name="EmphasisColor_13" value="0.5 0.1 0.5 0.13" />
+  <color name="EmphasisColor_35" value="0.5 0.1 0.5 0.35" />
+
+  <!-- UI Definitions -->
+  <color
+     name="TitleBarFocusColor"
+     reference="White_10" />
+  <color name="HintTitle" reference="SchemeLightest" />
+  <color name="HintText" reference="NebulaBlue" />
+  <color name="HintBg" reference="Black" />
+  <color name="AccordionHeaderTextColor" reference="GalacticPurple" />
+  <color name="AgentChatColor" reference="White" />
+  <color name="AgentIMColor" reference="NebulaBlue" />
+  <color name="AlertBoxColor" reference="SL-DkTitanium" />
+  <color name="AlertCautionBoxColor" reference="StellarGreen" />
+  <color name="AlertCautionTextColor" reference="GalacticPurple" />
+  <color name="AgentLinkColor" reference="NebulaBlue" />
+  <color name="AlertTextColor" reference="AccentColor" />
+
+  <!-- Buttons and UI Elements -->
+  <color name="ButtonColor" reference="StellarGreen" />
+  <color name="ButtonImageColor" reference="NebulaBlue" />
+  <color name="ButtonLabelColor" reference="GalacticPurple" />
+  <color name="FloaterButtonImageColor" reference="StellarGreen" />
+  <color name="FloaterDefaultBackgroundColor" reference="NebulaBlue_50" />
+  <color name="FloaterFocusBackgroundColor" reference="NebulaBlue" />
+  <color name="FloaterFocusBorderColor" reference="StellarGreen_50" />
+  <color name="FloaterFocusTextColor" reference="GalacticPurple" />
+  <color name="FloaterDefaultTextColor" reference="GalacticPurple_50" />
+  <color name="FloaterDefaultBorderColor" reference="StellarGreen_50" />
+
+  <!-- Group Lists and UI Elements -->
+  <color name="GroupListBackgroundColor" reference="Black" />
+  <color name="GroupListBorderColor" reference="StellarGreen" />
+  <color name="GroupListTextColor" reference="GalacticPurple" />
+  <color name="GroupListTextHighlightColor" reference="NebulaBlue" />
+  <color name="GroupListTextSelectedColor" reference="NebulaBlue" />
+  <color name="GroupListTextSelectedBackgroundColor" reference="Black" />
+  <color name="GroupListTextSelectedBorderColor" reference="StellarGreen" />
+
+  <!-- Additional Sci-fi Colors -->
+  <color name="LaserGreen" value="0.13 1.0 0.13 1.0" />
+  <color name="SpaceBlack" value="0.05 0.05 0.05 1.0" />
+  <color name="SpaceGray" value="0.2 0.2 0.2 1.0" />
+  <color name="StarlightYellow" value="0.9 0.9 0.4 1.0" />
+  <color name="MeteorRed" value="0.9 0.2 0.1 1.0" />
+  <color name="WormholeViolet" value="0.4 0.0 0.7 1.0" />
+  <color name="QuantumBlue" value="0.0 0.6 1.0 1.0" />
+  <color name="SL-Brown" value="0.2 0.1 0.05 1" />
+  <color name="SL-BrickBrown" value="0.5 0.1 0.1 1" />
+  <color name="SL-BrightRed" value="0.9 0.1 0.1 1" />
+  <color name="SL-NavyBlue_0" value="0 0.1 0.2 1" />
+  <color name="SL-MdBlue" value="0.05 0.3 0.5 1" />
+
+
+  <!-- A shade reminiscent of the ethereal glow from distant galaxies. -->
+  <color name="Blue_80" value="0.8 0.8 1 1"/>
+
+  <!-- Pure as the untouched void of space, highlighting the focus of the cosmic explorer. -->
+  <color name="TextBgFocusColor" value="1 1 1 1"/>
+
+  <!-- Dark as the void between stars, ensuring legibility in any interstellar interface. -->
+  <color name="TextFgColor" value="0 0 0 1"/>
+
+  <!-- Channeling the energy of a star going supernova, drawing attention wherever it's applied. -->
+  <color name="EmphasisColor" value="1 0.5 0 1"/>
+
+  <!--Missing stuff -->
+  <color
+    name="MapTrackColorUnder"
+    value="0.1 0.5 0.9 1" />
+  <!-- Futuristic blue -->
+  <color
+      name="MapTrackDisabledColor"
+      value="0.5 0.1 0.5 1" />
+  <!-- Cyber purple -->
+  <color
+      name="MapWhisperRingColor"
+      value="0.2 0.7 0.3 0.3" />
+  <!-- Neon green -->
+  <color
+      name="MapWhisperRingColorUnder"
+      value="0.2 0.7 0.3 1" />
+  <color
+    name="Unused?"
+    value="0.502 0.502 0.502 1" />
+  <!-- Updated to a neutral gray color -->
+
+  <!--  other color definitions  -->
+
+  <color
+      name="NetMapOtherOwnBelowWater"
+      value="0.502 0.502 0.502 1" />
+  <!-- Updated to match "Unused?" color -->
+
+  <!--  other color definitions  -->
+
+  <color
+      name="ButtonBorderColor"
+      value="0.204 0.396 0.643 1" />
+  <!-- Electric Blue -->
+
+  <color
+      name="ButtonFlashBgColor"
+      value="0.306 0.263 0.518 1" />
+  <!-- Futuristic Purple -->
+
+  <color
+      name="ButtonImageColor"
+      value="0.753 0.753 0.753 1" />
+  <!-- Metallic Silver -->
+
+  <color
+      name="ButtonSelectedBgColor"
+      value="0.149 0.275 0.482 1" />
+  <!-- Darker Electric Blue -->
+
+  <color
+      name="ButtonSelectedColor"
+      value="0.212 0.184 0.361 1" />
+  <!-- Darker Futuristic Purple -->
+
+  <color
+      name="ButtonUnselectedBgColor"
+      value="0.373 0.349 0.608 1" />
+  <!-- Lighter Futuristic Purple -->
+
+  <color
+      name="ButtonUnselectedFgColor"
+      value="0.643 0.643 0.643 1" />
+  <!-- Lighter Metallic Silver -->
+
+  <!--  other color definitions  -->
+
+  <color
+      name="FloaterFocusBackgroundColor"
+      value="0.306 0.263 0.518 1" />
+  <!-- Reused Futuristic Purple -->
+
+  <color name="FloaterFocusBorderColor" reference="SL-Background_50" />
+  <color name="FloaterUnfocusBorderColor" reference="Black_50" />
+  <color name="FocusColor" reference="EmphasisColor" />
+  <color name="FolderViewLoadingMessageTextColor" reference="EmphasisColor" />
+  <color name="GridFocusPointColor" reference="White_50" />
+  <color name="GridlineBGColor" value="0.92 0.92 1 0.78" />
+  <color name="GridlineColor" reference="White" />
+  <color name="GroupLinkColor" reference="White" />
+  <color name="GridlineShadowColor" value="0 0 0 0.31" />
+  <color name="GroupNotifyBoxColor" value="0.3344 0.5456 0.5159 1" />
+  <color name="GroupNotifyTextColor" reference="White"/>
+  <color name="GroupNotifyDimmedTextColor" value="0.5 0.5 0.5 1" />
+  <color name="HTMLLinkColor" reference="AccentColor" />
+  <color name="HealthTextColor" reference="White" />
+  <color name="HelpBgColor" value="0.1 0.1 0.3 1" />
+  <color name="HelpFgColor" value="0.3 0.3 0.6 1" />
+  <color name="HelpScrollHighlightColor" value="0.2 0.2 0.5 1" />
+  <color name="HelpScrollShadowColor" value="0.05 0.05 0.2 1" />
+  <color name="HelpScrollThumbColor" value="0.4 0.4 0.8 1" />
+  <color name="HelpScrollTrackColor" value="0.1 0.1 0.35 1" />
+  <color name="HighlightChildColor" reference="Yellow" />
+  <color name="HighlightInspectColor" reference="Purple" />
+  <color name="IMHistoryBgColor" value="0.2 0.2 0.4 1" />
+  <color name="IMHistoryTextColor" value="0.8 0.8 1 1" />
+  <color name="IconDisabledColor" reference="White_25" />
+  <color name="IconEnabledColor" reference="White" />
+  <color name="InventoryBackgroundColor" reference="Transparent" />
+  <color name="InventoryFocusOutlineColor" reference="White_25" />
+  <color name="InventoryItemEnabledColor" reference="LtGray" />
+  <color name="InventoryItemHighlightBgColor" reference="SchemeLightest_35" />
+  <color name="InventoryItemHighlightFgColor" reference="White" />
+  <color name="InventoryItemLibraryColor" reference="White" />
+  <color name="InventoryItemLinkColor" reference="LtGray_50" />
+  <color name="InventoryMouseOverColor" reference="LtGray_35" />
+  <color name="InventorySearchStatusColor" reference="EmphasisColor" />
+  <color name="InventoryProtectedColor" reference="EmphasisColor" />
+  <color name="LabelDisabledColor" reference="White_25" />
+  <color name="LabelSelectedColor" reference="White" />
+  <color name="LabelSelectedDisabledColor" reference="White_25" />
+  <color name="LabelTextColor" reference="LtGray" />
+  <color name="LoginProgressBarBgColor" value="0.15 0.15 0.4 1" />
+  <color name="LoginProgressBarFgColor" value="0.3 0.3 0.7 1" />
+  <color name="LoginProgressBoxBorderColor" reference="NavyBlue_0" />
+  <color name="LoginProgressBoxCenterColor" reference="Black_78" />
+  <color name="LoginProgressBoxShadowColor" reference="Black_78" />
+  <color name="LoginProgressBoxTextColor" reference="White" />
+  <color name="MapAvatarColor" reference="Red" />
+  <color name="MapAvatarFriendColor" reference="Green" />
+  <color name="MapAvatarLindenColor" reference="Blue" />
+  <color name="MapAvatarMutedColor" value="0.4 0.4 0.4 1" />
+  <color name="MapFrustumColor" reference="White_10" />
+  <color name="MapParcelOutlineColor" value="1 1 1 1" />
+  <color name="MapTrackColor" reference="Red" />
+  <color name="MapTrackColorUnder" reference="Blue" />
+  <color name="MapTrackDisabledColor" reference="BrickBrown" />
+  <color name="MapWhisperRingColor" value="0 0 1 0.3" />
+  <color name="MapChatRingColor" value="1 1 0 0.3" />
+  <color name="MapShoutRingColor" value="1 0 0 0.3" />
+  <color name="MenuBarBgColor" reference="DkGray" />
+  <color name="MenuBarGodBgColor" reference="FrogGreen" />
+  <color name="MenuDefaultBgColor" reference="DkGray2" />
+  <color name="MenuItemDisabledColor" reference="LtGray_50" />
+  <color name="MenuItemEnabledColor" reference="LtGray" />
+  <color name="MenuItemHighlightBgColor" reference="SchemeLightest_35" />
+  <color name="MenuItemFlashBgColor" reference="BeaconColor" />
+  <color name="MenuItemHighlightFgColor" reference="White" />
+  <color name="MenuNonProductionBgColor" value="0.5 0.0 0.0 1.0" />
+  <color name="MenuPopupBgColor" reference="DkGray2" />
+  <color name="ModelUploaderLabels" value="1 0.6 0 1" />
+  <color name="MultiSliderDisabledThumbColor" reference="Black" />
+  <color name="MultiSliderThumbCenterColor" reference="White" />
+  <color name="MultiSliderThumbCenterSelectedColor" reference="Green" />
+  <color name="MultiSliderThumbOutlineColor" value="0.5 0.5 0.8 1" />
+  <color name="MultiSliderTrackColor" reference="LtGray" />
+  <color name="MultiSliderTriangleColor" reference="Yellow" />
+  <color name="NameTagBackground" value="0 0 0 0.5" />
+  <color name="NameTagChat" reference="LtGray" />
+  <color name="NameTagChatDistanceColor" reference="Green" />
+  <color name="NameTagShoutDistanceColor" reference="Yellow" />
+  <color name="NameTagBeyondShoutDistanceColor" reference="BrightRed" />
+  <color name="NameTagWhisperDistanceColor" reference="Green" />
+  
+  <color name="HelpBgColor" value="0.2 0.2 0.2 1" />
+  <color name="HelpFgColor" value="0.7 0.7 0.7 1" />
+  <color name="HelpScrollHighlightColor" value="0.5 0.5 0.8 1" />
+  <color name="HelpScrollShadowColor" value="0.1 0.1 0.1 1" />
+  <color name="HelpScrollThumbColor" value="0.4 0.4 0.4 1" />
+  <color name="HelpScrollTrackColor" value="0.3 0.3 0.3 1" />
+  
+  <color name="IMHistoryBgColor" value="0.15 0.15 0.15 1" />
+  <color name="IMHistoryTextColor" value="0.8 0.8 0.8 1" />
+  
+  <color name="LoginProgressBarBgCo lor" value="0.25 0.25 0.25 1" />
+  <color name="LoginProgressBarFgColor" value="0 0.7 0.9 1" />
+  
+  <color name="MultiSliderThumbOutlineColor" value="0.5 0.5 0.5 1" />
+  
+  <color name="SliderTrackColor" value="0.2 0.2 0.2 1" />
+  <!--Resize bar colors -->
+
+<color
+  name="ResizebarBorderLight"
+  value="0.3 0.3 0.4 1"/>
+
+<color
+  name="ResizebarBorderDark"
+  value="0.1 0.1 0.2 1"/>
+
+<color
+  name="ResizebarBody"
+  value="0.25 0.25 0.35 1"/>
+
+<!-- Color for nearby media list items -->
+<color
+  name="MediaListItemColor"
+  reference="lightblue" />
+  
+<!-- Balance at the top -->
+<color
+  name="CurrencyColor"
+  reference="purple" />
+
+<color
+  name="Phototools_Header"
+  value="0.3 0.1 0.4 1" />
+
+<!-- syntax highlighting (LSL Scripts) -->
+<color
+  name="ScriptText"
+  reference="lightblue" />
+<color
+  name="ScriptBackground"
+  value="0.08 0.08 0.15 1" />
+<color
+  name="ScriptCursorColor"
+  reference="purple" />
+<color
+  name="SyntaxLslComment"
+  value=".4 .1 .5 1" />
+<color
+  name="SyntaxLslConstant"
+  value="0.1 0.4 0.6 1" />
+<color
+  name="SyntaxLslControlFlow"
+  value="0 0.5 1 1" />
+<color
+  name="SyntaxLslControlLabel"
+  value="0.2 0.2 0.8 1" />
+<color
+  name="SyntaxLslDataType"
+  value="0.2 0.1 0.6 1" />
+<color
+  name="SyntaxLslDeprecated"
+  value="0.8 0.1 0.6, 1" />
+<color
+  name="SyntaxLslEvent"
+  value="0 0.4 0.7 1" />
+<color
+  name="SyntaxLslFunction"
+  value="0.6 0 0.5 1" />
+<color
+  name="SyntaxLslGodMode"
+  value="0.7 0.1 0.4 1" />
+<color
+  name="SyntaxLslStringLiteral"
+  value="0.2 0.2 0.7 1" />
+<color
+  name="OutfitGalleryItemSelected"
+  value="0.2 0.5 0.7 1" />
+<color
+  name="OutfitGalleryItemWorn"
+  value="0.2 0.5 0.7 1" />
+<color
+  name="OutfitGalleryItemUnselected"
+  value="0.2 0.2 0.3 1" />
+
+<!-- more color entries with sci-fi inspired adjustments... -->
+
+
+
+</colors>

@@ -36,45 +36,36 @@
 
     <map>
       <key>name</key>
-      <string>Manikineko Online</string>
+      <string>Firestorm</string>
       <key>folder</key>
       <string>firestorm</string>
       <key>themes</key>
-      <array>
+        <array>
         <map>
           <key>name</key>
-          <string>Grey</string>
+          <string>Bright Blue</string>
           <key>folder</key>
           <string/>
         </map>
         <map>
           <key>name</key>
-          <string>Dark</string>
+          <string>Classic Brown</string>
           <key>folder</key>
-          <string>dark</string>
+          <string>classic_brown</string>
         </map>
-        <!-- Thea Brianna's blue theme -->
         <map>
           <key>name</key>
-          <string>Blue</string>
+          <string>Ectoplasma</string>
           <key>folder</key>
-          <string>blue</string>
+          <string>ectoplasma</string>
         </map>
-        <!-- Ansariel Hiller's high contrast theme -->
         <map>
           <key>name</key>
-          <string>High Contrast</string>
+          <string>Blood</string>
           <key>folder</key>
-          <string>highcontrast</string>
+          <string>blood</string>
         </map>
-        <!-- David Rowe's purple theme from CtrlAltStudio Viewer -->
-        <map>
-          <key>name</key>
-          <string>CtrlAltStudio</string>
-          <key>folder</key>
-          <string>ctrlaltstudio</string>
-        </map>
-      </array>
+      </array>  
     </map>
 
     <map>

@@ -416,48 +416,39 @@ HttpHandle HttpRequest::requestNoOp(HttpHandler::ptr_t user_handler)
 	return op->getHandle();
 }
 
-
 HttpStatus HttpRequest::update(long usecs)
 {
-	HttpOperation::ptr_t op;
-	
-	if (usecs)
-	{
-		const HttpTime limit(totalTime() + HttpTime(usecs));
-		while (limit >= totalTime() && (op = mReplyQueue->fetchOp()))
-		{
-			// Process operation
-			op->visitNotifier(this);
-		
-			// We're done with the operation
-            op.reset();
-		}
-	}
-	else
-	{
-		// Same as above, just no time limit
-		HttpReplyQueue::OpContainer replies;
-		mReplyQueue->fetchAll(replies);
-		if (! replies.empty())
-		{
-			for (HttpReplyQueue::OpContainer::iterator iter(replies.begin());
-				 replies.end() != iter;
-				 ++iter)
-			{
-				// Swap op pointer for NULL;
-                op.reset();
-                op.swap(*iter);
-			
-				// Process operation
-				op->visitNotifier(this);
-		
-				// We're done with the operation
-			}
-		}
-	}
-	
-	return HttpStatus();
+    HttpOperation::ptr_t op;
+
+    const HttpTime limit = totalTime() + HttpTime(usecs);
+
+    // Instead of checking limit >= totalTime() every iteration, calculate the number of iterations once.
+    size_t iterations = usecs ? static_cast<size_t>((limit - totalTime()) / usecs) : 0;
+
+    while (iterations-- && (op = mReplyQueue->fetchOp()))
+    {
+        // Process operation
+        op->visitNotifier(this);
+        op.reset();
+    }
+
+    // If no time limit, fetch all at once
+    if (!usecs)
+    {
+        HttpReplyQueue::OpContainer replies;
+        mReplyQueue->fetchAll(replies);
+
+        // This can be optimized as well
+        for (HttpOperation::ptr_t &currentOp : replies)
+        {
+            // Process operation
+            currentOp->visitNotifier(this);
+        }
+    }
+
+    return HttpStatus();
 }
+
 
 
 

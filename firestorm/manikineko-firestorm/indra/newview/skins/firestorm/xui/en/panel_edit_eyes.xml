@@ -7,17 +7,17 @@
 	 left="0"
 	 name="edit_eyes_panel"
 	 top_pad="10"
-	 width="333" >
+	 width="363" >
 
      <panel
 	  border="false"
 	  follows="top|left|right"
-	  height="80"
+	  height="300"
 	  left="0"
 	  layout="topleft"
 	  name="avatar_eye_color_panel"
 	  top="0"
-	  width="333" >
+	  width="100" >
        <texture_picker
              can_apply_immediately="true"
              default_image_name="Default"
@@ -25,10 +25,10 @@
              height="80"
              label="Iris"
              layout="topleft"
-             left="5"
+             left="15"
              name="Iris"
              tool_tip="Click to choose a picture"
-             top="5"
+             top="0"
              width="64" >
          <texture_picker.commit_callback
              function="TexturePicker.Commit" />
@@ -39,12 +39,12 @@
       <panel
        name="eyes_main_tab_holder"
        title="Eyes"
-       top_pad="0"
-       left="0"
+       top="0"
+       left="100"
        layout="topleft"
        follows="all"
-       height="320"
-       width="333">
+       height="400"
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -55,8 +55,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="eyes_main_tab"
@@ -69,8 +70,8 @@
        left="0"
        name="eyes_main_param_list"
        top="0"
-       height="288"
-       width="333" />
+       height="400"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
