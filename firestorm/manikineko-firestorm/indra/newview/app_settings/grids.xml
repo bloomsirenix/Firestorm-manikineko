@@ -983,8 +983,6 @@
         <array>
           <string>http://master.manikineko.nl:8002/</string>
         </array>
-        <key>system_grid</key>
-        <integer>1</integer>
         <key>login_identifier_types</key>
         <array>
           <string>agent</string>
