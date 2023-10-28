@@ -1736,11 +1736,8 @@ BOOL LLViewerRegion::isViewerCameraStatic()
 
 void LLViewerRegion::killInvisibleObjects(F32 max_time)
 {
-<<<<<<< HEAD
 	if(sFSAreaSearchActive){ return; } // <FS:Beq/> FIRE-32668 Area Search improvements
-=======
 	if(gAgent.getFSAreaSearchActive()){ return; } // <FS:Beq/> FIRE-32668 Area Search improvements (again)
->>>>>>> fs/master
 	if(!sVOCacheCullingEnabled)
 	{
 		return;
@@ -3568,7 +3565,6 @@ void LLViewerRegion::logActiveCapabilities() const
 	log_capabilities(mImpl->mCapabilities);
 }
 
-<<<<<<< HEAD
 // <FS:Beq> Area Search improvement
 void LLViewerRegion::useFullUpdateInterestListMode(bool send_everything, bool force_update)
 {
@@ -3617,7 +3613,6 @@ void LLViewerRegion::useFullUpdateInterestListMode(bool send_everything, bool fo
 // </FS:Beq>
 
 LLSpatialPartition* LLViewerRegion::getSpatialPartition(U32 type)
-=======
 
 bool LLViewerRegion::requestPostCapability(const std::string &capName, LLSD &postData, httpCallback_t cbSuccess, httpCallback_t cbFailure)
 {
@@ -3723,7 +3718,6 @@ void LLViewerRegion::resetInterestList()
 
 
 LLSpatialPartition *LLViewerRegion::getSpatialPartition(U32 type)
->>>>>>> fs/master
 {
 	if (type < mImpl->mObjectPartition.size() && type < PARTITION_VO_CACHE)
 	{

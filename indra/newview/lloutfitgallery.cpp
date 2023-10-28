@@ -40,11 +40,8 @@
 #include "llfilepicker.h"
 #include "llfloaterperms.h"
 #include "llfloaterreg.h"
-<<<<<<< HEAD
 #include "llfloatersimpleoutfitsnapshot.h"
-=======
 #include "llfloatersimplesnapshot.h"
->>>>>>> fs/master
 #include "llimagedimensionsinfo.h"
 #include "llinventoryfunctions.h"
 #include "llinventorymodel.h"
@@ -1325,7 +1322,6 @@ void LLOutfitGallery::refreshOutfit(const LLUUID& category_id)
     }
 }
 
-<<<<<<< HEAD
 // Refresh linked textures from "textures" uploads folder
 void LLOutfitGallery::refreshTextures(const LLUUID& category_id)
 {
@@ -1455,8 +1451,6 @@ void LLUpdateGalleryOnPhotoLinked::fire(const LLUUID& inv_item_id)
 {
 }
 
-=======
->>>>>>> fs/master
 LLUUID LLOutfitGallery::getPhotoAssetId(const LLUUID& outfit_id)
 {
     outfit_map_t::iterator outfit_it = mOutfitMap.find(outfit_id);
@@ -1472,7 +1466,6 @@ LLUUID LLOutfitGallery::getDefaultPhoto()
     return LLUUID();
 }
 
-<<<<<<< HEAD
 void LLOutfitGallery::onTexturePickerCommit(LLTextureCtrl::ETexturePickOp op, LLUUID id)
 {
     LLUUID selected_outfit_id = getSelectedOutfitUUID();
@@ -1621,5 +1614,3 @@ void LLOutfitGallery::onTexturePickerUpdateImageStats(LLPointer<LLViewerTexture>
 {
     mTextureSelected = texture;
 }
-=======
->>>>>>> fs/master

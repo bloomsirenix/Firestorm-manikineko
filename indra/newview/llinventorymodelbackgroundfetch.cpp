@@ -1153,7 +1153,6 @@ void LLInventoryModelBackgroundFetch::bulkFetch()
 			}
 			else
 			{
-<<<<<<< HEAD
 				const LLViewerInventoryCategory * cat(gInventory.getCategory(cat_id));
 		
 				if (cat)
@@ -1167,7 +1166,6 @@ void LLInventoryModelBackgroundFetch::bulkFetch()
 						folder_sd["sort_order"]		= LLSD::Integer(sort_order);
 						folder_sd["fetch_folders"]	= LLSD::Boolean(TRUE); //(LLSD::Boolean)sFullFetchStarted;
 						folder_sd["fetch_items"]	= LLSD::Boolean(TRUE);
-=======
                 const LLViewerInventoryCategory * cat(gInventory.getCategory(cat_id));
                 if (cat)
                 {
@@ -1181,7 +1179,6 @@ void LLInventoryModelBackgroundFetch::bulkFetch()
                             folder_sd["sort_order"] = LLSD::Integer(sort_order);
                             folder_sd["fetch_folders"] = LLSD::Boolean(TRUE); //(LLSD::Boolean)sFullFetchStarted;
                             folder_sd["fetch_items"] = LLSD::Boolean(TRUE);
->>>>>>> fs/master
 
                             // <FS:Beq> correct library owner for OpenSim (Rye)
                             //if (ALEXANDRIA_LINDEN_ID == cat->getOwnerID())
@@ -1220,7 +1217,6 @@ void LLInventoryModelBackgroundFetch::bulkFetch()
 				recursive_cats.push_back(cat_id);
 			}
             all_cats.push_back(cat_id);
-<<<<<<< HEAD
 		}
 		else
 		{
@@ -1242,8 +1238,6 @@ void LLInventoryModelBackgroundFetch::bulkFetch()
 				//itemp->fetchFromServer();
 				item_count++;
 			}
-=======
->>>>>>> fs/master
 		}
 
         mFetchFolderQueue.pop_front();
@@ -1619,17 +1613,14 @@ void BGFolderHttpHandler::processFailure(LLCore::HttpStatus status, LLCore::Http
             while (iter != end)
             {
                 folders.append(*iter);
-<<<<<<< HEAD
                 LLUUID fodler_id = iter->get("folder_id").asUUID();
                 if (std::find(mRecursiveCatUUIDs.begin(), mRecursiveCatUUIDs.end(), fodler_id) != mRecursiveCatUUIDs.end())
                 {
                     recursive_cats.push_back(fodler_id);
-=======
                 LLUUID folder_id = iter->get("folder_id").asUUID();
                 if (std::find(mRecursiveCatUUIDs.begin(), mRecursiveCatUUIDs.end(), folder_id) != mRecursiveCatUUIDs.end())
                 {
                     recursive_cats.push_back(folder_id);
->>>>>>> fs/master
                 }
                 if (folders.size() == (S32)(size / 2))
                 {

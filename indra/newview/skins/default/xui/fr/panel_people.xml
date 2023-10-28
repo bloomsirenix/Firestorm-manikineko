@@ -39,11 +39,8 @@ Pour rechercher des résidents avec qui passer du temps, utilisez [secondlife://
 	</panel.string>
 	<tab_container name="tabs">
 		<panel label="Prés de vous" name="nearby_panel">
-<<<<<<< HEAD
 <!-- FS:Ansariel: Manikineko Online radar
-=======
 <!-- FS:Ansariel: Firestorm radar
->>>>>>> fs/master
 			<panel name="nearby_buttons_panel">
 				<filter_editor label="Filtrer les personnes" name="nearby_filter_input"/>
 				<button name="gear_btn" tool_tip="Actions sur la personne sélectionnée"/>

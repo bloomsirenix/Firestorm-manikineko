@@ -275,7 +275,6 @@ void LLInventoryPanel::initFromParams(const LLInventoryPanel::Params& params)
 	// save off copy of params
 	mParams = params;
 
-<<<<<<< HEAD
 	mCommitCallbackRegistrar.pushScope(); // registered as a widget; need to push callback scope ourselves
 	{
 		// Determine the root folder in case specified, and
@@ -304,9 +303,7 @@ void LLInventoryPanel::initFromParams(const LLInventoryPanel::Params& params)
 		mFolderRoot.get()->setScrollContainer(mScroller);
 		mFolderRoot.get()->setFollowsAll();
 		mFolderRoot.get()->addChild(mFolderRoot.get()->mStatusTextBox);
-=======
     initFolderRoot();
->>>>>>> fs/master
 
     // <FS:Ansariel> Optional hiding of empty system folders
     gSavedSettings.getControl("DebugHideEmptySystemFolders")->getSignal()->connect(boost::bind(&LLInventoryPanel::updateHideEmptySystemFolders, this, _2));

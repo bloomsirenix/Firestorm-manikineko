@@ -1971,11 +1971,8 @@ EMeshProcessingResult LLMeshRepoThread::headerReceived(const LLVolumeParams& mes
 	llssize header_size = 0;
 	if (data_size > 0)
 	{
-<<<<<<< HEAD
 		U32 dsize = data_size;
-=======
 		llssize dsize = data_size;
->>>>>>> fs/master
 		char* result_ptr = strip_deprecated_header((char*)data, dsize, &header_size);
 
 		data_size = dsize;
@@ -4273,11 +4270,8 @@ void LLMeshRepository::notifyMeshLoaded(const LLVolumeParams& mesh_params, LLVol
 		}
 		
 		mLoadingMeshes[detail].erase(obj_iter);
-<<<<<<< HEAD
-=======
 
 		LLViewerStatsRecorder::instance().meshLoaded();
->>>>>>> fs/master
 	}
 }
 

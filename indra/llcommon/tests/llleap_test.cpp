@@ -17,11 +17,8 @@
 // std headers
 #include <functional>
 // external library headers
-<<<<<<< HEAD
 #include <boost/assign/list_of.hpp>
 #include <boost/phoenix/core/argument.hpp>
-=======
->>>>>>> fs/master
 // other Linden headers
 #include "../test/lltut.h"
 #include "../test/namedtempfile.h"
@@ -32,13 +29,10 @@
 #include "llstring.h"
 #include "stringize.h"
 #include "StringVec.h"
-<<<<<<< HEAD
 
 using boost::assign::list_of;
 
 StringVec sv(const StringVec& listof) { return listof; }
-=======
->>>>>>> fs/master
 
 #if defined(LL_WINDOWS)
 #define sleep(secs) _sleep((secs) * 1000)
@@ -115,11 +109,8 @@ namespace tut
                    "import os\n"
                    "import sys\n"
                    "\n"
-<<<<<<< HEAD
                    "from llbase import llsd\n"
-=======
                    "import llsd\n"
->>>>>>> fs/master
                    "\n"
                    "class ProtocolError(Exception):\n"
                    "    def __init__(self, msg, data):\n"
@@ -241,17 +232,14 @@ namespace tut
     void object::test<2>()
     {
         set_test_name("stderr to log");
-<<<<<<< HEAD
         NamedTempFile script("py",
                              "import sys\n"
                              "sys.stderr.write('''Hello from Python!\n"
                              "note partial line''')\n");
-=======
         NamedExtTempFile script("py",
                                 "import sys\n"
                                 "sys.stderr.write('''Hello from Python!\n"
                                 "note partial line''')\n");
->>>>>>> fs/master
         StringVec vcommand{ PYTHON, script.getName() };
         CaptureLog log(LLError::LEVEL_INFO);
         waitfor(LLLeap::create(get_test_name(), vcommand));

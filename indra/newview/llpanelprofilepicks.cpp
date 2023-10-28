@@ -89,15 +89,12 @@ public:
         return true;
     }
 
-<<<<<<< HEAD
     bool handle(const LLSD& params, const LLSD& query_map,
         LLMediaCtrl* web)
-=======
     bool handle(const LLSD& params,
                 const LLSD& query_map,
                 const std::string& grid,
                 LLMediaCtrl* web)
->>>>>>> fs/master
     {
         if (LLStartUp::getStartupState() < STATE_STARTED)
         {

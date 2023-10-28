@@ -381,11 +381,8 @@ namespace tut
         set_test_name("raw APR nonblocking I/O");
 
         // Create a script file in a temporary place.
-<<<<<<< HEAD
         NamedTempFile script("py",
-=======
         NamedExtTempFile script("py",
->>>>>>> fs/master
             "from __future__ import print_function" EOL
             "import sys" EOL
             "import time" EOL

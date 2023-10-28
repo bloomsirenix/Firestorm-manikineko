@@ -29,11 +29,8 @@
 			<text name="ShadersPrefText4">
 				Ultra
 			</text>
-<<<<<<< HEAD
 			<check_box label="Tam ekran rejimi" name="Fullscreen Mode" tool_tip="Manikineko Online-u tam ekran rejimində işə salın. Bu seçimi dəyişmək üçün yenidən başlatma tələb olunur."/>
-=======
 			<check_box label="Tam ekran rejimi" name="Fullscreen Mode" tool_tip="Firestorm-u tam ekran rejimində işə salın. Bu seçimi dəyişmək üçün yenidən başlatma tələb olunur."/>
->>>>>>> fs/master
 			<text name="ShadersText">
 				Şeyderlər:
 			</text>

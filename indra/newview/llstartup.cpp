@@ -300,11 +300,8 @@ static bool mLoginStatePastUI = false;
 static bool mBenefitsSuccessfullyInit = false;
 
 const F32 STATE_AGENT_WAIT_TIMEOUT = 240; //seconds
-<<<<<<< HEAD
 const S32 MAX_SEED_CAP_ATTEMPTS_BEFORE_LOGIN = 3; // Give region 3 chances
-=======
 const S32 MAX_SEED_CAP_ATTEMPTS_BEFORE_ABORT = 4; // Give region 4 chances
->>>>>>> fs/master
 
 std::unique_ptr<LLEventPump> LLStartUp::sStateWatcher(new LLEventStream("StartupState"));
 std::unique_ptr<LLStartupListener> LLStartUp::sListener(new LLStartupListener());
@@ -1025,12 +1022,9 @@ bool idle_startup()
 #else
 				void* window_handle = NULL;
 #endif
-<<<<<<< HEAD
 				bool init = gAudiop->init(window_handle, LLAppViewer::instance()->getSecondLifeTitle());
 				if(init)
-=======
 				if (gAudiop->init(window_handle, LLAppViewer::instance()->getSecondLifeTitle()))
->>>>>>> fs/master
 				{
 					if (FALSE == gSavedSettings.getBOOL("UseMediaPluginsForStreamingAudio"))
 					{
@@ -2086,13 +2080,11 @@ bool idle_startup()
 		else
 		{
 			U32 num_retries = regionp->getNumSeedCapRetries();
-<<<<<<< HEAD
             if (num_retries > MAX_SEED_CAP_ATTEMPTS_BEFORE_LOGIN)
             {
                 // Region will keep trying to get capabilities,
                 // but for now continue as if caps were granted
                 LLStartUp::setStartupState(STATE_SEED_CAP_GRANTED);
-=======
             if (num_retries > MAX_SEED_CAP_ATTEMPTS_BEFORE_ABORT)
             {
                 LL_WARNS("AppInit") << "Failed to get capabilities. Backing up to login screen!" << LL_ENDL;
@@ -2105,7 +2097,6 @@ bool idle_startup()
                     LLNotificationsUtil::add("LoginPacketNeverReceivedNoTP", LLSD(), LLSD(), login_alert_status);
                 }
                 reset_login();
->>>>>>> fs/master
             }
 			else if (num_retries > 0)
 			{

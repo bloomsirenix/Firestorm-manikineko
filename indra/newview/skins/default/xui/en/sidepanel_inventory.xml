@@ -72,10 +72,7 @@
                         font="SansSerifMedium"
                         name="inbox_btn"
                         height="35"
-<<<<<<< HEAD
                         width="270"
-=======
->>>>>>> fs/master
                         image_unselected="MarketplaceBtn_Off"
                         image_selected="MarketplaceBtn_Selected"
                         halign="left"
@@ -85,12 +82,9 @@
                         tab_stop="false"
                         pad_left="35"
                         top="0"
-<<<<<<< HEAD
                         left="10" />
-=======
                         left="5"
                         right="-43" />
->>>>>>> fs/master
                      <button
                         name="reload_received_items_btn"
                         height="35"

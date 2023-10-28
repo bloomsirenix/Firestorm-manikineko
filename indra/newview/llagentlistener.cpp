@@ -154,11 +154,8 @@ void LLAgentListener::requestTeleport(LLSD const & event_data) const
         params.append(event_data["x"]);
         params.append(event_data["y"]);
         params.append(event_data["z"]);
-<<<<<<< HEAD
         LLCommandDispatcher::dispatch("teleport", params, LLSD(), NULL, LLCommandHandler::NAV_TYPE_CLICKED, true);
-=======
         LLCommandDispatcher::dispatch("teleport", params, LLSD(), LLGridManager::getInstance()->getGrid(), NULL, LLCommandHandler::NAV_TYPE_CLICKED, true);
->>>>>>> fs/master
         // *TODO - lookup other LLCommandHandlers for "agent", "classified", "event", "group", "floater", "parcel", "login", login_refresh", "balance", "chat"
         // should we just compose LLCommandHandler and LLDispatchListener?
     }

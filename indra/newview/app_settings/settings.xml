@@ -2961,11 +2961,8 @@
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
-<<<<<<< HEAD
       <integer>95.0</integer>
-=======
       <real>95.0</real>
->>>>>>> fs/master
     </map>
     <key>FSDiskCacheLowWaterPercent</key>
     <map>
@@ -2976,11 +2973,8 @@
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
-<<<<<<< HEAD
       <integer>70.0</integer>
-=======
       <real>70.0</real>
->>>>>>> fs/master
     </map>
     <key>CacheLocation</key>
     <map>
@@ -14051,11 +14045,8 @@ Change of this parameter will affect the layout of buttons in notification toast
 			<key>Type</key>
 			<string>String</string>
 			<key>Value</key>
-<<<<<<< HEAD
 			<string>https://jira.firestormviewer.org/secure/CreateIssueDetails!init.jspa?pid=10003&amp;issuetype=8&amp;priority=3&amp;environment=[ENVIRONMENT]</string>
-=======
 			<string>https://phoenixviewer.com/app/file-a-jira/?environment=[ENVIRONMENT]</string>
->>>>>>> fs/master
 		</map>
 	<key>RevokePermsOnStopAnimation</key>
     <map>
@@ -22299,7 +22290,6 @@ Change of this parameter will affect the layout of buttons in notification toast
       <key>Value</key>
       <integer>0</integer>
     </map>
-<<<<<<< HEAD
   <key>360CaptureUseInterestListCap</key>
   <map>
     <key>Comment</key>
@@ -22311,8 +22301,6 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>Value</key>
     <integer>1</integer>
   </map>
-=======
->>>>>>> fs/master
   <key>360CaptureJPEGEncodeQuality</key>
   <map>
     <key>Comment</key>
@@ -23717,8 +23705,6 @@ Change of this parameter will affect the layout of buttons in notification toast
     <key>Value</key>
     <integer>0</integer>
   </map>
-<<<<<<< HEAD
-=======
   <key>FindOriginalOpenWindow</key>
   <map>
     <key>Comment</key>
@@ -23786,7 +23772,6 @@ Change of this parameter will affect the layout of buttons in notification toast
   <integer>0</integer>
 </map>
 
->>>>>>> fs/master
   <key>FSNetMapPhantomOpacity</key>
   <map>
     <key>Comment</key>

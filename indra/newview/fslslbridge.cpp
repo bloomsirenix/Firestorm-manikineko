@@ -177,11 +177,8 @@ bool FSLSLBridge::lslToViewer(std::string_view message, const LLUUID& fromID, co
 		return false;
 	}
 	std::string_view tag = message.substr(0, tagend + 1);
-<<<<<<< HEAD
 	std::string ourBridge = findFSCategory().asString();
-=======
 	std::string ourBridge = getBridgeFolder().asString();
->>>>>>> fs/master
 	//</FS:TS> FIRE-962
 	
 	bool bridgeIsEnabled = gSavedSettings.getBOOL("UseLSLBridge");
@@ -1551,13 +1548,10 @@ LLUUID FSLSLBridge::findFSCategory()
 			{
 				if (cat->getName() == FS_BRIDGE_FOLDER)
 				{
-<<<<<<< HEAD
 					bridgeCatID = cat->getUUID();
 					break;
-=======
 					mBridgeFolderID = cat->getUUID();
 					return mBridgeFolderID;
->>>>>>> fs/master
 				}
 			}
 		}

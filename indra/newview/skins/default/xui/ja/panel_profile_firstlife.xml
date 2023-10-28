@@ -1,6 +1,3 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<<<<<<< HEAD
 <panel label="プロフィール" name="panel_profile_firstlife"/>
-=======
 <panel label="プロフィール" name="panel_profile_firstlife"/>
->>>>>>> fs/master

@@ -446,7 +446,6 @@ TestString PleaseIgnore
         max_val="999999999"
         top_pad="10"
         tool_tip="Object cost." />
-<<<<<<< HEAD
       <text
         type="string"
         length="1"
@@ -531,7 +530,6 @@ TestString PleaseIgnore
       right="-1"
       width="100" />
   </panel>
-=======
       
     </layout_panel>
 
@@ -608,5 +606,4 @@ TestString PleaseIgnore
         </text>
     </layout_panel>
   </layout_stack>
->>>>>>> fs/master
 </panel>

@@ -105,12 +105,9 @@
 #include "llfloaternotificationstabbed.h"
 #include "llfloaterobjectweights.h"
 #include "llfloateropenobject.h"
-<<<<<<< HEAD
 #include "llfloateroutfitphotopreview.h"
 #include "llfloatersimpleoutfitsnapshot.h"
-=======
 #include "llfloatersimplesnapshot.h"
->>>>>>> fs/master
 #include "llfloaterpathfindingcharacters.h"
 #include "llfloaterpathfindingconsole.h"
 #include "llfloaterpathfindinglinksets.h"
@@ -124,11 +121,8 @@
 #include "llfloaterpreferenceviewadvanced.h"
 #include "llfloaterpreviewtrash.h"
 #include "llfloaterprofile.h"
-<<<<<<< HEAD
 #include "llfloaterproperties.h"
-=======
 #include "llfloaterproperties.h" // <FS:Ansariel> Keep legacy properties floater
->>>>>>> fs/master
 #include "llfloaterregiondebugconsole.h"
 #include "llfloaterregioninfo.h"
 #include "llfloaterregionrestarting.h"
@@ -295,10 +289,7 @@ public:
                 "avatar_picker",
                 "camera",
                 "camera_presets",
-<<<<<<< HEAD
-=======
                 "change_item_thumbnail"
->>>>>>> fs/master
                 "classified",
                 "add_landmark",
                 "delete_pref_preset",
@@ -317,10 +308,7 @@ public:
                 "message_critical", // Modal!!! Login specific. If this is in use elsewhere, better to create a non modal variant
                 "message_tos", // Modal!!! Login specific.
                 "mute_object_by_name",
-<<<<<<< HEAD
-=======
                 "new_feature_notification",
->>>>>>> fs/master
                 "publish_classified",
                 "save_pref_preset",
                 "save_camera_preset",
@@ -346,10 +334,7 @@ public:
 	bool handle(
         const LLSD& params,
         const LLSD& query_map,
-<<<<<<< HEAD
-=======
         const std::string& grid,
->>>>>>> fs/master
         LLMediaCtrl* web) override
 	{
 		if (params.size() != 1)
@@ -588,11 +573,8 @@ void LLViewerFloaterReg::registerFloaters()
 	LLFloaterReg::add("scene_load_stats", "floater_scene_load_stats.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterSceneLoadStats>);
 	LLFloaterReg::add("stop_queue", "floater_script_queue.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterNotRunQueue>);
 	LLFloaterReg::add("snapshot", "floater_snapshot.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterSnapshot>);
-<<<<<<< HEAD
     LLFloaterReg::add("simple_outfit_snapshot", "floater_simple_outfit_snapshot.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterSimpleOutfitSnapshot>);
-=======
     LLFloaterReg::add("simple_snapshot", "floater_simple_snapshot.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterSimpleSnapshot>);
->>>>>>> fs/master
 	// <FS:CR> Search floater is deferred to login now so we can tell what grid we're in.
     //LLFloaterReg::add("search", "floater_search.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterSearch>);
     LLFloaterReg::add("profile", "floater_profile.xml",(LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterProfile>);
@@ -659,11 +641,8 @@ void LLViewerFloaterReg::registerFloaters()
 	LLFloaterReg::add("secondary_inventory", "floater_my_inventory.xml", (LLFloaterBuildFunc)&LLSidepanelInventory::createSecondaryInventoryWindow);
 	LLFloaterReg::add("script_recover", "floater_script_recover.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterScriptRecover>);
 	LLFloaterReg::add("sound_explorer", "floater_NACL_explore_sounds.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<NACLFloaterExploreSounds>);
-<<<<<<< HEAD
 	LLFloaterReg::add("vram_usage", "floater_fs_vram_usage.xml", static_cast<LLFloaterBuildFunc>( &LLFloaterReg::build< FSFloaterVRAMUsage >) );
-=======
 	LLFloaterReg::add("vram_usage", "floater_fs_vram_usage.xml", static_cast<LLFloaterBuildFunc>(&LLFloaterReg::build<FSFloaterVRAMUsage>));
->>>>>>> fs/master
 	LLFloaterReg::add("local_mesh_floater", "floater_vj_local_mesh.xml", (LLFloaterBuildFunc)&LLFloaterReg::build<LLFloaterLocalMesh>); // local mesh
 
 	LLFloaterReg::registerControlVariables(); // Make sure visibility and rect controls get preserved when saving

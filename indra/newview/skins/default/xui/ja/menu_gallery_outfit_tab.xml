@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" ?>
 <context_menu name="Outfit">
 	<menu name="New Clothes" label="新しい洋服">
@@ -21,7 +20,6 @@
 		<menu_item_call name="New Shape" label="新しいシェイプ"/>
 		<menu_item_call name="New Skin" label="新しい皮膚"/>
 	</menu>
-=======
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <context_menu name="Outfit">
 	<menu_item_call label="着る－このアウトフィットに着替える" name="wear_replace"/>
@@ -56,5 +54,4 @@
 	<menu_item_call label="アウトフィットを編集" name="edit"/>
 	<menu_item_call label="アウトフィットの名前変更" name="rename"/>
 	<menu_item_call label="アウトフィットを削除" name="delete"/>
->>>>>>> fs/master
 </context_menu>

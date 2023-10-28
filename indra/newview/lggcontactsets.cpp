@@ -295,11 +295,8 @@ void LGGContactSets::importFromLLSD(const LLSD& data)
 	}
 }
 
-<<<<<<< HEAD
 LLColor4 LGGContactSets::getSetColor(std::string_view set_name)
-=======
 LLColor4 LGGContactSets::getSetColor(std::string_view set_name) const
->>>>>>> fs/master
 {
 	if (ContactSet* set = getContactSet(set_name); set)
 	{
@@ -314,12 +311,9 @@ LLColor4 LGGContactSets::colorize(const LLUUID& uuid, LLColor4 color, ELGGCSType
 	static LLCachedControl<bool> legacy_radar_friend(gSavedSettings, "FSLegacyRadarFriendColoring");
 	static LLCachedControl<bool> legacy_radar_linden(gSavedSettings, "FSLegacyRadarLindenColoring");
 	bool rlv_shownames = !RlvActions::canShowName(RlvActions::SNC_DEFAULT, uuid);
-<<<<<<< HEAD
 	LLColor4 color = cur_color;
 	
-=======
 
->>>>>>> fs/master
 	if (uuid == gAgentID)
 	{
 		switch (type)
@@ -453,11 +447,8 @@ LLColor4 LGGContactSets::colorize(const LLUUID& uuid, LLColor4 color, ELGGCSType
 	return color;
 }
 
-<<<<<<< HEAD
 LLColor4 LGGContactSets::getFriendColor(const LLUUID& friend_id, std::string_view ignored_set_name)
-=======
 LLColor4 LGGContactSets::getFriendColor(const LLUUID& friend_id, std::string_view ignored_set_name) const
->>>>>>> fs/master
 {
 	LLColor4 color = getDefaultColor();
 	if (ignored_set_name == CS_SET_NO_SETS)
@@ -466,12 +457,9 @@ LLColor4 LGGContactSets::getFriendColor(const LLUUID& friend_id, std::string_vie
 	}
 
 	U32 lowest = U32_MAX;
-<<<<<<< HEAD
 	string_vec_t contact_sets = getFriendSets(friend_id);
 	for (const auto& set_name : contact_sets)
-=======
 	for (const auto& set_name : getFriendSets(friend_id))
->>>>>>> fs/master
 	{
 		if (set_name != ignored_set_name)
 		{
@@ -497,11 +485,8 @@ LLColor4 LGGContactSets::getFriendColor(const LLUUID& friend_id, std::string_vie
 	{
 		if (isFriendInSet(friend_id, ignored_set_name) && !isInternalSetName(ignored_set_name))
 		{
-<<<<<<< HEAD
 			return mContactSets[ignored_set_name.data()]->mColor;
-=======
 			return mContactSets.at(ignored_set_name.data())->mColor;
->>>>>>> fs/master
 		}
 	}
 	return color;
@@ -579,11 +564,8 @@ string_vec_t LGGContactSets::getFriendSets(const LLUUID& friend_id) const
 	return sets;
 }
 
-<<<<<<< HEAD
 uuid_vec_t LGGContactSets::getFriendsInSet(std::string_view set_name)
-=======
 uuid_vec_t LGGContactSets::getFriendsInSet(std::string_view set_name) const
->>>>>>> fs/master
 {
 	uuid_vec_t friends;
 
@@ -644,11 +626,8 @@ uuid_vec_t LGGContactSets::getFriendsInAnySet() const
 
 bool LGGContactSets::isFriendInAnySet(const LLUUID& friend_id) const
 {
-<<<<<<< HEAD
 	for (const auto& [set_name, set] :  mContactSets)
-=======
 	for (const auto& [set_name, set] : mContactSets)
->>>>>>> fs/master
 	{
 		if (set->hasFriend(friend_id))
 		{
@@ -659,11 +638,8 @@ bool LGGContactSets::isFriendInAnySet(const LLUUID& friend_id) const
 	return false;
 }
 
-<<<<<<< HEAD
 bool LGGContactSets::isFriendInSet(const LLUUID& friend_id, std::string_view set_name)
-=======
 bool LGGContactSets::isFriendInSet(const LLUUID& friend_id, std::string_view set_name) const
->>>>>>> fs/master
 {
 	if (set_name == CS_SET_ALL_SETS)
 	{
@@ -695,16 +671,13 @@ bool LGGContactSets::isFriendInSet(const LLUUID& friend_id, std::string_view set
 
 bool LGGContactSets::notifyForFriend(const LLUUID& friend_id) const
 {
-<<<<<<< HEAD
 	string_vec_t sets = getFriendSets(friend_id);
 	for (const auto& set_name : sets)
 	{
 		if (mContactSets[set_name]->mNotify)
-=======
 	for (const auto& set_name : getFriendSets(friend_id))
 	{
 		if (mContactSets.at(set_name)->mNotify)
->>>>>>> fs/master
 		{
 			return true;
 		}
@@ -756,12 +729,9 @@ void LGGContactSets::removeNonFriendFromList(const LLUUID& non_friend_id, bool s
 
 void LGGContactSets::removeFriendFromAllSets(const LLUUID& friend_id, bool save_changes /*= true*/)
 {
-<<<<<<< HEAD
 	string_vec_t sets = getFriendSets(friend_id);
 	for (const auto& set_name : sets)
-=======
 	for (const auto& set_name : getFriendSets(friend_id))
->>>>>>> fs/master
 	{
 		removeFriendFromSet(friend_id, set_name, save_changes);
 	}
@@ -947,11 +917,8 @@ void LGGContactSets::removeFriendFromSet(const LLUUID& friend_id, std::string_vi
 	}
 }
 
-<<<<<<< HEAD
 bool LGGContactSets::isValidSet(std::string_view set_name)
-=======
 bool LGGContactSets::isValidSet(std::string_view set_name) const
->>>>>>> fs/master
 {
 	return (mContactSets.find(set_name.data()) != mContactSets.end());
 }
@@ -1026,11 +993,8 @@ void LGGContactSets::setNotifyForSet(std::string_view set_name, bool notify)
 	}
 }
 
-<<<<<<< HEAD
 bool LGGContactSets::getNotifyForSet(std::string_view set_name)
-=======
 bool LGGContactSets::getNotifyForSet(std::string_view set_name) const
->>>>>>> fs/master
 {
 	if (ContactSet* set = getContactSet(set_name); set)
 	{
@@ -1048,11 +1012,8 @@ void LGGContactSets::setSetColor(std::string_view set_name, const LLColor4& colo
 	}
 }
 
-<<<<<<< HEAD
 bool LGGContactSets::isInternalSetName(std::string_view set_name)
-=======
 bool LGGContactSets::isInternalSetName(std::string_view set_name) const
->>>>>>> fs/master
 {
 	return (set_name.empty() ||
 			set_name == CS_SET_EXTRA_AVS ||
@@ -1062,11 +1023,8 @@ bool LGGContactSets::isInternalSetName(std::string_view set_name) const
 			set_name == CS_GLOBAL_SETTINGS);
 }
 
-<<<<<<< HEAD
 LGGContactSets::ContactSet* LGGContactSets::getContactSet(std::string_view set_name)
-=======
 LGGContactSets::ContactSet* LGGContactSets::getContactSet(std::string_view set_name) const
->>>>>>> fs/master
 {
 	if (set_name.empty())
 	{
@@ -1074,12 +1032,9 @@ LGGContactSets::ContactSet* LGGContactSets::getContactSet(std::string_view set_n
 		return nullptr;
 	}
 
-<<<<<<< HEAD
 	contact_set_map_t::iterator found = mContactSets.find(set_name.data());
 	if (found != mContactSets.end())
-=======
 	if (auto found = mContactSets.find(set_name.data()); found != mContactSets.end())
->>>>>>> fs/master
 	{
 		return found->second;
 	}

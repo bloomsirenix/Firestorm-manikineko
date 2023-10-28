@@ -602,19 +602,13 @@ BOOL get_is_item_worn(const LLUUID& id)
 	const LLViewerInventoryItem* item = gInventory.getItem(id);
 	if (!item)
 		return FALSE;
-<<<<<<< HEAD
     
-=======
 
->>>>>>> fs/master
     if (item->getIsLinkType() && !gInventory.getItem(item->getLinkedUUID()))
     {
         return FALSE;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> fs/master
 	// Consider the item as worn if it has links in COF.
 // [SL:KB] - The code below causes problems across the board so it really just needs to go
 //	if (LLAppearanceMgr::instance().isLinkedInCOF(id))
@@ -993,7 +987,6 @@ void show_item_original(const LLUUID& item_uuid)
     LLSidepanelInventory *sidepanel_inventory =	LLFloaterSidePanelContainer::getPanel<LLSidepanelInventory>("inventory");
     if (sidepanel_inventory)
     {
-<<<<<<< HEAD
         // <FS:Ansariel> FIRE-31037: "Recent" inventory filter gets reset when using "Show Original"
         //LLPanelMainInventory* main_inventory = sidepanel_inventory->getMainInventoryPanel();
         //if (main_inventory)
@@ -1001,7 +994,6 @@ void show_item_original(const LLUUID& item_uuid)
         //    main_inventory->resetAllItemsFilters();
         //}
         // </FS:Ansariel>
-=======
         LLPanelMainInventory* main_inventory = sidepanel_inventory->getMainInventoryPanel();
         if (main_inventory)
         {
@@ -1012,7 +1004,6 @@ void show_item_original(const LLUUID& item_uuid)
             // <FS:Ansariel> FIRE-31037: "Recent" inventory filter gets reset when using "Show Original"
             //main_inventory->resetAllItemsFilters();
         }
->>>>>>> fs/master
         reset_inventory_filter();
 
         if (!LLFloaterReg::getTypedInstance<LLFloaterSidePanelContainer>("inventory")->isInVisibleChain())
@@ -1082,11 +1073,8 @@ S32 depth_nesting_in_marketplace(LLUUID cur_uuid)
     // Todo: findCategoryUUIDForType is somewhat expensive with large
     // flat root folders yet we use depth_nesting_in_marketplace at
     // every turn, find a way to correctly cache this id.
-<<<<<<< HEAD
     const LLUUID marketplace_listings_uuid = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS, false);
-=======
     const LLUUID marketplace_listings_uuid = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS);
->>>>>>> fs/master
     if (marketplace_listings_uuid.isNull())
     {
         return -1;
@@ -1706,7 +1694,6 @@ bool move_item_to_marketplacelistings(LLInventoryItem* inv_item, LLUUID dest_fol
             else if (depth == 1)
             {
                 // We need a version folder
-<<<<<<< HEAD
                 dest_folder = gInventory.createNewCategory(dest_folder, LLFolderType::FT_NONE, viewer_inv_item->getName());
                 depth++;
             }
@@ -1740,9 +1727,7 @@ bool move_item_to_marketplacelistings(LLInventoryItem* inv_item, LLUUID dest_fol
                                     dest_folder,
                                     std::string(),
                                     cb);
-=======
                 gInventory.createNewCategory(dest_folder, LLFolderType::FT_NONE, viewer_inv_item->getName(), callback_dest_create);
->>>>>>> fs/master
             }
             else
             {
@@ -1824,14 +1809,12 @@ bool sort_alpha(const LLViewerInventoryCategory* cat1, const LLViewerInventoryCa
 // This function does no deletion of listings but a mere audit and raises issues to the user (through the
 // optional callback cb).
 // The only inventory changes that are done is to move and sort folders containing no-copy items to stock folders.
-<<<<<<< HEAD
 bool validate_marketplacelistings(
     LLInventoryCategory* cat,
     validation_callback_t cb,
     bool fix_hierarchy,
     S32 depth,
     bool notify_observers)
-=======
 // @pending_callbacks - how many callbacks we are waiting for, must be inited before use
 // @result - true if things validate, false if issues are raised, must be inited before use
 typedef boost::function<void(S32 pending_callbacks, bool result)> validation_result_callback_t;
@@ -1844,7 +1827,6 @@ void validate_marketplacelistings(
     bool notify_observers,
     S32 &pending_callbacks,
     bool &result)
->>>>>>> fs/master
 {
     // Get the type and the depth of the folder
     LLViewerInventoryCategory * viewer_cat = (LLViewerInventoryCategory *) (cat);
@@ -1899,13 +1881,11 @@ void validate_marketplacelistings(
             // Nest the stock folder one level deeper in a normal folder and restart from there
             pending_callbacks++;
             LLUUID parent_uuid = cat->getParentUUID();
-<<<<<<< HEAD
             LLUUID folder_uuid = gInventory.createNewCategory(parent_uuid, LLFolderType::FT_NONE, cat->getName());
             LLInventoryCategory* new_cat = gInventory.getCategory(folder_uuid);
             gInventory.changeCategoryParent(viewer_cat, folder_uuid, false);
             result &= validate_marketplacelistings(new_cat, cb, fix_hierarchy, depth + 1, notify_observers);
             return result;
-=======
             LLUUID cat_uuid = cat->getUUID();
             gInventory.createNewCategory(parent_uuid,
                 LLFolderType::FT_NONE,
@@ -1929,7 +1909,6 @@ void validate_marketplacelistings(
             );
             result = false;
             return;
->>>>>>> fs/master
         }
         else
         {
@@ -2143,7 +2122,6 @@ void validate_marketplacelistings(
                         }
                         cb_result(0, true);
                     }
-<<<<<<< HEAD
                     
                     // Next type
                     update_marketplace_category(parent_uuid);
@@ -2152,9 +2130,7 @@ void validate_marketplacelistings(
                     {
                         gInventory.notifyObservers();
                     }
-=======
                     );
->>>>>>> fs/master
                     items_vector_it++;
                 }
             }
@@ -2168,11 +2144,8 @@ void validate_marketplacelistings(
                 {
                     LLViewerInventoryCategory * viewer_cat = (LLViewerInventoryCategory *) (*iter);
                     gInventory.changeCategoryParent(viewer_cat, parent_uuid, false);
-<<<<<<< HEAD
                     result &= validate_marketplacelistings(viewer_cat, cb, fix_hierarchy, depth, false);
-=======
                     validate_marketplacelistings(viewer_cat, cb_result, cb_msg, fix_hierarchy, depth, false, pending_callbacks, result);
->>>>>>> fs/master
                 }
             }
         }
@@ -2248,12 +2221,9 @@ void validate_marketplacelistings(
             {
                 gInventory.notifyObservers();
             }
-<<<<<<< HEAD
             return result && !has_bad_items;
-=======
             result &=!has_bad_items;
             return;
->>>>>>> fs/master
         }
     }
 
@@ -2266,11 +2236,8 @@ void validate_marketplacelistings(
 	for (LLInventoryModel::cat_array_t::iterator iter = cat_array_copy.begin(); iter != cat_array_copy.end(); iter++)
 	{
 		LLInventoryCategory* category = *iter;
-<<<<<<< HEAD
 		result &= validate_marketplacelistings(category, cb, fix_hierarchy, depth + 1, false);
-=======
 		validate_marketplacelistings(category, cb_result, cb_msg, fix_hierarchy, depth + 1, false, pending_callbacks, result);
->>>>>>> fs/master
 	}
 
     update_marketplace_category(cat->getUUID(), true, true);
@@ -2278,11 +2245,8 @@ void validate_marketplacelistings(
     {
         gInventory.notifyObservers();
     }
-<<<<<<< HEAD
     return result && !has_bad_items;
-=======
     result &= !has_bad_items;
->>>>>>> fs/master
 }
 
 void change_item_parent(const LLUUID& item_id, const LLUUID& new_parent_id)
@@ -2382,11 +2346,9 @@ void move_items_to_new_subfolder(const uuid_vec_t& selected_uuids, const std::st
 
     inventory_func_type func = boost::bind(&move_items_to_folder, _1, selected_uuids);
     gInventory.createNewCategory(first_item->getParentUUID(), LLFolderType::FT_NONE, folder_name, func);
-<<<<<<< HEAD
 
 }
 
-=======
 }
 
 // Returns true if the item can be moved to Current Outfit or any outfit folder.
@@ -2750,7 +2712,6 @@ LLMarketplaceValidator::ValidationRequest::ValidationRequest(
 , mDepth(depth)
 {}
 
->>>>>>> fs/master
 ///----------------------------------------------------------------------------
 /// LLInventoryCollectFunctor implementations
 ///----------------------------------------------------------------------------
@@ -3347,10 +3308,7 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
 			LLSD args;
 			// <FS:Ansariel> FIRE-31816: Include selection count when deleting more than one object from inventory
 			//args["QUESTION"] = LLTrans::getString(root->getSelectedCount() > 1 ? "DeleteItems" :  "DeleteItem");
-<<<<<<< HEAD
 			//args["QUESTION"] = LLTrans::getString(root->getSelectedCount() > 1 ? "DeleteItems" : "DeleteItem", args);
-=======
->>>>>>> fs/master
 			LLLocale locale("");
 			std::string count_str{};
 			S32 selection_count = root->getSelectedCount();
@@ -3574,11 +3532,8 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
     if (action == "wear" || action == "wear_add")
     {
         const LLUUID trash_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_TRASH);
-<<<<<<< HEAD
         const LLUUID mp_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS, false);
-=======
         const LLUUID mp_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS);
->>>>>>> fs/master
         std::copy_if(selected_uuid_set.begin(),
             selected_uuid_set.end(),
             std::back_inserter(ids),
@@ -3693,7 +3648,6 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
     {
         if (ids.size() == 1)
         {
-<<<<<<< HEAD
             LLInventoryCategory* inv_cat = gInventory.getCategory(*ids.begin());
             if (!inv_cat || LLFolderType::lookupIsProtectedType(inv_cat->getPreferredType()))
             {
@@ -3739,9 +3693,7 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
 
             }); // <FS:Ansariel> FIRE-32736: Add confirmation before ungrouping folder
 
-=======
             ungroup_folder_items(*ids.begin());
->>>>>>> fs/master
         }
     }
     // <FS:Ansariel> FIRE-22851: Show texture "Save as" file picker subsequently instead all at once

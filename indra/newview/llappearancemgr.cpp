@@ -4615,7 +4615,6 @@ void LLAppearanceMgr::makeNewOutfitLinks(const std::string& new_folder_name, boo
 
 	// First, make a folder in the My Outfits directory.
 	const LLUUID parent_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MY_OUTFITS);
-<<<<<<< HEAD
     if (AISAPI::isAvailable())
 	{
 		// cap-based category creation was buggy until recently. use
@@ -4636,7 +4635,6 @@ void LLAppearanceMgr::makeNewOutfitLinks(const std::string& new_folder_name, boo
 			new_folder_name);
 		onOutfitFolderCreated(folder_id, show_panel);
 	}
-=======
 
     gInventory.createNewCategory(
         parent_id,
@@ -4646,7 +4644,6 @@ void LLAppearanceMgr::makeNewOutfitLinks(const std::string& new_folder_name, boo
         {
             LLAppearanceMgr::getInstance()->onOutfitFolderCreated(new_cat_id, show_panel);
         });
->>>>>>> fs/master
 }
 
 void LLAppearanceMgr::wearBaseOutfit()

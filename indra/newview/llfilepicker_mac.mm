@@ -103,10 +103,7 @@ std::unique_ptr<std::vector<std::string>> doLoadDialog(const std::vector<std::st
             }
         }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> fs/master
     return outfiles;
 }
 
@@ -153,11 +150,8 @@ void doLoadDialogModeless(const std::vector<std::string>* allowed_types,
     }
 }
 
-<<<<<<< HEAD
 std::unique_ptr<std::string> doSaveDialog(const std::string* file,
-=======
 std::unique_ptr<std::string> doSaveDialog(const std::string* file, 
->>>>>>> fs/master
                   const std::string* type,
                   const std::string* creator,
                   const std::string* extension,

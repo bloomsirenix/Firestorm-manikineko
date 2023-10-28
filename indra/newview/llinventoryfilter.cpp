@@ -71,10 +71,7 @@ LLInventoryFilter::FilterOps::FilterOps(const Params& p)
 	mFilterTypes(p.types),
 	mFilterUUID(p.uuid),
 	mFilterLinks(p.links),
-<<<<<<< HEAD
-=======
     mFilterThumbnails(p.thumbnails),
->>>>>>> fs/master
 	mCoalescedObjectsOnly(p.coalesced_objects_only),		// <FS:Zi> FIRE-31369: Add inventory filter for coalesced objects
 	mSearchVisibility(p.search_visibility)
 {

@@ -296,7 +296,6 @@
 			<text name="label size">
 				Dimensioni (metri)
 			</text>
-<<<<<<< HEAD
 			<button name="copy_rot_btn" tool_tip="Copia dimensioni"/>
 			<button name="paste_rot_btn" tool_tip="Incolla dimensioni"/>
 			<button name="paste_rot_clip_btn" tool_tip="Incolla dim da appunti"/>
@@ -307,7 +306,6 @@
 			<button name="paste_size_btn" tool_tip="Incolla rotazione"/>
 			<button name="paste_size_clip_btn" tool_tip="Incolla dim da appunti"/>
 			<text name="label rotation">
-=======
 			<button name="copy_size_btn" tool_tip="Copia rotazione"/>
 			<button name="paste_size_btn" tool_tip="Incolla rotazione"/>
 			<button name="paste_size_clip_btn" tool_tip="Incolla dim da appunti"/>
@@ -317,7 +315,6 @@
 			<button name="copy_rot_btn" tool_tip="Copia dimensioni"/>
 			<button name="paste_rot_btn" tool_tip="Incolla dimensioni"/>
 			<button name="paste_rot_clip_btn" tool_tip="Incolla dim da appunti"/>
->>>>>>> fs/master
 			<button label="Copia" name="copy_params_btn" tool_tip="Copia i parametri dell'&apos;oggetto negli appunti"/>
 			<button label="Incolla" name="paste_params_btn" tool_tip="Incolla i parametri dagli appunti"/>
 			<combo_box name="comboBaseType">
@@ -419,7 +416,6 @@ Alto:
 Medio:
 Basso:
 Min:
-<<<<<<< HEAD
         </text>
         <combo_box name="LOD_show_combo">
           <combo_box.item label="Predef" name="Default"/>
@@ -438,7 +434,6 @@ Min:
         <string name="fs_lod_tooltip_msg">Predefinito per [APP_NAME] Viewer ([FACTOR])</string>
         <text name="LOD_swap_usr_current" tool_tip="Your current LOD Factor"/>
         <text name="LOD_swap_LOD_Change_label">
-=======
         	</text>
         	<combo_box name="LOD_show_combo">
 				<combo_box.item label="Predef" name="Default"/>
@@ -457,7 +452,6 @@ Min:
         	<string name="fs_lod_tooltip_msg">Predefinito per [APP_NAME] Viewer ([FACTOR])</string>
         	<text name="LOD_swap_usr_current" tool_tip="Your current LOD Factor"/>
         	<text name="LOD_swap_LOD_Change_label">
->>>>>>> fs/master
 Alt ↔ Med
 Med ↔ Bas
 Bas ↔ Min         

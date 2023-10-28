@@ -1361,10 +1361,7 @@ BOOL LLBVHLoader::serialize(LLDataPacker& dp)
 		dp.packS32(joint->mNumRotKeys, "num_rot_keys");
 
 		LLQuaternion::Order order = bvhStringToOrder( joint->mOrder );
-<<<<<<< HEAD
 		S32 outcount = 0;
-=======
->>>>>>> fs/master
 		S32 frame = 0;
 		for (Key& key : joint->mKeys)
 		{

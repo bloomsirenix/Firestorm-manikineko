@@ -117,8 +117,6 @@ public:
 
     void resetFilters();
     void resetAllItemsFilters();
-<<<<<<< HEAD
-=======
 
     void findLinks(const LLUUID& item_id, const std::string& item_name);
 
@@ -145,7 +143,6 @@ public:
     std::string getLocalizedRootName();
 
     LLInventoryFilter& getCurrentFilter();
->>>>>>> fs/master
 
 	// <FS:Zi> Filter dropdown
 	void onFilterTypeSelected(const std::string& filter_type_name);

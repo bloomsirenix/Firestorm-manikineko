@@ -1483,7 +1483,6 @@ class LLAdvancedDumpRegionObjectCache : public view_listener_t
 	}
 };
 
-<<<<<<< HEAD
 // <FS:Beq> Handle InterestListFullUpdate as a proper state toggle
 // class LLAdvancedInterestListFullUpdate : public view_listener_t
 // {
@@ -1563,7 +1562,6 @@ class LLAdvancedToggleInterestListFullUpdate : public view_listener_t
 	}
 };
 // </FS:Beq>
-=======
 class LLAdvancedToggleInterestList360Mode : public view_listener_t
 {
 public:
@@ -1631,7 +1629,6 @@ class LLAdvancedResetInterestLists : public view_listener_t
 };
 
 
->>>>>>> fs/master
 class LLAdvancedBuyCurrencyTest : public view_listener_t
 	{
 	bool handleEvent(const LLSD& userdata)
@@ -12355,20 +12352,17 @@ void initialize_menus()
 	// Advanced > World
 	view_listener_t::addMenu(new LLAdvancedDumpScriptedCamera(), "Advanced.DumpScriptedCamera");
 	view_listener_t::addMenu(new LLAdvancedDumpRegionObjectCache(), "Advanced.DumpRegionObjectCache");
-<<<<<<< HEAD
 	
 	// <FS:Beq> Make InterestList a proper stateful toggle
 	// view_listener_t::addMenu(new LLAdvancedInterestListFullUpdate(), "Advanced.InterestListFullUpdate");
 	view_listener_t::addMenu(new LLAdvancedCheckInterestListFullUpdate(), "Advanced.CheckInterestListFullUpdate"); 
 	view_listener_t::addMenu(new LLAdvancedToggleInterestListFullUpdate(), "Advanced.ToggleInterestListFullUpdate");
 	// </FS:Beq>
-=======
     view_listener_t::addMenu(new LLAdvancedToggleStatsRecorder(), "Advanced.ToggleStatsRecorder");
     view_listener_t::addMenu(new LLAdvancedCheckStatsRecorder(), "Advanced.CheckStatsRecorder");
     view_listener_t::addMenu(new LLAdvancedToggleInterestList360Mode(), "Advanced.ToggleInterestList360Mode");
     view_listener_t::addMenu(new LLAdvancedCheckInterestList360Mode(), "Advanced.CheckInterestList360Mode");
     view_listener_t::addMenu(new LLAdvancedResetInterestLists(), "Advanced.ResetInterestLists");
->>>>>>> fs/master
 
 	// Advanced > UI
 	commit.add("Advanced.WebBrowserTest", boost::bind(&handle_web_browser_test,	_2));	// sigh! this one opens the MEDIA browser

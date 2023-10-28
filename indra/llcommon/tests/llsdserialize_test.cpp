@@ -1935,11 +1935,8 @@ namespace tut
     static void toPythonUsing(const std::string& desc,
                               const FormatterFunction& serialize)
     {
-<<<<<<< HEAD
         set_test_name("verify sequence to Python");
 
-=======
->>>>>>> fs/master
         LLSD cdata(llsd::array(17, 3.14,
                                "This string\n"
                                "has several\n"

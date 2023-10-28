@@ -452,11 +452,8 @@ F32 LLVOCacheEntry::getSquaredPixelThreshold(bool is_front)
 
 bool LLVOCacheEntry::isAnyVisible(const LLVector4a& camera_origin, const LLVector4a& local_camera_origin, F32 dist_threshold)
 {
-<<<<<<< HEAD
 	if( LLViewerRegion::sFSAreaSearchActive ) { return true; } // <FS:Beq/> FIRE-32688 Area Search improvements
-=======
 	if( gAgent.getFSAreaSearchActive() ) { return true; } // <FS:Beq/> FIRE-32688 Area Search improvements
->>>>>>> fs/master
 	LLOcclusionCullingGroup* group = (LLOcclusionCullingGroup*)getGroup();
 	if(!group)
 	{

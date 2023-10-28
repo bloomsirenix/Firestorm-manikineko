@@ -96,11 +96,8 @@ LLMD5::LLMD5()
 // operation, processing another message block, and updating the
 // context.
 
-<<<<<<< HEAD
 void LLMD5::update (const uint1 *input, const size_t input_length) {
-=======
 void LLMD5::update (const uint8_t *input, const size_t input_length) {
->>>>>>> fs/master
 
   size_t input_index, buffer_index;
   size_t buffer_space;                // how much space is left in buffer
@@ -193,11 +190,8 @@ void LLMD5::finalize (){
 
   unsigned char bits[8];		/* Flawfinder: ignore */
   size_t index, padLen;
-<<<<<<< HEAD
   static uint1 PADDING[64]={
-=======
   static uint8_t PADDING[64]={
->>>>>>> fs/master
     0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -209,13 +203,10 @@ void LLMD5::finalize (){
   }
 
   // Save number of bits.
-<<<<<<< HEAD
   // Treat count, a uint64_t, as uint4[2].
   encode (bits, reinterpret_cast<uint4*>(&count), 8);
-=======
   // Treat count, a uint64_t, as uint32_t[2].
   encode (bits, reinterpret_cast<uint32_t*>(&count), 8);
->>>>>>> fs/master
 
   // Pad out to 56 mod 64.
   index = size_t((count >> 3) & 0x3f);
@@ -517,11 +508,8 @@ void LLMD5::transform (const U8 block[64]){
 
 // Encodes input (uint32_t) into output (unsigned char). Assumes len is
 // a multiple of 4.
-<<<<<<< HEAD
 void LLMD5::encode (uint1 *output, const uint4 *input, const size_t len) {
-=======
 void LLMD5::encode (uint8_t *output, const uint32_t *input, const size_t len) {
->>>>>>> fs/master
 
   size_t i, j;
 
@@ -538,11 +526,8 @@ void LLMD5::encode (uint8_t *output, const uint32_t *input, const size_t len) {
 
 // Decodes input (unsigned char) into output (uint32_t). Assumes len is
 // a multiple of 4.
-<<<<<<< HEAD
 void LLMD5::decode (uint4 *output, const uint1 *input, const size_t len){
-=======
 void LLMD5::decode (uint32_t *output, const uint8_t *input, const size_t len){
->>>>>>> fs/master
 
   size_t i, j;
 

@@ -1,5 +1,4 @@
 /** 
-<<<<<<<< HEAD:indra/newview/fsfloaterpartialinventory.h
  * @file fsfloaterpartialinventory.h
  * @brief Displays the inventory underneath a particular starting folder
  *
@@ -34,7 +33,6 @@
  * $/LicenseInfo$
  */
 
-<<<<<<<< HEAD:indra/newview/fsfloaterpartialinventory.h
 #ifndef FS_FLOATERPARTIALINVENTORY_H
 #define FS_FLOATERPARTIALINVENTORY_H
 

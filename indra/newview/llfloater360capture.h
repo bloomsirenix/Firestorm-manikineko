@@ -50,11 +50,8 @@ class LLFloater360Capture:
         void onOpen(const LLSD& key) override;
         void handleMediaEvent(LLPluginClassMedia* self, EMediaEvent event) override;
 
-<<<<<<< HEAD
         // void changeInterestListMode(bool send_everything); // <FS:Beq/> Area search improvements - code relocated to LLViewerRegion
 
-=======
->>>>>>> fs/master
         const std::string getHTMLBaseFolder();
         void capture360Images();
         // <FS:Beq/> make 360 work properly after region crossing/TP

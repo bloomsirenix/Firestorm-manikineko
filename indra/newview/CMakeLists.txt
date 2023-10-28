@@ -359,16 +359,13 @@ set(viewer_SOURCE_FILES
     llfloaternewfeaturenotification.cpp
     llfloaternotificationsconsole.cpp
     llfloaternotificationstabbed.cpp
-<<<<<<< HEAD
     llfloateroutfitphotopreview.cpp 
     llfloaterobjectweights.cpp
     llfloateropenobject.cpp
     llfloatersimpleoutfitsnapshot.cpp
-=======
     llfloaterobjectweights.cpp
     llfloateropenobject.cpp
     llfloatersimplesnapshot.cpp
->>>>>>> fs/master
     llfloaterpathfindingcharacters.cpp
     llfloaterpathfindingconsole.cpp
     llfloaterpathfindinglinksets.cpp
@@ -384,11 +381,8 @@ set(viewer_SOURCE_FILES
     llfloaterpreferenceviewadvanced.cpp
     llfloaterpreviewtrash.cpp
     llfloaterprofiletexture.cpp
-<<<<<<< HEAD
     llfloaterproperties.cpp
-=======
     llfloaterproperties.cpp # <FS:Ansariel> Keep legacy properties floater
->>>>>>> fs/master
     llfloaterregiondebugconsole.cpp
     llfloaterregioninfo.cpp
     llfloaterreporter.cpp
@@ -1160,16 +1154,13 @@ set(viewer_HEADER_FILES
     llfloaternewfeaturenotification.h
     llfloaternotificationsconsole.h
     llfloaternotificationstabbed.h
-<<<<<<< HEAD
     llfloateroutfitphotopreview.h
     llfloaterobjectweights.h
     llfloateropenobject.h
     llfloatersimpleoutfitsnapshot.h
-=======
     llfloaterobjectweights.h
     llfloateropenobject.h
     llfloatersimplesnapshot.h
->>>>>>> fs/master
     llfloaterpathfindingcharacters.h
     llfloaterpathfindingconsole.h
     llfloaterpathfindinglinksets.h
@@ -1185,11 +1176,8 @@ set(viewer_HEADER_FILES
     llfloaterpreferenceviewadvanced.h
     llfloaterpreviewtrash.h
     llfloaterprofiletexture.h
-<<<<<<< HEAD
     llfloaterproperties.h
-=======
     llfloaterproperties.h # <FS:Ansariel> Keep legacy properties floater
->>>>>>> fs/master
     llfloaterregiondebugconsole.h
     llfloaterregioninfo.h
     llfloaterreporter.h

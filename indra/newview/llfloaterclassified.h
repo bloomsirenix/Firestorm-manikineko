@@ -1,5 +1,4 @@
 /**
-<<<<<<<< HEAD:indra/newview/llfloaterclassified.h
  * @file llfloaterclassified.h
  * @brief LLFloaterClassified for displaying classifieds.
 ========
@@ -8,7 +7,6 @@
  *
  * $LicenseInfo:firstyear=2022&license=viewerlgpl$
  * Second Life Viewer Source Code
-<<<<<<<< HEAD:indra/newview/llfloaterclassified.h
  * Copyright (C) 2022, Linden Research, Inc.
 ========
  * Copyright (C) 2010, Linden Research, Inc.
@@ -32,7 +30,6 @@
  * $/LicenseInfo$
  */
 
-<<<<<<<< HEAD:indra/newview/llfloaterclassified.h
 #ifndef LL_LLFLOATERCLASSIFIED_H
 #define LL_LLFLOATERCLASSIFIED_H
 

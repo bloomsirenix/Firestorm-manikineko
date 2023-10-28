@@ -4778,7 +4778,6 @@
                 <menu_item_call.on_click
                  function="Advanced.DumpRegionObjectCache" />
             </menu_item_call>
-<<<<<<< HEAD
         
             <menu_item_check
              label="Interest List: Full Update"
@@ -4789,7 +4788,6 @@
                 <menu_item_check.on_click
                  function="Advanced.ToggleInterestListFullUpdate" />
             </menu_item_check>
-=======
 			<menu_item_check
              label="Record Stats to File"
              name="Stats Recorder File">
@@ -4813,7 +4811,6 @@
 				<menu_item_call.on_click
                  function="Advanced.ResetInterestLists" />
 			</menu_item_call>
->>>>>>> fs/master
             <menu_item_call
              label="Dump Simulator Features to Nearby Chat"
              name="DumpSimFeaturesToChat">

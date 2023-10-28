@@ -38,11 +38,8 @@
 #include "llfloatermap.h"
 #include "llfloatermodelpreview.h"
 #include "llfloatersnapshot.h"
-<<<<<<< HEAD
 #include "llfloatersimpleoutfitsnapshot.h"
-=======
 #include "llfloatersimplesnapshot.h"
->>>>>>> fs/master
 #include "llimage.h"
 #include "llimagebmp.h"
 #include "llimagepng.h"
@@ -819,13 +816,10 @@ class LLFileEnableCloseAllWindows : public view_listener_t
 	bool handleEvent(const LLSD& userdata)
 	{
 		LLFloaterSnapshot* floater_snapshot = LLFloaterSnapshot::findInstance();
-<<<<<<< HEAD
 		LLFloaterSimpleOutfitSnapshot* floater_outfit_snapshot = LLFloaterSimpleOutfitSnapshot::findInstance();
 		bool is_floaters_snapshot_opened = (floater_snapshot && floater_snapshot->isInVisibleChain())
 			|| (floater_outfit_snapshot && floater_outfit_snapshot->isInVisibleChain());
-=======
 		bool is_floaters_snapshot_opened = (floater_snapshot && floater_snapshot->isInVisibleChain());
->>>>>>> fs/master
 		bool open_children = gFloaterView->allChildrenClosed() && !is_floaters_snapshot_opened;
 		return !open_children && !LLNotificationsUI::LLToast::isAlertToastShown();
 	}
@@ -840,12 +834,9 @@ class LLFileCloseAllWindows : public view_listener_t
 		LLFloaterSnapshot* floater_snapshot = LLFloaterSnapshot::findInstance();
 		if (floater_snapshot)
 			floater_snapshot->closeFloater(app_quitting);
-<<<<<<< HEAD
         LLFloaterSimpleOutfitSnapshot* floater_outfit_snapshot = LLFloaterSimpleOutfitSnapshot::findInstance();
 		if (floater_outfit_snapshot)
 			floater_outfit_snapshot->closeFloater(app_quitting);
-=======
->>>>>>> fs/master
 		if (gMenuHolder) gMenuHolder->hideMenus();
 		return true;
 	}

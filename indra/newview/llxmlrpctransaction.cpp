@@ -400,16 +400,6 @@ void LLXMLRPCTransaction::Impl::init(XMLRPC_REQUEST request, bool useGzip, const
 
 	httpHeaders->append(HTTP_OUT_HEADER_CONTENT_TYPE, HTTP_CONTENT_TEXT_XML);
 
-<<<<<<< HEAD
-    std::string user_agent = llformat("%s %d.%d.%d (%d)",
-        LLVersionInfo::instance().getChannel().c_str(),
-        LLVersionInfo::instance().getMajor(),
-        LLVersionInfo::instance().getMinor(),
-        LLVersionInfo::instance().getPatch(),
-        LLVersionInfo::instance().getBuild());
-
-    httpHeaders->append(HTTP_OUT_HEADER_USER_AGENT, user_agent);
-=======
 	std::string user_agent = stringize(
 		LLVersionInfo::instance().getChannel(), ' ',
 		LLVersionInfo::instance().getMajor(), '.',
@@ -418,7 +408,6 @@ void LLXMLRPCTransaction::Impl::init(XMLRPC_REQUEST request, bool useGzip, const
 		LLVersionInfo::instance().getBuild(), ')');
 
 	httpHeaders->append(HTTP_OUT_HEADER_USER_AGENT, user_agent);
->>>>>>> fs/master
 
 	///* Setting the DNS cache timeout to -1 disables it completely.
 	//This might help with bug #503 */

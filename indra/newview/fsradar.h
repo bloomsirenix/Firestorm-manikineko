@@ -109,7 +109,6 @@ public:
 		return mUpdateSignal.connect(cb);
 	}
 
-<<<<<<< HEAD
 private:
 	void updateRadarList();
 	void updateTracking();
@@ -117,7 +116,6 @@ private:
 	void radarAlertMsg(const LLUUID& agent_id, const LLAvatarName& av_name, std::string_view postMsg);
 	void updateAgeAlertCheck();
 
-=======
 protected:
 	void initSingleton() override;
 
@@ -128,7 +126,6 @@ private:
 	void radarAlertMsg(const LLUUID& agent_id, const LLAvatarName& av_name, std::string_view postMsg);
 	void updateAgeAlertCheck();
 
->>>>>>> fs/master
 	std::unique_ptr<Updater> mRadarListUpdater;
 	
 	struct RadarFields 

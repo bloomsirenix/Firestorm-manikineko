@@ -169,19 +169,15 @@ const U32	MAXADDRSTR		= 17;		// 123.567.901.345 = 15 chars + \0 + 1 for good luc
 //   llclampb(a)     // clamps a to [0 .. 255]
 //
 
-<<<<<<< HEAD
 template <typename T1, typename T2> 
 inline auto llmax(T1 d1, T2 d2)
-=======
 // recursion tail
 template <typename T>
 inline auto llmax(T data)
->>>>>>> fs/master
 {
     return data;
 }
 
-<<<<<<< HEAD
 template <typename T1, typename T2, typename T3> 
 inline auto llmax(T1 d1, T2 d2, T3 d3)
 {
@@ -199,7 +195,6 @@ inline auto llmax(T1 d1, T2 d2, T3 d3, T4 d4)
 
 template <typename T1, typename T2> 
 inline auto llmin(T1 d1, T2 d2)
-=======
 template <typename T0, typename T1, typename... Ts> 
 inline auto llmax(T0 d0, T1 d1, Ts... rest)
 {
@@ -216,13 +211,11 @@ inline auto llmin(T data)
 
 template <typename T0, typename T1, typename... Ts> 
 inline auto llmin(T0 d0, T1 d1, Ts... rest)
->>>>>>> fs/master
 {
     auto minrest = llmin(d1, rest...);
     return (d0 < minrest) ? d0 : minrest;
 }
 
-<<<<<<< HEAD
 template <typename T1, typename T2, typename T3> 
 inline auto llmin(T1 d1, T2 d2, T3 d3)
 {
@@ -241,11 +234,9 @@ inline auto llmin(T1 d1, T2 d2, T3 d3, T4 d4)
 template <typename A, typename MIN, typename MAX> 
 inline A llclamp(A a, MIN minval, MAX maxval)
 {
-=======
 template <typename A, typename MIN, typename MAX> 
 inline A llclamp(A a, MIN minval, MAX maxval)
 {
->>>>>>> fs/master
 	A aminval{ static_cast<A>(minval) }, amaxval{ static_cast<A>(maxval) };
 	if ( a < aminval )
 	{

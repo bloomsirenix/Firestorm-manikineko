@@ -1,5 +1,4 @@
 /** 
-<<<<<<<< HEAD:indra/newview/fsfloaterpartialinventory.h
  * @file fsfloaterpartialinventory.h
  * @brief Displays the inventory underneath a particular starting folder
  *
@@ -7,7 +6,6 @@
  * Phoenix Firestorm Viewer Source Code
  * Copyright (c) 2022 Ansariel Hiller @ Second Life
  *
-========
  * @file lltexturemanagerbridge.h
  * @brief Bridge to an application-specific texture manager.
  *
@@ -15,7 +13,6 @@
  * Second Life Viewer Source Code
  * Copyright (C) 2010, Linden Research, Inc.
  * 
->>>>>>>> fs/master:indra/llrender/lltexturemanagerbridge.h
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
@@ -34,7 +31,6 @@
  * $/LicenseInfo$
  */
 
-<<<<<<<< HEAD:indra/newview/fsfloaterpartialinventory.h
 #ifndef FS_FLOATERPARTIALINVENTORY_H
 #define FS_FLOATERPARTIALINVENTORY_H
 

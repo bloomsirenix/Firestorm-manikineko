@@ -148,10 +148,7 @@ public:
 			Optional<EFolderShow>		show_folder_state;
 			Optional<PermissionMask>	permissions;
 			Optional<EFilterCreatorType> creator_type;
-<<<<<<< HEAD
-=======
             Optional<EFilterThumbnail> thumbnails;
->>>>>>> fs/master
 			Optional<bool>				coalesced_objects_only;		// <FS:Zi> FIRE-31369: Add inventory filter for coalesced objects
 
 			Params()

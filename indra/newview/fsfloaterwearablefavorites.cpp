@@ -210,12 +210,9 @@ BOOL FSFloaterWearableFavorites::handleKeyHere(KEY key, MASK mask)
 // static
 std::optional<LLUUID> FSFloaterWearableFavorites::getWearableFavoritesFolderID()
 {
-<<<<<<< HEAD
 	LLUUID fs_root_cat_id = gInventory.findCategoryByName(ROOT_FIRESTORM_FOLDER);
 	if (!fs_root_cat_id.isNull())
-=======
 	if (LLUUID fs_root_cat_id = gInventory.findCategoryByName(ROOT_FIRESTORM_FOLDER); !fs_root_cat_id.isNull())
->>>>>>> fs/master
 	{
 		LLInventoryModel::item_array_t* items;
 		LLInventoryModel::cat_array_t* cats;
@@ -236,11 +233,8 @@ std::optional<LLUUID> FSFloaterWearableFavorites::getWearableFavoritesFolderID()
 }
 
 // static
-<<<<<<< HEAD
 void FSFloaterWearableFavorites::initCategory()
-=======
 void FSFloaterWearableFavorites::initCategory(inventory_func_type callback)
->>>>>>> fs/master
 {
 	if (!gInventory.isInventoryUsable())
 	{
@@ -251,22 +245,17 @@ void FSFloaterWearableFavorites::initCategory(inventory_func_type callback)
 	if (auto fs_favs_id = getWearableFavoritesFolderID(); fs_favs_id.has_value())
 	{
 		sFolderID = fs_favs_id.value();
-<<<<<<< HEAD
-=======
 		callback(sFolderID);
->>>>>>> fs/master
 	}
 	else
 	{
 		LLUUID fs_root_cat_id = gInventory.findCategoryByName(ROOT_FIRESTORM_FOLDER);
 		if (fs_root_cat_id.isNull())
 		{
-<<<<<<< HEAD
 			fs_root_cat_id = gInventory.createNewCategory(gInventory.getRootFolderID(), LLFolderType::FT_NONE, ROOT_FIRESTORM_FOLDER);
 		}
 
 		sFolderID = gInventory.createNewCategory(fs_root_cat_id, LLFolderType::FT_NONE, FS_WEARABLE_FAVORITES_FOLDER);
-=======
 			gInventory.createNewCategory(gInventory.getRootFolderID(), LLFolderType::FT_NONE, ROOT_FIRESTORM_FOLDER, [callback](const LLUUID& new_cat_id)
 			{
 				gInventory.createNewCategory(new_cat_id, LLFolderType::FT_NONE, FS_WEARABLE_FAVORITES_FOLDER, [callback](const LLUUID& new_cat_id)
@@ -284,7 +273,6 @@ void FSFloaterWearableFavorites::initCategory(inventory_func_type callback)
 				callback(new_cat_id);
 			});
 		}
->>>>>>> fs/master
 	}
 }
 

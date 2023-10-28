@@ -354,11 +354,8 @@ namespace LLTrace
 		Recording snapshotCurRecording() const;
 
 		template <typename T>
-<<<<<<< HEAD
 		auto getSampleCount(const StatType<T>& stat, size_t num_periods = S32_MAX)
-=======
 		auto getSampleCount(const StatType<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
 			LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -378,11 +375,8 @@ namespace LLTrace
 
 		// catch all for stats that have a defined sum
 		template <typename T>
-<<<<<<< HEAD
 		typename T::value_t getPeriodMin(const StatType<T>& stat, size_t num_periods = S32_MAX)
-=======
 		typename T::value_t getPeriodMin(const StatType<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -405,57 +399,45 @@ namespace LLTrace
 		}
 
 		template<typename T>
-<<<<<<< HEAD
 		T getPeriodMin(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		T getPeriodMin(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return T(getPeriodMin(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64 getPeriodMin(const StatType<SampleAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T>
 		T getPeriodMin(const SampleStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodMin(const StatType<SampleAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T>
 		T getPeriodMin(const SampleStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return T(getPeriodMin(static_cast<const StatType<SampleAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64 getPeriodMin(const StatType<EventAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T>
 		T getPeriodMin(const EventStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodMin(const StatType<EventAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T>
 		T getPeriodMin(const EventStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return T(getPeriodMin(static_cast<const StatType<EventAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64Kilobytes getPeriodMin(const StatType<MemAccumulator>& stat, size_t num_periods = S32_MAX);
 		F64Kilobytes getPeriodMin(const MemStatHandle& stat, size_t num_periods = S32_MAX);
 
 		template <typename T>
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMinPerSec(const StatType<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64Kilobytes getPeriodMin(const StatType<MemAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		F64Kilobytes getPeriodMin(const MemStatHandle& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 
 		template <typename T>
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMinPerSec(const StatType<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -470,11 +452,8 @@ namespace LLTrace
 		}
 
 		template<typename T>
-<<<<<<< HEAD
 		typename RelatedTypes<T>::fractional_t getPeriodMinPerSec(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		typename RelatedTypes<T>::fractional_t getPeriodMinPerSec(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMinPerSec(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
@@ -486,11 +465,8 @@ namespace LLTrace
 
 		// catch all for stats that have a defined sum
 		template <typename T>
-<<<<<<< HEAD
 		typename T::value_t getPeriodMax(const StatType<T>& stat, size_t num_periods = S32_MAX)
-=======
 		typename T::value_t getPeriodMax(const StatType<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -513,57 +489,45 @@ namespace LLTrace
 		}
 
 		template<typename T>
-<<<<<<< HEAD
 		T getPeriodMax(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		T getPeriodMax(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return T(getPeriodMax(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64 getPeriodMax(const StatType<SampleAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T>
 		T getPeriodMax(const SampleStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodMax(const StatType<SampleAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T>
 		T getPeriodMax(const SampleStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return T(getPeriodMax(static_cast<const StatType<SampleAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64 getPeriodMax(const StatType<EventAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T>
 		T getPeriodMax(const EventStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodMax(const StatType<EventAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T>
 		T getPeriodMax(const EventStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return T(getPeriodMax(static_cast<const StatType<EventAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64Kilobytes getPeriodMax(const StatType<MemAccumulator>& stat, size_t num_periods = S32_MAX);
 		F64Kilobytes getPeriodMax(const MemStatHandle& stat, size_t num_periods = S32_MAX);
 
 		template <typename T>
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMaxPerSec(const StatType<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64Kilobytes getPeriodMax(const StatType<MemAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		F64Kilobytes getPeriodMax(const MemStatHandle& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 
 		template <typename T>
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMaxPerSec(const StatType<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -578,11 +542,8 @@ namespace LLTrace
 		}
 
 		template<typename T>
-<<<<<<< HEAD
 		typename RelatedTypes<T>::fractional_t getPeriodMaxPerSec(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		typename RelatedTypes<T>::fractional_t getPeriodMaxPerSec(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMaxPerSec(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
@@ -594,11 +555,8 @@ namespace LLTrace
 
 		// catch all for stats that have a defined sum
 		template <typename T>
-<<<<<<< HEAD
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMean(const StatType<T >& stat, size_t num_periods = S32_MAX)
-=======
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMean(const StatType<T >& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -619,56 +577,44 @@ namespace LLTrace
 		}
 
 		template<typename T>
-<<<<<<< HEAD
 		typename RelatedTypes<T>::fractional_t getPeriodMean(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		typename RelatedTypes<T>::fractional_t getPeriodMean(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMean(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
 		}
-<<<<<<< HEAD
 		F64 getPeriodMean(const StatType<SampleAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T> 
 		typename RelatedTypes<T>::fractional_t getPeriodMean(const SampleStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodMean(const StatType<SampleAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T> 
 		typename RelatedTypes<T>::fractional_t getPeriodMean(const SampleStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMean(static_cast<const StatType<SampleAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64 getPeriodMean(const StatType<EventAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T>
 		typename RelatedTypes<T>::fractional_t getPeriodMean(const EventStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodMean(const StatType<EventAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T>
 		typename RelatedTypes<T>::fractional_t getPeriodMean(const EventStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMean(static_cast<const StatType<EventAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64Kilobytes getPeriodMean(const StatType<MemAccumulator>& stat, size_t num_periods = S32_MAX);
 		F64Kilobytes getPeriodMean(const MemStatHandle& stat, size_t num_periods = S32_MAX);
 		
 		template <typename T>
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMeanPerSec(const StatType<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64Kilobytes getPeriodMean(const StatType<MemAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		F64Kilobytes getPeriodMean(const MemStatHandle& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		
 		template <typename T>
 		typename RelatedTypes<typename T::value_t>::fractional_t getPeriodMeanPerSec(const StatType<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
@@ -690,17 +636,13 @@ namespace LLTrace
 		}
 
 		template<typename T>
-<<<<<<< HEAD
 		typename RelatedTypes<T>::fractional_t getPeriodMeanPerSec(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		typename RelatedTypes<T>::fractional_t getPeriodMeanPerSec(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMeanPerSec(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
         F64 getPeriodMedian( const StatType<SampleAccumulator>& stat, size_t num_periods = S32_MAX);
 
         template <typename T>
@@ -708,7 +650,6 @@ namespace LLTrace
         {
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
             num_periods = llmin(num_periods, getNumRecordedPeriods());
-=======
 		F64 getPeriodMedian( const StatType<SampleAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 
 		template <typename T>
@@ -716,7 +657,6 @@ namespace LLTrace
 		{
 			LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			num_periods = llmin(num_periods, getNumRecordedPeriods());
->>>>>>> fs/master
 
 			std::vector <typename RelatedTypes<typename T::value_t>::fractional_t> buf;
 			for (size_t i = 1; i <= num_periods; i++)
@@ -732,63 +672,51 @@ namespace LLTrace
 			return typename RelatedTypes<T>::fractional_t((buf.size() % 2 == 0) ? (buf[buf.size() / 2 - 1] + buf[buf.size() / 2]) / 2 : buf[buf.size() / 2]);
 		}
 
-<<<<<<< HEAD
         template<typename T>
         typename RelatedTypes<T>::fractional_t getPeriodMedianPerSec(const CountStatHandle<T>& stat, size_t num_periods = S32_MAX)
         {
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
             return typename RelatedTypes<T>::fractional_t(getPeriodMedianPerSec(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
         }
-=======
 		template<typename T>
 		typename RelatedTypes<T>::fractional_t getPeriodMedianPerSec(const CountStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
 		{
 			LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodMedianPerSec(static_cast<const StatType<CountAccumulator>&>(stat), num_periods));
 		}
->>>>>>> fs/master
 
 		//
 		// PERIODIC STANDARD DEVIATION
 		//
 
-<<<<<<< HEAD
 		F64 getPeriodStandardDeviation(const StatType<SampleAccumulator>& stat, size_t num_periods = S32_MAX);
 
 		template<typename T> 
 		typename RelatedTypes<T>::fractional_t getPeriodStandardDeviation(const SampleStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodStandardDeviation(const StatType<SampleAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 
 		template<typename T> 
 		typename RelatedTypes<T>::fractional_t getPeriodStandardDeviation(const SampleStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodStandardDeviation(static_cast<const StatType<SampleAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64 getPeriodStandardDeviation(const StatType<EventAccumulator>& stat, size_t num_periods = S32_MAX);
 		template<typename T>
 		typename RelatedTypes<T>::fractional_t getPeriodStandardDeviation(const EventStatHandle<T>& stat, size_t num_periods = S32_MAX)
-=======
 		F64 getPeriodStandardDeviation(const StatType<EventAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		template<typename T>
 		typename RelatedTypes<T>::fractional_t getPeriodStandardDeviation(const EventStatHandle<T>& stat, size_t num_periods = std::numeric_limits<size_t>::max())
->>>>>>> fs/master
 		{
             LL_PROFILE_ZONE_SCOPED_CATEGORY_STATS;
 			return typename RelatedTypes<T>::fractional_t(getPeriodStandardDeviation(static_cast<const StatType<EventAccumulator>&>(stat), num_periods));
 		}
 
-<<<<<<< HEAD
 		F64Kilobytes getPeriodStandardDeviation(const StatType<MemAccumulator>& stat, size_t num_periods = S32_MAX);
 		F64Kilobytes getPeriodStandardDeviation(const MemStatHandle& stat, size_t num_periods = S32_MAX);
-=======
 		F64Kilobytes getPeriodStandardDeviation(const StatType<MemAccumulator>& stat, size_t num_periods = std::numeric_limits<size_t>::max());
 		F64Kilobytes getPeriodStandardDeviation(const MemStatHandle& stat, size_t num_periods = std::numeric_limits<size_t>::max());
->>>>>>> fs/master
 
 	private:
 		// implementation for LLStopWatchControlsMixin

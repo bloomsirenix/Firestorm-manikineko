@@ -47,11 +47,8 @@
 			<text name="mode_selection_text">
 				Rejim seçimi
 			</text>
-<<<<<<< HEAD
 			<combo_box name="mode_combo" tool_tip="Sizə ən məhərətli olduğunuz tənzimləmə rejimi seçin. Manikineko Online rejimi əsas olaraq quraşdırılacaq">
-=======
 			<combo_box name="mode_combo" tool_tip="Sizə ən məhərətli olduğunuz tənzimləmə rejimi seçin. Firestorm rejimi əsas olaraq quraşdırılacaq">
->>>>>>> fs/master
 				<combo_box.item label="Hibrid" name="Hybrid"/>
 			</combo_box>
 		</layout_panel>

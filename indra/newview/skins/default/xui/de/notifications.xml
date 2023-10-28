@@ -2615,12 +2615,9 @@ Möchten Sie den Nicht-stören-Modus deaktivieren, bevor Sie diese Transaktion a
 		Ihr Papierkorb läuft über. Dies kann zu Anmeldeproblemen führen.
 		<usetemplate name="okcancelbuttons" notext="Papierkorb später leeren" yestext="Papierkorb ansehen"/>
 	</notification>
-<<<<<<< HEAD
-=======
 	<notification name="InventoryLimitReachedAISAlert">
 		Es gibt Probleme mit Ihrem Inventar. Bitte kontaktieren Sie den Support.
 	</notification>
->>>>>>> fs/master
 	<notification name="InventoryLimitReachedAIS">
 		Es gibt Probleme mit Ihrem Inventar. Bitte kontaktieren Sie den Support Ihres Grids.
 	</notification>
@@ -4903,8 +4900,6 @@ Entpacken: [UNPACK_TIME]s [USIZE]KB
 			<button name="cancel" text="Abbrechen"/>
 		</form>
 	</notification>
-<<<<<<< HEAD
-=======
 	<notification label="Eingabe MFA-Token" name="PromptMFATokenWithSave">
 		[MESSAGE]
 		<form name="form">
@@ -4913,7 +4908,6 @@ Entpacken: [UNPACK_TIME]s [USIZE]KB
 			<button name="cancel" text="Abbrechen"/>
 		</form>
 	</notification>
->>>>>>> fs/master
 	<notification label="Unterordner erstellen" name="CreateSubfolder">
 		Name des neuen Ordners:
 		<form name="form">

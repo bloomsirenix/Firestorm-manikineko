@@ -466,14 +466,11 @@ void LLLoginInstance::handleLoginFailure(const LLSD& event)
             gViewerWindow->setShowProgress(FALSE, FALSE);
         }
 
-<<<<<<< HEAD
         LLSD args(llsd::map( "MESSAGE", LLTrans::getString(response["message_id"]) ));
         LLSD payload;
         LLNotificationsUtil::add("PromptMFAToken", args, payload,
             boost::bind(&LLLoginInstance::handleMFAChallenge, this, _1, _2));
-=======
         showMFAChallange(LLTrans::getString(response["message_id"]));
->>>>>>> fs/master
     }
     else if(   reason_response == "key"
             || reason_response == "presence"
@@ -561,14 +558,11 @@ bool LLLoginInstance::handleTOSResponse(bool accepted, const std::string& key)
         {
             // SL-18511 this TOS failure happened while we are in the middle of an MFA challenge/response.
             // the previously entered token is very likely expired, so prompt again
-<<<<<<< HEAD
             LLSD args(llsd::map( "MESSAGE", LLTrans::getString("LoginFailedAuthenticationMFARequired") ));
             LLSD payload;
             LLNotificationsUtil::add("PromptMFAToken", args, payload,
                 boost::bind(&LLLoginInstance::handleMFAChallenge, this, _1, _2));
-=======
             showMFAChallange(LLTrans::getString("LoginFailedAuthenticationMFARequired"));
->>>>>>> fs/master
         }
         else
         {
@@ -586,8 +580,6 @@ bool LLLoginInstance::handleTOSResponse(bool accepted, const std::string& key)
     return true;
 }
 
-<<<<<<< HEAD
-=======
 void LLLoginInstance::showMFAChallange(const std::string& message)
 {
     LLSD args(llsd::map("MESSAGE", message));
@@ -604,7 +596,6 @@ void LLLoginInstance::showMFAChallange(const std::string& message)
     }
 }
 
->>>>>>> fs/master
 bool LLLoginInstance::handleMFAChallenge(LLSD const & notif, LLSD const & response)
 {
     bool continue_clicked = response["continue"].asBoolean();
@@ -620,10 +611,7 @@ bool LLLoginInstance::handleMFAChallenge(LLSD const & notif, LLSD const & respon
 
         // Set the request data to true and retry login.
         mRequestData["params"]["token"] = token;
-<<<<<<< HEAD
-=======
         mSaveMFA = response.has("ignore") ? response["ignore"].asBoolean() : false;
->>>>>>> fs/master
         reconnect();
     } else {
         LL_INFOS("LLLogin") << "PromptMFAToken: no token, attemptComplete" << LL_ENDL;
