@@ -1,0 +1,13 @@
+
+stage
+fmodstudioapi*
+
+*.tar.*
+*.zip
+*.dmg
+*.exe
+*.cpp.orig
+*.cpp.bak
+*.h.bak
+*.h.orig
+*.diff

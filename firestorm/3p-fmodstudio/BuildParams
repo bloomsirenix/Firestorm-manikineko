@@ -1,0 +1,20 @@
+# BuildParams
+#
+# Please refer to:
+#  https://wiki.secondlife.com/wiki/Automated_Build_System
+
+# Do *not* use Public Upload location for this package
+public_build = false
+
+# Set to true to package files in legacy build layout, false for new (autobuild) package layout
+# see https://wiki.lindenlab.com/wiki/Autobuild/Package_Layout
+fmod-autobuild.build_legacy_package = false
+
+fmod-autobuild.PACKAGE_NAME = fmod
+
+# autobuild uses VS2010
+# Note: we actually do not build anything for fmod so the Windows binary is using whatever
+# compiler was used by the fmod folks
+AUTOBUILD_VSVER=100
+
+# eof
