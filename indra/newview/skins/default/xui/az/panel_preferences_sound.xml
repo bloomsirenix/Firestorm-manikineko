@@ -3,7 +3,11 @@
 	<panel.string name="middle_mouse">
 		Orta siçan düyməsi
 	</panel.string>
+<<<<<<< HEAD
+	<tab_container label="Manikineko Online Seçimləri" name="tabs">
+=======
 	<tab_container label="Firestorm Seçimləri" name="tabs">
+>>>>>>> fs/master
 		<panel label="Səslər" name="Media Sounds Panel">
 			<slider label="Ümumi səs səviyyəsi" name="System Volume"/>
 			<check_box label="Çevirilərkən səssizləşdir" name="mute_when_minimized"/>

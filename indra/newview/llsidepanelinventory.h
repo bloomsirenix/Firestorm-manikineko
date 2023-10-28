@@ -114,6 +114,15 @@ private:
     LLLayoutPanel* mInboxLayoutPanel;
 
 protected:
+<<<<<<< HEAD
+	void 						onInfoButtonClicked();
+	void 						onShareButtonClicked();
+	void 						onShopButtonClicked();
+	void 						onWearButtonClicked();
+	void 						onPlayButtonClicked();
+	void 						onTeleportButtonClicked();
+=======
+>>>>>>> fs/master
 	void						onReloadInboxClicked();			// <FS:Zi> Add reload button to inventory inbox
 public:
 	void 						onBackButtonClicked();

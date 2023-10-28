@@ -282,10 +282,13 @@ public:
     void clearFolderRoot();
 
     static void callbackPurgeSelectedItems(const LLSD& notification, const LLSD& response, const std::vector<LLUUID> inventory_selected);
+<<<<<<< HEAD
+=======
 
     void changeFolderRoot(const LLUUID& new_id) {};
     void initFolderRoot();
     void initializeViewBuilding();
+>>>>>>> fs/master
 
 protected:
 	void openStartFolderOrMyInventory(); // open the first level of inventory

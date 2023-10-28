@@ -1,10 +1,18 @@
 /**
+<<<<<<<< HEAD:indra/newview/llfloaterclassified.h
  * @file llfloaterclassified.h
  * @brief LLFloaterClassified for displaying classifieds.
+========
+ * @file llinspecttexture.h
+>>>>>>>> fs/master:indra/newview/llinspecttexture.h
  *
  * $LicenseInfo:firstyear=2022&license=viewerlgpl$
  * Second Life Viewer Source Code
+<<<<<<<< HEAD:indra/newview/llfloaterclassified.h
  * Copyright (C) 2022, Linden Research, Inc.
+========
+ * Copyright (C) 2010, Linden Research, Inc.
+>>>>>>>> fs/master:indra/newview/llinspecttexture.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +32,7 @@
  * $/LicenseInfo$
  */
 
+<<<<<<<< HEAD:indra/newview/llfloaterclassified.h
 #ifndef LL_LLFLOATERCLASSIFIED_H
 #define LL_LLFLOATERCLASSIFIED_H
 
@@ -43,3 +52,29 @@ public:
 };
 
 #endif // LL_LLFLOATERCLASSIFIED_H
+========
+#pragma once
+
+#include "lltooltip.h"
+
+class LLTexturePreviewView;
+
+namespace LLInspectTextureUtil
+{
+	LLToolTip* createInventoryToolTip(LLToolTip::Params p);
+}
+
+class LLTextureToolTip : public LLToolTip
+{
+public:
+	LLTextureToolTip(const LLToolTip::Params& p);
+	~LLTextureToolTip();
+
+public:
+	void initFromParams(const LLToolTip::Params& p) override;
+
+protected:
+	LLTexturePreviewView* mPreviewView;
+	S32                   mPreviewSize;
+};
+>>>>>>>> fs/master:indra/newview/llinspecttexture.h

@@ -11950,7 +11950,11 @@ void LLPipeline::handleShadowDetailChanged()
     {
         skipRenderingShadows();
     }
+<<<<<<< HEAD
+    else
+=======
     // else <FS:Beq/> Ghosting fix for Whirly to try. just remove this for now. 
+>>>>>>> fs/master
     {
         LLViewerShaderMgr::instance()->setShaders();
     }

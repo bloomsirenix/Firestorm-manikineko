@@ -463,102 +463,126 @@ LLGLManager::LLGLManager() :
 	mGLMaxIndexRange(0)
 {
 }
-
-//---------------------------------------------------------------------
-// Global initialization for GL
-//---------------------------------------------------------------------
 void LLGLManager::initWGL()
 {
-	mHasPBuffer = FALSE;
+    mHasPBuffer = FALSE;
 #if LL_WINDOWS && !LL_MESA_HEADLESS
-	if (!glh_init_extensions("WGL_ARB_pixel_format"))
-	{
-		LL_WARNS("RenderInit") << "No ARB pixel format extensions" << LL_ENDL;
-	}
+    bool has_ARB_pixel_format = glh_init_extensions("WGL_ARB_pixel_format");
+    if (!has_ARB_pixel_format)
+    {
+        LL_WARNS("RenderInit") << "No ARB pixel format extensions" << LL_ENDL;
+    }
 
-	if (ExtensionExists("WGL_ARB_create_context",gGLHExts.mSysExts))
-	{
-		GLH_EXT_NAME(wglCreateContextAttribsARB) = (PFNWGLCREATECONTEXTATTRIBSARBPROC)GLH_EXT_GET_PROC_ADDRESS("wglCreateContextAttribsARB");
-	}
-	else
-	{
-		LL_WARNS("RenderInit") << "No ARB create context extensions" << LL_ENDL;
-	}
+    bool has_ARB_create_context = ExtensionExists("WGL_ARB_create_context", gGLHExts.mSysExts);
+    if (has_ARB_create_context)
+    {
+        GLH_EXT_NAME(wglCreateContextAttribsARB) =
+            (PFNWGLCREATECONTEXTATTRIBSARBPROC) GLH_EXT_GET_PROC_ADDRESS("wglCreateContextAttribsARB");
+    }
+    else
+    {
+        LL_WARNS("RenderInit") << "No ARB create context extensions" << LL_ENDL;
+    }
 
-	// For retreiving information per AMD adapter, 
-	// because we can't trust curently selected/default one when there are multiple
-	mHasAMDAssociations = ExtensionExists("WGL_AMD_gpu_association", gGLHExts.mSysExts);
-	if (mHasAMDAssociations)
-	{
-		GLH_EXT_NAME(wglGetGPUIDsAMD) = (PFNWGLGETGPUIDSAMDPROC)GLH_EXT_GET_PROC_ADDRESS("wglGetGPUIDsAMD");
-		GLH_EXT_NAME(wglGetGPUInfoAMD) = (PFNWGLGETGPUINFOAMDPROC)GLH_EXT_GET_PROC_ADDRESS("wglGetGPUInfoAMD");
-	}
+    mHasAMDAssociations = ExtensionExists("WGL_AMD_gpu_association", gGLHExts.mSysExts);
+    if (mHasAMDAssociations)
+    {
+        GLH_EXT_NAME(wglGetGPUIDsAMD)  = (PFNWGLGETGPUIDSAMDPROC) GLH_EXT_GET_PROC_ADDRESS("wglGetGPUIDsAMD");
+        GLH_EXT_NAME(wglGetGPUInfoAMD) = (PFNWGLGETGPUINFOAMDPROC) GLH_EXT_GET_PROC_ADDRESS("wglGetGPUInfoAMD");
+    }
 
-	if (ExtensionExists("WGL_EXT_swap_control", gGLHExts.mSysExts))
-	{
-        GLH_EXT_NAME(wglSwapIntervalEXT) = (PFNWGLSWAPINTERVALEXTPROC)GLH_EXT_GET_PROC_ADDRESS("wglSwapIntervalEXT");
-	}
+    if (ExtensionExists("WGL_EXT_swap_control", gGLHExts.mSysExts))
+    {
+        GLH_EXT_NAME(wglSwapIntervalEXT) = (PFNWGLSWAPINTERVALEXTPROC) GLH_EXT_GET_PROC_ADDRESS("wglSwapIntervalEXT");
+    }
 
-	if( !glh_init_extensions("WGL_ARB_pbuffer") )
-	{
-		LL_WARNS("RenderInit") << "No ARB WGL PBuffer extensions" << LL_ENDL;
-	}
+    bool has_ARB_pbuffer = glh_init_extensions("WGL_ARB_pbuffer");
+    if (!has_ARB_pbuffer)
+    {
+        LL_WARNS("RenderInit") << "No ARB WGL PBuffer extensions" << LL_ENDL;
+    }
 
-	if( !glh_init_extensions("WGL_ARB_render_texture") )
-	{
-		LL_WARNS("RenderInit") << "No ARB WGL render texture extensions" << LL_ENDL;
-	}
+    bool has_ARB_render_texture = glh_init_extensions("WGL_ARB_render_texture");
+    if (!has_ARB_render_texture)
+    {
+        LL_WARNS("RenderInit") << "No ARB WGL render texture extensions" << LL_ENDL;
+    }
 
-	mHasPBuffer = ExtensionExists("WGL_ARB_pbuffer", gGLHExts.mSysExts) &&
-					ExtensionExists("WGL_ARB_render_texture", gGLHExts.mSysExts) &&
-					ExtensionExists("WGL_ARB_pixel_format", gGLHExts.mSysExts);
+    mHasPBuffer = has_ARB_pbuffer && has_ARB_render_texture && has_ARB_pixel_format;
 #endif
 }
 
-// return false if unable (or unwilling due to old drivers) to init GL
 bool LLGLManager::initGL()
 {
-	if (mInited)
-	{
-		LL_ERRS("RenderInit") << "Calling init on LLGLManager after already initialized!" << LL_ENDL;
-	}
+    if (mInited)
+    {
+        LL_ERRS("RenderInit") << "Calling init on LLGLManager after already initialized!" << LL_ENDL;
+        return false;  // return early if already initialized
+    }
 
-	stop_glerror();
+    stop_glerror();
 
 #if LL_WINDOWS
-	if (!glGetStringi)
-	{
-		glGetStringi = (PFNGLGETSTRINGIPROC) GLH_EXT_GET_PROC_ADDRESS("glGetStringi");
-	}
+    if (!glGetStringi)
+    {
+        glGetStringi = (PFNGLGETSTRINGIPROC) GLH_EXT_GET_PROC_ADDRESS("glGetStringi");
+        if (!glGetStringi)  // If it's still null, there's an issue.
+        {
+            LL_ERRS("RenderInit") << "Failed to initialize glGetStringi function pointer!" << LL_ENDL;
+            return false;
+        }
+    }
 
-	//reload extensions string (may have changed after using wglCreateContextAttrib)
-	if (glGetStringi)
-	{
-		std::stringstream str;
+    std::string extensions;
+    GLint       count = 0;
+    glGetIntegerv(GL_NUM_EXTENSIONS, &count);
 
-		GLint count = 0;
-		glGetIntegerv(GL_NUM_EXTENSIONS, &count);
-		for (GLint i = 0; i < count; ++i)
-		{
-			std::string ext = ll_safe_string((const char*) glGetStringi(GL_EXTENSIONS, i));
-			str << ext << " ";
-			LL_DEBUGS("GLExtensions") << ext << LL_ENDL;
-		}
-		
-		{
-			PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB = 0;
-			wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC)wglGetProcAddress("wglGetExtensionsStringARB");
-			if(wglGetExtensionsStringARB)
-			{
-				str << (const char*) wglGetExtensionsStringARB(wglGetCurrentDC());
-			}
-		}
+    for (GLint i = 0; i < count; ++i)
+    {
+        const char *ext = (const char *) glGetStringi(GL_EXTENSIONS, i);
+        if (ext)
+        {
+            extensions += ext;
+            extensions += ' ';
+            LL_DEBUGS("GLExtensions") << ext << LL_ENDL;
+        }
+    }
 
-		free(gGLHExts.mSysExts);
-		std::string extensions = str.str();
-		gGLHExts.mSysExts = strdup(extensions.c_str());
-	}
+    PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB = nullptr;
+    wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC) wglGetProcAddress("wglGetExtensionsStringARB");
+    if (wglGetExtensionsStringARB)  // Ensure function pointer is not null before calling it.
+    {
+        const char *wglExtensions = (const char *) wglGetExtensionsStringARB(wglGetCurrentDC());
+        if (wglExtensions)
+        {
+            extensions += wglExtensions;
+        }
+    }
+
+    if (gGLHExts.mSysExts)
+    {
+        free(gGLHExts.mSysExts);
+    }
+    gGLHExts.mSysExts = strdup(extensions.c_str());
 #endif
+
+    mGLVendor = ll_safe_string((const char *) glGetString(GL_VENDOR));
+    LLStringUtil::toUpper(mGLVendor);
+
+    mGLRenderer = ll_safe_string((const char *) glGetString(GL_RENDERER));
+    LLStringUtil::toUpper(mGLRenderer);
+
+    parse_gl_version(&mDriverVersionMajor, &mDriverVersionMinor, &mDriverVersionRelease, &mDriverVersionVendorString, &mGLVersionString);
+
+    mGLVersion = mDriverVersionMajor + mDriverVersionMinor * 0.1f;
+
+    if (mGLVersion >= 2.f)
+    {
+        parse_glsl_version(mGLSLVersionMajor, mGLSLVersionMinor);
+    }
+
+   
+
 	
 	stop_glerror();
 

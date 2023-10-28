@@ -701,9 +701,16 @@ void LLMarketplaceInventoryObserver::onIdleProcessQueue(void *userdata)
                 // If it's a folder known to the marketplace, let's check it's in proper shape
                 if (LLMarketplaceData::instance().isListed(*id_it) || LLMarketplaceData::instance().isVersionFolder(*id_it))
                 {
+<<<<<<< HEAD
+                    LLInventoryCategory* cat = (LLInventoryCategory*)(obj);
+                    // can trigger notifyObservers
+                    // can cause more structural changes
+                    validate_marketplacelistings(cat);
+=======
                     // can trigger notifyObservers
                     // can cause more structural changes
                     LLMarketplaceValidator::getInstance()->validateMarketplaceListings(obj->getUUID());
+>>>>>>> fs/master
                 }
             }
             else

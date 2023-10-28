@@ -275,7 +275,38 @@ void LLInventoryPanel::initFromParams(const LLInventoryPanel::Params& params)
 	// save off copy of params
 	mParams = params;
 
+<<<<<<< HEAD
+	mCommitCallbackRegistrar.pushScope(); // registered as a widget; need to push callback scope ourselves
+	{
+		// Determine the root folder in case specified, and
+		// build the views starting with that folder.
+        LLFolderView* folder_view = createFolderRoot(root_id);
+		mFolderRoot = folder_view->getHandle();
+	
+		addItemID(root_id, mFolderRoot.get());
+	}
+	mCommitCallbackRegistrar.popScope();
+	mFolderRoot.get()->setCallbackRegistrar(&mCommitCallbackRegistrar);
+	mFolderRoot.get()->setEnableRegistrar(&mEnableCallbackRegistrar);
+	
+	// Scroller
+		LLRect scroller_view_rect = getRect();
+		scroller_view_rect.translate(-scroller_view_rect.mLeft, -scroller_view_rect.mBottom);
+		// <FS:Ansariel> Pull this magic number here so inventory scroll panel
+		//               doesn't get cut off on the left side!
+		scroller_view_rect.mLeft += 2;
+		// </FS:Ansariel>
+	LLScrollContainer::Params scroller_params(mParams.scroll());
+		scroller_params.rect(scroller_view_rect);
+		mScroller = LLUICtrlFactory::create<LLFolderViewScrollContainer>(scroller_params);
+		addChild(mScroller);
+		mScroller->addChild(mFolderRoot.get());
+		mFolderRoot.get()->setScrollContainer(mScroller);
+		mFolderRoot.get()->setFollowsAll();
+		mFolderRoot.get()->addChild(mFolderRoot.get()->mStatusTextBox);
+=======
     initFolderRoot();
+>>>>>>> fs/master
 
     // <FS:Ansariel> Optional hiding of empty system folders
     gSavedSettings.getControl("DebugHideEmptySystemFolders")->getSignal()->connect(boost::bind(&LLInventoryPanel::updateHideEmptySystemFolders, this, _2));

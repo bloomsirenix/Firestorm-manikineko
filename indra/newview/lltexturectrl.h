@@ -64,6 +64,8 @@ bool get_is_predefined_texture(LLUUID asset_id);
 // that the texture is original source of asset
 LLUUID get_copy_free_item_by_asset_id(LLUUID image_id, bool no_trans_perm = false);
 bool get_can_copy_texture(LLUUID image_id);
+<<<<<<< HEAD
+=======
 
 enum LLPickerSource
 {
@@ -72,6 +74,7 @@ enum LLPickerSource
     PICKER_BAKE,
     PICKER_UNKNOWN, // on cancel, default ids
 };
+>>>>>>> fs/master
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // LLTextureCtrl

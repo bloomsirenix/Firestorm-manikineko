@@ -11,13 +11,19 @@
 	<menu_item_call label="S'asseoir" name="Sit Down Here"/>
 	<menu_item_call label="Se lever" name="Stand Up"/>
 	<context_menu label="Apparence" name="AppearanceSubmenu">
+<<<<<<< HEAD
+=======
 		<menu_item_call label="Tenue actuelle" name="NowWearing" />
+>>>>>>> fs/master
 		<menu_item_call label="Changer de tenue" name="Change Outfit" />
 		<menu_item_call label="Modifier la silhouette" name="Edit Shape" />
 		<menu_item_call label="Modifier la tenue" name="Edit Outfit Parts" />
 		<menu_item_call label="Voltigement" name="Hover Height"/>
 		<menu_item_call label="Réinitialiser le squelette" name="Reset Skeleton"/>
 		<menu_item_call label="Réinitialiser le squelette et les animations" name="Reset Skeleton And Animations"/>
+<<<<<<< HEAD
+	</context_menu>
+=======
 		<menu_item_call label="Réinitialiser le LOD du maillage" name="Reset Mesh LOD"/>
 	</context_menu>
 	<context_menu label="Enlever" name="Take Off &gt;">
@@ -43,6 +49,7 @@
 	<menu_item_call label="S'asseoir / Se lever" name="Sit stand"/>
 	<menu_item_call label="Voler / Atterrir" name="Fly land"/>
 	<menu_item_call label="Arrêter les animations" name="Stop Animating My Avatar"/>
+>>>>>>> fs/master
 	<context_menu label="Communauté" name="CommunitySubmenu">
 		<menu_item_call label="Amis" name="Friends..."/>
 		<menu_item_call label="Groupes" name="Groups..."/>

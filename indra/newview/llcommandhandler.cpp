@@ -198,6 +198,34 @@ void LLCommandHandlerRegistry::notifySlurlThrottled()
     }
 }
 
+void LLCommandHandlerRegistry::notifySlurlBlocked()
+{
+    static bool slurl_blocked = false;
+    if (!slurl_blocked)
+    {
+        if (LLStartUp::getStartupState() >= STATE_BROWSER_INIT)
+        {
+            // Note: commands can arrive before we initialize everything we need for Notification.
+            LLNotificationsUtil::add("BlockedSLURL");
+        }
+        slurl_blocked = true;
+    }
+}
+
+void LLCommandHandlerRegistry::notifySlurlThrottled()
+{
+    static bool slurl_throttled = false;
+    if (!slurl_throttled)
+    {
+        if (LLStartUp::getStartupState() >= STATE_BROWSER_INIT)
+        {
+            // Note: commands can arrive before we initialize everything we need for Notification.
+            LLNotificationsUtil::add("ThrottledSLURL");
+        }
+        slurl_throttled = true;
+    }
+}
+
 //---------------------------------------------------------------------------
 // Automatic registration of commands, runs before main()
 //---------------------------------------------------------------------------

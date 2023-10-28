@@ -909,6 +909,19 @@ void LLInvFVBridge::getClipboardEntries(bool show_asset_id,
             }
         }
 
+        if (isAgentInventory())
+        {
+            items.push_back(std::string("New folder from selected"));
+            items.push_back(std::string("Subfolder Separator"));
+            std::set<LLUUID> selected_uuid_set = LLAvatarActions::getInventorySelectedUUIDs();
+            uuid_vec_t ids;
+            std::copy(selected_uuid_set.begin(), selected_uuid_set.end(), std::back_inserter(ids));
+            if (!is_only_items_selected(ids) && !is_only_cats_selected(ids))
+            {
+                disabled_items.push_back(std::string("New folder from selected"));
+            }
+        }
+
 		if (obj->getIsLinkType())
 		{
 			items.push_back(std::string("Find Original"));
@@ -1032,10 +1045,26 @@ void LLInvFVBridge::getClipboardEntries(bool show_asset_id,
         addDeleteContextMenuOptions(items, disabled_items);
     }
 
+<<<<<<< HEAD
+	// If multiple items are selected, disable properties (if it exists).
+	// <FS> Old, standalone properties floater
+	//if ((flags & FIRST_SELECTED_ITEM) == 0)
+	//{
+	//	disabled_items.push_back(std::string("Properties"));
+	//}
+	// </FS>
+
+	LLInventoryPanel *active_panel = LLInventoryPanel::getActiveInventoryPanel(FALSE);
+	// <FS:Zi> Don't offer "Show in Main View" for folders opened in separate inventory views
+	//         as there are no tabs to switch to
+	// if (active_panel && (active_panel->getName() != "All Items"))
+	if (active_panel && (active_panel->getName() != "All Items") && (active_panel->getName() != "inv_panel"))
+=======
 	// <FS:Zi> Don't offer "Show in Main View" for folders opened in separate inventory views
 	//         as there are no tabs to switch to
 	//if (!isPanelActive("All Items") && !isPanelActive("comb_single_folder_inv"))
 	if (!isPanelActive("All Items") && !isPanelActive("comb_single_folder_inv") && !isPanelActive("inv_panel"))
+>>>>>>> fs/master
 	// </FS:Zi>
 	{
 		items.push_back(std::string("Show in Main Panel"));
@@ -4431,12 +4460,19 @@ void LLFolderBridge::perform_pasteFromClipboard()
                             {
                                 //changeItemParent() implicity calls dirtyFilter
                                 changeItemParent(model, viitem, parent_id, FALSE);
+<<<<<<< HEAD
+=======
                                 if (cb) cb->fire(item_id);
+>>>>>>> fs/master
                             }
                         }
                         else
                         {
+<<<<<<< HEAD
+                            dropToFavorites(item);
+=======
                             dropToFavorites(item, cb);
+>>>>>>> fs/master
                         }
 					}
 				}
@@ -5037,6 +5073,8 @@ void LLFolderBridge::buildContextMenuFolderOptions(U32 flags,   menuentry_vec_t&
     {
         disabled_items.push_back(std::string("New folder from selected"));
     }
+<<<<<<< HEAD
+=======
 
     //skip the rest options in single-folder mode
     if (mRoot == NULL)
@@ -5045,6 +5083,7 @@ void LLFolderBridge::buildContextMenuFolderOptions(U32 flags,   menuentry_vec_t&
     }
 
     addOpenFolderMenuOptions(flags, items);
+>>>>>>> fs/master
 
 #ifndef LL_RELEASE_FOR_DOWNLOAD
 	if (LLFolderType::lookupIsProtectedType(type) && is_agent_inventory)

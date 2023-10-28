@@ -182,6 +182,8 @@ LLPanelMainInventory::LLPanelMainInventory(const LLPanel::Params& p)
 	mEnableCallbackRegistrar.add("Inventory.CoalescedObjects.Check", boost::bind(&LLPanelMainInventory::isCoalescedObjectsChecked, this, _2));
 	// </FS:Zi>
 
+<<<<<<< HEAD
+=======
 	// <FS:Ansariel> Register all callback handlers early
 	mCommitCallbackRegistrar.add("Inventory.GearDefault.Custom.Action", boost::bind(&LLPanelMainInventory::onCustomAction, this, _2));
 	mEnableCallbackRegistrar.add("Inventory.GearDefault.Check", boost::bind(&LLPanelMainInventory::isActionChecked, this, _2));
@@ -189,6 +191,7 @@ LLPanelMainInventory::LLPanelMainInventory(const LLPanel::Params& p)
 	mEnableCallbackRegistrar.add("Inventory.GearDefault.Visible", boost::bind(&LLPanelMainInventory::isActionVisible, this, _2));
 	// </FS:Ansariel>
 
+>>>>>>> fs/master
 	mSavedFolderState = new LLSaveFolderState();
 	mSavedFolderState->setApply(FALSE);
 
@@ -470,6 +473,14 @@ LLPanelMainInventory::~LLPanelMainInventory( void )
 	gInventory.removeObserver(this);
 	delete mSavedFolderState;
 
+<<<<<<< HEAD
+	auto menu = mMenuAddHandle.get();
+	if(menu)
+	{
+		menu->die();
+		mMenuAddHandle.markDead();
+	}
+=======
     auto menu = mMenuAddHandle.get();
     if(menu)
     {
@@ -485,6 +496,7 @@ LLPanelMainInventory::~LLPanelMainInventory( void )
     {
         mGalleryRootUpdatedConnection.disconnect();
     }
+>>>>>>> fs/master
 }
 
 LLInventoryPanel* LLPanelMainInventory::getAllItemsPanel()
@@ -725,6 +737,21 @@ void LLPanelMainInventory::resetFilters()
 }
 
 void LLPanelMainInventory::resetAllItemsFilters()
+<<<<<<< HEAD
+{
+    LLFloaterInventoryFinder *finder = getFinder();
+    getAllItemsPanel()->getFilter().resetDefault();
+    if (finder)
+    {
+        finder->updateElementsFromFilter();
+    }
+
+    setFilterTextFromFilter();
+}
+
+void LLPanelMainInventory::onSelectSearchType()
+=======
+>>>>>>> fs/master
 {
     LLFloaterInventoryFinder *finder = getFinder();
     getAllItemsPanel()->getFilter().resetDefault();
@@ -1956,15 +1983,23 @@ void LLPanelMainInventory::initListCommandsHandlers()
     //mEnableCallbackRegistrar.add("Inventory.GearDefault.Visible", boost::bind(&LLPanelMainInventory::isActionVisible, this, _2));
 	// </FS:Ansariel>
 	mMenuGearDefault = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_inventory_gear_default.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
+<<<<<<< HEAD
+	mGearMenuButton->setMenu(mMenuGearDefault, LLMenuButton::MP_TOP_LEFT, true);
+=======
 	mGearMenuButton->setMenu(mMenuGearDefault, LLMenuButton::MP_BOTTOM_LEFT, true);
     mMenuViewDefault = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_inventory_view_default.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
 	if (mViewMenuButton) // <FS:Ansariel> Keep better inventory layout
 		mViewMenuButton->setMenu(mMenuViewDefault, LLMenuButton::MP_BOTTOM_LEFT, true);
+>>>>>>> fs/master
 	LLMenuGL* menu = LLUICtrlFactory::getInstance()->createFromFile<LLMenuGL>("menu_inventory_add.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
 	mMenuAddHandle = menu->getHandle();
 
 	mMenuVisibility = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_inventory_search_visibility.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
+<<<<<<< HEAD
+	mVisibilityMenuButton->setMenu(mMenuVisibility, LLMenuButton::MP_BOTTOM_LEFT, true);
+=======
     mVisibilityMenuButton->setMenu(mMenuVisibility, LLMenuButton::MP_BOTTOM_LEFT, true);
+>>>>>>> fs/master
 
 	// Update the trash button when selected item(s) get worn or taken off.
 	LLOutfitObserver::instance().addCOFChangedCallback(boost::bind(&LLPanelMainInventory::updateListCommands, this));

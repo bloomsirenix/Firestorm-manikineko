@@ -81,6 +81,10 @@
 			<menu_item_check name="inventory_filter_only_copy" label="Tylko kopiowalne" />
 			<menu_item_check name="inventory_filter_only_transfer" label="Tylko transferowalne" />
 			<menu_item_check name="inventory_filter_coalesced_objects_only" label="Tylko podniesione razem" />
+<<<<<<< HEAD
+			<menu_item_check name="inventory_show_partial_results" label="Pokaż częściowe wyniki wyszukiwania" />
+=======
+>>>>>>> fs/master
 		</menu>
 	</menu_bar>
 	<layout_stack name="nav_stack">

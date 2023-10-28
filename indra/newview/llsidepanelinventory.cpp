@@ -696,7 +696,11 @@ void LLSidepanelInventory::cleanup()
 // <FS:Zi> Add reload button to inventory inbox
 void LLSidepanelInventory::onReloadInboxClicked()
 {
+<<<<<<< HEAD
+	const LLUUID inbox_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_INBOX, true);
+=======
 	const LLUUID inbox_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_INBOX);
+>>>>>>> fs/master
 
 	if (LLViewerInventoryCategory* cat = gInventory.getCategory(inbox_id); cat)
 	{
@@ -705,6 +709,8 @@ void LLSidepanelInventory::onReloadInboxClicked()
 	}
 }
 // </FS:Zi>
+<<<<<<< HEAD
+=======
 
 // <FS:Ansariel> Secondary inventory window
 //static
@@ -713,3 +719,4 @@ LLFloater* LLSidepanelInventory::createSecondaryInventoryWindow(const LLSD& key)
 	return LLFloaterReg::build<LLFloaterSidePanelContainer>(LLSD().with("is_secondary", true));
 }
 // </FS:Ansariel>
+>>>>>>> fs/master

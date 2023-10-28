@@ -1111,6 +1111,14 @@ void LLPanelLogin::onRememberPasswordCheck(void*)
 
         std::string grid(LLGridManager::getInstance()->getGridId());
         std::string user_id(cred->userID());
+<<<<<<< HEAD
+        if (!remember_password)
+        {
+            gSecAPIHandler->removeFromProtectedMap("mfa_hash", grid, user_id);
+            gSecAPIHandler->syncProtectedMap();
+        }
+=======
+>>>>>>> fs/master
     }
 }
 

@@ -7,7 +7,7 @@
 	 left="0"
 	 name="edit_shape_panel"
 	 top_pad="10"
-	 width="333" >
+	 width="363" >
      <string name="meters">Meters</string>
      <string name="feet">Feet</string>
      <string name="height">Height:</string>
@@ -22,16 +22,16 @@
          left="0"
          name="avatar_height"
          top="0"
-         width="333">
+         width="353">
      </text>
 
     <tab_container
        name="wearable_accordion"
        layout="topleft"
        follows="all"
-       tab_position="top"
+       tab_position="left"
        height="384"
-       width="333">
+       width="363">
 
       <!-- Begin Body Panel -->
       <panel
@@ -42,7 +42,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -53,8 +53,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_body_tab"
@@ -67,8 +68,8 @@
        left="0"
        name="shape_body_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -83,7 +84,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -94,8 +95,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_head_tab"
@@ -108,8 +110,8 @@
        left="0"
        name="shape_head_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -124,7 +126,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -135,8 +137,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_eyes_tab"
@@ -149,8 +152,8 @@
        left="0"
        name="shape_eyes_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -165,7 +168,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -176,8 +179,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_ears_tab"
@@ -190,8 +194,8 @@
        left="0"
        name="shape_ears_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -206,7 +210,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -217,8 +221,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_nose_tab"
@@ -231,8 +236,8 @@
        left="0"
        name="shape_nose_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -247,7 +252,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -258,8 +263,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_mouth_tab"
@@ -272,8 +278,8 @@
        left="0"
        name="shape_mouth_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -288,7 +294,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -299,8 +305,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_chin_tab"
@@ -313,8 +320,8 @@
        left="0"
        name="shape_chin_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -329,7 +336,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -340,8 +347,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_torso_tab"
@@ -354,8 +362,8 @@
        left="0"
        name="shape_torso_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>
@@ -370,7 +378,7 @@
        layout="topleft"
        follows="all"
        height="384"
-       width="333">
+       width="263">
       <!-- Viewer demands an accordion here, so we provide one -->
       <accordion
        layout="topleft"
@@ -381,8 +389,9 @@
        top="0"
        single_expansion="true"
        fit_parent="true"
-       width="333">
+       width="263">
       <accordion_tab
+       header_visible="false"
        layout="topleft"
        min_height="150"
        name="shape_legs_tab"
@@ -395,8 +404,8 @@
        left="0"
        name="shape_legs_param_list"
        top="0"
-       height="330"
-       width="333" />
+       height="384"
+       width="263" />
       </accordion_tab>
       </accordion>
       </panel>

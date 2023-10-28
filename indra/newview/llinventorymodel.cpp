@@ -982,6 +982,10 @@ const LLUUID LLInventoryModel::findCategoryUUIDForTypeInRoot(
 	
 	if(rv.isNull() 
        && root_id.notNull()
+<<<<<<< HEAD
+       && create_folder
+=======
+>>>>>>> fs/master
        && preferred_type != LLFolderType::FT_MARKETPLACE_LISTINGS
        && preferred_type != LLFolderType::FT_OUTBOX)
 	{
@@ -5326,8 +5330,11 @@ LLPointer<LLInventoryValidationInfo> LLInventoryModel::validate() const
                     // Exception: FT_SETTINGS is not automatic, but only deserves a warning.
 					validation_info->mWarnings["non_fatal_system_duplicate_under_root"]++;
                     warning_count++;
+<<<<<<< HEAD
+=======
                     // <FS:Beq>  FIRE-31634 [OPENSIM] Better inventory validation logging
                     //LL_WARNS("Inventory") << "System folder type has excess copies under root, type " << ft << " count " << count_under_root << LL_ENDL;
+>>>>>>> fs/master
                 }
 			}
 			if (count_elsewhere > 0)

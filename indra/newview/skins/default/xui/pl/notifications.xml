@@ -2485,9 +2485,12 @@ Czy chcesz je odtworzyć?
 		Twój kosz się przepełnia. Może to sprawić, że będziesz mieć problemy z zalogowaniem się.
 		<usetemplate name="okcancelbuttons" notext="Wyczyszczę kosz ręcznie później" yestext="Sprawdź kosz teraz" />
 	</notification>
+<<<<<<< HEAD
+=======
 	<notification name="InventoryLimitReachedAISAlert">
 		W Twojej Szafie występują problemy. Skontaktuj się z pomocą techniczną swojego świata.
 	</notification>
+>>>>>>> fs/master
 	<notification name="InventoryLimitReachedAIS">
 		W Twojej Szafie występują problemy. Skontaktuj się z pomocą techniczną swojego świata.
 	</notification>
@@ -5211,6 +5214,8 @@ Rozpakowywanie: [UNPACK_TIME]s [USIZE]KB
 			<button name="cancel" text="Anuluj" />
 		</form>
 	</notification>
+<<<<<<< HEAD
+=======
 	<notification name="PromptMFATokenWithSave">
 		[MESSAGE]
 		<form name="form">
@@ -5219,6 +5224,7 @@ Rozpakowywanie: [UNPACK_TIME]s [USIZE]KB
 			<button name="cancel" text="Anuluj" />
 		</form>
 	</notification>
+>>>>>>> fs/master
 	<notification label="Utwórz podfolder" name="CreateSubfolder">
 		Nazwij nowy folder:
 		<form name="form">

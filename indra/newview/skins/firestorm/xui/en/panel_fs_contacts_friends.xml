@@ -5,7 +5,7 @@
  mouse_opaque="true"
  name="friends"
  width="355">
-	<panel.string name="FontName" value="SANSSERIF"/>
+	<panel.string name="FontName" value="SANSSERIF_SMALL"/>
 	<layout_stack
 	 default_tab_group="2"
 	 border_size="0"
@@ -46,13 +46,14 @@
 		 user_resize="false"
 		 top="0"
 		 layout="topleft"
-		 bottom="-1"
+		 bottom="-2"
 		 follows="all">
 			<fs_scroll_list
+			 desired_line_height="14"
 			 left="0"
 			 right="-1"
 			 top="0"
-			 bottom="-2"
+			 bottom="-1"
 			 follows="all"
 			 layout="topleft"
 			 column_padding="0"
@@ -62,10 +63,9 @@
 			 content_type="Agents"
 			 name="friend_list">
 				<fs_scroll_list.column
-				 image="legacy/ff_online_status_button.tga"
 				 name="icon_online_status"
 				 tool_tip="Online status"
-				 width="20" />
+				 width="16" />
 				<fs_scroll_list.column
 				 dynamicwidth="true"
 				 label="Username"
@@ -82,30 +82,30 @@
 				 name="full_name"
 				 tool_tip="This contact's chosen name." />
 				<fs_scroll_list.column
-				 image="legacy/ff_visible_online_button.tga"
+				 image="Permission_Visible_Online_h"
 				 name="icon_visible_online"
 				 tool_tip="Friend can see when you&apos;re online"
-				 width="20" />
+				 width="16" />
 				<fs_scroll_list.column
-				 image="legacy/ff_visible_map_button.tga"
+				 image="Permission_Visible_Map_h"
 				 name="icon_visible_map"
 				 tool_tip="Friend can locate you on the map"
-				 width="20" />
+				 width="16" />
 				<fs_scroll_list.column
-				 image="legacy/ff_edit_mine_button.tga"
+				 image="Permission_Edit_Objects_Mine_h"
 				 name="icon_edit_mine"
 				 tool_tip="Friend can edit, delete or take objects"
-				 width="20" />
+				 width="16" />
 				<fs_scroll_list.column
-				 image="legacy/ff_visible_map_button_theirs.tga"
+				 image="Permission_Visible_Map_h"
 				 name="icon_visible_map_theirs"
 				 tool_tip="You can locate them on the map"
-				 width="20" />
+				 width="16" />
 				<fs_scroll_list.column
-				 image="legacy/ff_edit_theirs_button.tga"
+				 image="Permission_Edit_Objects_Theirs_h"
 				 name="icon_edit_theirs"
 				 tool_tip="You can edit this friend&apos;s objects"
-				 width="20" />
+				 width="16" />
 				<fs_scroll_list.column
 				 name="friend_last_update_generation"
 				 width="-1" />
@@ -113,7 +113,7 @@
 		</layout_panel>
 	</layout_stack>
 	<button
-	 top="1"
+	 top="2"
 	 follows="top|right"
 	 layout="topleft"
 	 height="22"

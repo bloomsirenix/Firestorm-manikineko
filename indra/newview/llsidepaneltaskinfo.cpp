@@ -651,6 +651,33 @@ void LLSidepanelTaskInfo::refresh()
 	if (gSavedSettings.getBOOL("DebugPermissions") )
 	{
 // <FS:Beq> remove misleading X for export when not in OpenSim		
+<<<<<<< HEAD
+		bool isOpenSim {false};
+#ifdef OPENSIM
+		if( LLGridManager::instance().isInOpenSim() )
+		{
+			isOpenSim = true;
+		}
+#endif
+// </FS:Beq>		
+		if (valid_base_perms)
+		{
+			getChild<LLUICtrl>("B:")->setValue("B: " + mask_to_string(base_mask_on, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
+			getChildView("B:")->setVisible(							TRUE);
+			
+			getChild<LLUICtrl>("O:")->setValue("O: " + mask_to_string(owner_mask_on, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
+			getChildView("O:")->setVisible(							TRUE);
+			
+			getChild<LLUICtrl>("G:")->setValue("G: " + mask_to_string(group_mask_on, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
+			getChildView("G:")->setVisible(							TRUE);
+			
+			getChild<LLUICtrl>("E:")->setValue("E: " + mask_to_string(everyone_mask_on, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
+			getChildView("E:")->setVisible(							TRUE);
+			
+			getChild<LLUICtrl>("N:")->setValue("N: " + mask_to_string(next_owner_mask_on, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
+			getChildView("N:")->setVisible(							TRUE);
+		}
+=======
         bool isOpenSim {false};
 #ifdef OPENSIM
         if( LLGridManager::instance().isInOpenSim() )
@@ -675,6 +702,7 @@ void LLSidepanelTaskInfo::refresh()
             mDAN->setValue("N: " + mask_to_string(next_owner_mask_on, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
             mDAN->setVisible(							TRUE);
         }
+>>>>>>> fs/master
 
 		U32 flag_mask = 0x0;
 		if (objectp->permMove()) 		flag_mask |= PERM_MOVE;
@@ -682,6 +710,20 @@ void LLSidepanelTaskInfo::refresh()
 		if (objectp->permCopy()) 		flag_mask |= PERM_COPY;
 		if (objectp->permTransfer()) 	flag_mask |= PERM_TRANSFER;
 
+<<<<<<< HEAD
+		getChild<LLUICtrl>("F:")->setValue("F:" + mask_to_string(flag_mask, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
+		getChildView("F:")->setVisible(								TRUE);
+	}
+	else
+	{
+		getChildView("B:")->setVisible(								FALSE);
+		getChildView("O:")->setVisible(								FALSE);
+		getChildView("G:")->setVisible(								FALSE);
+		getChildView("E:")->setVisible(								FALSE);
+		getChildView("N:")->setVisible(								FALSE);
+		getChildView("F:")->setVisible(								FALSE);
+	}
+=======
         mDAF->setValue("F:" + mask_to_string(flag_mask, isOpenSim)); // <FS:Beq/> remove misleading X for export when not in OpenSim
         mDAF->setVisible(TRUE);
 
@@ -711,6 +753,7 @@ void LLSidepanelTaskInfo::refresh()
         parent_floater->reshape(parent_rect.getWidth(), parent_rect.getHeight() - (debug_rect.getHeight() * 2));
         mVisibleDebugPermissions = false;
     }
+>>>>>>> fs/master
 
 	BOOL has_change_perm_ability = FALSE;
 	BOOL has_change_sale_ability = FALSE;

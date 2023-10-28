@@ -410,11 +410,15 @@
 			function="Inventory.CoalescedObjects.Check"
 			parameter="coalesced_objects_only" />
 	</menu_item_check>
+<<<<<<< HEAD
+	<menu_item_separator />
+=======
     <menu_item_separator>
         <menu_item_separator.on_visible
          function="Inventory.GearDefault.Visible"
          parameter="multi_folder_view" />
     </menu_item_separator>
+>>>>>>> fs/master
 	<!-- </FS:Zi> -->
 
 	<menu_item_call

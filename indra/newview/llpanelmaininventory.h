@@ -117,6 +117,8 @@ public:
 
     void resetFilters();
     void resetAllItemsFilters();
+<<<<<<< HEAD
+=======
 
     void findLinks(const LLUUID& item_id, const std::string& item_name);
 
@@ -143,6 +145,7 @@ public:
     std::string getLocalizedRootName();
 
     LLInventoryFilter& getCurrentFilter();
+>>>>>>> fs/master
 
 	// <FS:Zi> Filter dropdown
 	void onFilterTypeSelected(const std::string& filter_type_name);
@@ -261,6 +264,11 @@ protected:
 	BOOL isActionChecked(const LLSD& userdata);
 	void onCustomAction(const LLSD& command_name);
     bool isActionVisible(const LLSD& userdata);
+
+	// <FS:Zi> FIRE-31369: Add inventory filter for coalesced objects
+	void onCoalescedObjectsToggled(const LLSD& userdata);
+	bool isCoalescedObjectsChecked(const LLSD& userdata);
+	// </FS:Zi>
 
 	// <FS:Zi> FIRE-31369: Add inventory filter for coalesced objects
 	void onCoalescedObjectsToggled(const LLSD& userdata);

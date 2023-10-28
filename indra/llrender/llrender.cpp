@@ -876,13 +876,15 @@ LLRender::~LLRender()
 {
 	shutdown();
 }
-
 void LLRender::init(bool needs_vertex_buffer)
 {
+    static bool isInit = false;
+    if (isInit)
+        return;  // If already initialized, return immediately
+
 #if LL_WINDOWS
     if (gGLManager.mHasDebugOutput && gDebugGL)
-    { //setup debug output callback
-        //glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_LOW_ARB, 0, NULL, GL_TRUE);
+    {
         glDebugMessageCallbackARB((GLDEBUGPROCARB) gl_debug_callback, NULL);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
     }
@@ -893,23 +895,34 @@ void LLRender::init(bool needs_vertex_buffer)
 
     gGL.setSceneBlendType(LLRender::BT_ALPHA);
     gGL.setAmbientLightColor(LLColor4::black);
-
     glCullFace(GL_BACK);
 
-	if (sGLCoreProfile && !LLVertexBuffer::sUseVAO)
-	{ //bind a dummy vertex array object so we're core profile compliant
+    if (sGLCoreProfile && !LLVertexBuffer::sUseVAO)
+    {
 #ifdef GL_ARB_vertex_array_object
-		U32 ret;
-		glGenVertexArrays(1, &ret);
-		glBindVertexArray(ret);
+        static U32 ret = 0;  // static to store the VAO id
+        if (ret == 0)
+        {
+            glGenVertexArrays(1, &ret);
+        }
+        glBindVertexArray(ret);
 #endif
-	}
+    }
 
     if (needs_vertex_buffer)
     {
         initVertexBuffer();
     }
 
+<<<<<<< HEAD
+    GLfloat range[2];
+    glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, range);
+    mMaxLineWidthAliased = range[1];
+    glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, range);
+    mMaxLineWidthSmooth = range[1];
+
+    isInit = true;  // Mark as initialized
+=======
 	// <FS:Ansariel> Don't ignore OpenGL max line width
 	GLfloat range[2];
 	glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, range);
@@ -919,25 +932,24 @@ void LLRender::init(bool needs_vertex_buffer)
 	stop_glerror();
 	mMaxLineWidthSmooth = range[1];
 	// </FS:Ansariel>
+>>>>>>> fs/master
 }
 
 void LLRender::initVertexBuffer()
 {
-    llassert_always(mBuffer.isNull()) ;
-    stop_glerror();
+    if (!mBuffer.isNull())
+        return;  // If buffer is already initialized, return immediately
+
     mBuffer = new LLVertexBuffer(immediate_mask, 0);
-    // <FS:Ansariel> Warn in case of allocation failure
-    //mBuffer->allocateBuffer(4096, 0, TRUE);
     if (!mBuffer->allocateBuffer(4096, 0, true))
     {
-        // If this doesn't work, we're knee-deep in trouble!
         LL_WARNS() << "Failed to allocate Vertex Buffer for common rendering" << LL_ENDL;
     }
     mBuffer->getVertexStrider(mVerticesp);
     mBuffer->getTexCoord0Strider(mTexcoordsp);
     mBuffer->getColorStrider(mColorsp);
-    stop_glerror();
 }
+
 
 void LLRender::resetVertexBuffer()
 {

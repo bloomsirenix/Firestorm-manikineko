@@ -59,7 +59,10 @@ class LLTextBase;
 class LLMenuButton;
 class LLLineEditor;
 class LLTextEditor;
+<<<<<<< HEAD
+=======
 class LLThumbnailCtrl;
+>>>>>>> fs/master
 class LLPanelProfileClassifieds;
 class LLPanelProfilePicks;
 class LLViewerFetchedTexture;
@@ -223,7 +226,11 @@ private:
 	LLCheckBoxCtrl*		mShowInSearchCheckbox;
 	// </FS:Ansariel>
     // <FS:Zi> Allow proper texture swatch handling
+<<<<<<< HEAD
+	// LLIconCtrl*			mSecondLifePic;
+=======
 	// LLThumbnailCtrl*			mSecondLifePic;
+>>>>>>> fs/master
 	LLTextureCtrl*		mSecondLifePic;
     // </FS:Zi>
 	LLPanel*			mSecondLifePicLayout;
@@ -361,7 +368,11 @@ protected:
 
 	LLTextEditor*	mDescriptionEdit;
     // <FS:Zi> Allow proper texture swatch handling
+<<<<<<< HEAD
+    // LLIconCtrl*		mPicture;
+=======
     // LLThumbnailCtrl*		mPicture;
+>>>>>>> fs/master
     LLTextureCtrl* mPicture;
     // </FS:Zi>
     LLButton* mUploadPhoto;

@@ -230,7 +230,11 @@
 #include "llcommandlineparser.h"
 #include "llfloatermemleak.h"
 #include "llfloaterreg.h"
+<<<<<<< HEAD
+#include "llfloatersimpleoutfitsnapshot.h"
+=======
 #include "llfloatersimplesnapshot.h"
+>>>>>>> fs/master
 #include "llfloatersnapshot.h"
 #include "llsidepanelinventory.h"
 #include "llatmosphere.h"
@@ -1786,6 +1790,12 @@ bool LLAppViewer::doFrame()
                     LL_PROFILE_ZONE_NAMED_CATEGORY_APP( "df Snapshot" )
                     pingMainloopTimeout("Main:Snapshot");
                     LLFloaterSnapshot::update(); // take snapshots
+<<<<<<< HEAD
+                    LLFloaterSimpleOutfitSnapshot::update();
+                    gGLActive = FALSE;
+                }
+		}
+=======
                     LLFloaterSimpleSnapshot::update();
                     gGLActive = FALSE;
                 }
@@ -1795,6 +1805,7 @@ bool LLAppViewer::doFrame()
                     LLViewerStatsRecorder::instance().idle();
                 }
             }
+>>>>>>> fs/master
 		}
 
 		{
@@ -3776,10 +3787,15 @@ LLSD LLAppViewer::getViewerInfo() const
 	// LLFloaterAbout.
 	LLSD info;
 	auto& versionInfo(LLVersionInfo::instance());
+<<<<<<< HEAD
+	info["VIEWER_VERSION"] = llsd::array(versionInfo.getMajor(), versionInfo.getMinor(),
+										 versionInfo.getPatch(), versionInfo.getBuild());
+=======
 	// With GitHub builds, the build number is too big to fit in a 32-bit int,
 	// and LLSD doesn't deal with integers wider than int. Use string.
 	info["VIEWER_VERSION"] = llsd::array(versionInfo.getMajor(), versionInfo.getMinor(),
 										 versionInfo.getPatch(), stringize(versionInfo.getBuild()));
+>>>>>>> fs/master
 	info["VIEWER_VERSION_STR"] = versionInfo.getVersion();
 	info["BUILD_DATE"] = __DATE__;
 	info["BUILD_TIME"] = __TIME__;
