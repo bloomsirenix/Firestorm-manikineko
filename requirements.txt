@@ -1,2 +1,0 @@
-llbase>=1.2.11
-autobuild>=3.9.1

@@ -32,7 +32,7 @@ endif (WINDOWS)
 # as well?
 
 # Portable compilation flags.
-add_compile_definitions( ADDRESS_SIZE=${ADDRESS_SIZE})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DADDRESS_SIZE=${ADDRESS_SIZE}")
 
 # Configure crash reporting
 set(RELEASE_CRASH_REPORTING OFF CACHE BOOL "Enable use of crash reporting in release builds")
@@ -77,10 +77,22 @@ if (WINDOWS)
   # CP changed to only append the flag for 32bit builds - on 64bit builds,
   # locally at least, the build output is spammed with 1000s of 'D9002'
   # warnings about this switch being ignored.
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")  
   # <FS:ND> Remove this, it's no option to cl.exe and causes a massive amount of warnings.
   #if( ADDRESS_SIZE EQUAL 32 )
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /p:PreferredToolArchitecture=x64")  
   #endif()
+  
+  # Preserve first-pass-through versions (ie no FORCE overwrite). Prevents recursive addition of /Zo (04/2021)
+  set(OG_CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} CACHE STRING "OG_CXX_FLAGS_RELEASE")
+  set(OG_CMAKE_CXX_FLAGS_RELWITHDEBINFO ${CMAKE_CXX_FLAGS_RELWITHDEBINFO} CACHE STRING "OG_CXX_FLAGS_RELWITHDEBINFO")
+
+  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
+      "${OG_CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Zo"
+      CACHE STRING "C++ compiler release-with-debug options" FORCE)
+  set(CMAKE_CXX_FLAGS_RELEASE
+      "${OG_CMAKE_CXX_FLAGS_RELEASE} ${LL_CXX_FLAGS} /Zo"
+      CACHE STRING "C++ compiler release options" FORCE)
   
   # zlib has assembly-language object files incompatible with SAFESEH
   add_link_options(/LARGEADDRESSAWARE
@@ -216,6 +228,10 @@ if (DARWIN)
 
 set(ENABLE_SIGNING TRUE)
 set(SIGNING_IDENTITY "Developer ID Application: The Phoenix Firestorm Project, Inc." )
+
+  # required for clang-15/xcode-15 since our boost package still uses deprecated std::unary_function/binary_function
+  # see https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes#C++-Standard-Library
+  add_compile_definitions(_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION)
 endif (DARWIN)
 
 if (LINUX OR DARWIN)

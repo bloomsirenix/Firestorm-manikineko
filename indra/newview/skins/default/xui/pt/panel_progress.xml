@@ -5,6 +5,10 @@
 	<layout_panel name="panel4"/>
 	<layout_panel name="center"/>
 	<layout_stack name="horizontal_centering">
+<<<<<<< HEAD
 		<text name="logos_lbl">Usos do Manikineko Online</text>
+=======
+		<text name="logos_lbl">Usos do Second Life</text>
+>>>>>>> fs/master
 	</layout_stack>
 </panel>

@@ -3,10 +3,14 @@
 	<menu_item_call label="Porter - Remplacer votre tenue" name="wear_replace" />
 	<menu_item_call label="Porter - Ajouter à votre tenue" name="wear_add" />
 	<menu_item_call label="Retirer - Retirer de votre tenue" name="take_off" />
+<<<<<<< HEAD
 	<menu_item_call label="Charger une photo ([UPLOAD_COST] L$)" name="upload_photo" />
 	<menu_item_call label="Sélectionner une photo" name="select_photo" />
 	<menu_item_call label="Prendre une photo" name="take_snapshot" />
 	<menu_item_call label="Supprimer la photo" name="remove_photo" />
+=======
+	<menu_item_call label="Photo..." name="thumbnail" />
+>>>>>>> fs/master
 	<menu label="Nouveau vêtement" name="New Clothes">
 		<menu_item_call label="Nouvelle chemise" name="New Shirt"/>
 		<menu_item_call label="Nouveaux pantalons" name="New Pants"/>

@@ -87,6 +87,7 @@ LLFloater360Capture::LLFloater360Capture(const LLSD& key)
     // such time as we ask it not to (the dtor). If we crash or
     // otherwise, exit before this is turned off, the Simulator
     // will take care of cleaning up for us.
+<<<<<<< HEAD
     if (gSavedSettings.getBOOL("360CaptureUseInterestListCap"))
     {
 // <FS:Beq> Fix 360 capture missing objects after TP
@@ -102,6 +103,12 @@ LLFloater360Capture::LLFloater360Capture(const LLSD& key)
     }
 	mRegionChangeConnection = gAgent.addRegionChangedCallback(boost::bind(&LLFloater360Capture::checkRegion, this));
 // </FS:Beq>
+=======
+    mStartILMode = gAgent.getInterestListMode();
+    gAgent.set360CaptureActive(true); // <FS:Beq/> make FS area search work aga
+    // send everything to us for as long as this floater is open
+    gAgent.changeInterestListMode(LLViewerRegion::IL_MODE_360);
+>>>>>>> fs/master
 }
 
 LLFloater360Capture::~LLFloater360Capture()
@@ -113,9 +120,11 @@ LLFloater360Capture::~LLFloater360Capture()
         mWebBrowser->unloadMediaSource();
     }
 
-    // Tell the Simulator not to send us everything anymore
-    // and revert to the regular "keyhole" frustum of interest
+    // Restore interest list mode to the state when started
+    // Normally LLFloater360Capture tells the Simulator send everything
+    // and now reverts to the regular "keyhole" frustum of interest
     // list updates.
+<<<<<<< HEAD
     if (!LLApp::isExiting() && gSavedSettings.getBOOL("360CaptureUseInterestListCap"))
     {
 // <FS:Beq> Fix 360 capture missing objects after TP
@@ -134,6 +143,21 @@ LLFloater360Capture::~LLFloater360Capture()
 		mRegionChangeConnection.disconnect();
 	}
 // </FS:Beq>
+=======
+    // <FS:Beq> This whole thing is wrong because it is not a simple before/after state states can overlap.
+    // if (!LLApp::isExiting() && 
+    //     // gSavedSettings.getBOOL("360CaptureUseInterestListCap") && // <FS:Beq/> Invalid dependency - This is not used anywhere else now.
+    //     mStartILMode != gAgent.getInterestListMode())
+    // {
+    //     gAgent.set360CaptureActive(false); // <FS:Beq/> make FS Area search work again
+    //     gAgent.changeInterestListMode(mStartILMode);
+	// }
+    if ( !LLApp::isExiting() )
+    {
+        gAgent.set360CaptureActive(false); // <FS:Beq/> make FS Area search work again
+        gAgent.changeInterestListMode(LLViewerRegion::IL_MODE_DEFAULT);// The Change Interest Mode target mode is indicative only. If something else is holding the 360 mode open then this will be ignored.
+	}
+>>>>>>> fs/master
 }
 
 BOOL LLFloater360Capture::postBuild()
@@ -216,6 +240,7 @@ void LLFloater360Capture::onChooseQualityRadioGroup()
     setSourceImageSize();
 }
 
+<<<<<<< HEAD
 // <FS:Beq> Area search improvements - allow area search and 360 to coexist nicely.
 // Code moved to LLViewerRegion.cpp
 // Using a new capability, tell the simulator that we want it to send everything
@@ -264,6 +289,8 @@ void LLFloater360Capture::onChooseQualityRadioGroup()
 //     }
 // }
 // </FS:Beq>
+=======
+>>>>>>> fs/master
 
 // There is is a setting (360CaptureSourceImageSize) that holds the size
 // (width == height since it's a square) of each of the 6 source snapshots.
@@ -683,11 +710,8 @@ void LLFloater360Capture::capture360Images()
     // display time to encode all 6 images.  It tends to be a fairly linear
     // time for each so we don't need to worry about displaying the time
     // for each - this gives us plenty to use for optimizing
-    LL_INFOS("360Capture") <<
-                           "Time to encode and save 6 images was " <<
-                           encode_time_total <<
-                           " seconds" <<
-                           LL_ENDL;
+    LL_INFOS("360Capture") << "Time to encode and save 6 images was " <<
+                           encode_time_total << " seconds" << LL_ENDL;
 
     // Write the JavaScript file footer (the bottom of the file after the
     // declarations of the actual data URLs array). The footer comprises of
@@ -719,7 +743,7 @@ void LLFloater360Capture::capture360Images()
     // as a change - only the subsequent 5 are
     if (camera_changed_times < 5)
     {
-        LL_INFOS("360Capture") << "Warning: we only captured " << camera_changed_times << " images." << LL_ENDL;
+        LL_WARNS("360Capture") << "360 image capture expected 5 or more images, only captured " << camera_changed_times << " images." << LL_ENDL;
     }
 
     // now we have the 6 shots saved in a well specified location,

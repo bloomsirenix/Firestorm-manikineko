@@ -29,6 +29,7 @@ set(llrender_SOURCE_FILES
     llrendertarget.cpp
     llshadermgr.cpp
     lltexture.cpp
+    lltexturemanagerbridge.cpp
     lluiimage.cpp
     llvertexbuffer.cpp
     llglcommonfunc.cpp
@@ -58,6 +59,7 @@ set(llrender_HEADER_FILES
     llrendersphere.h
     llshadermgr.h
     lltexture.h
+    lltexturemanagerbridge.h
     lluiimage.h
     lluiimage.inl
     llvertexbuffer.h
@@ -87,6 +89,11 @@ endif (BUILD_HEADLESS)
 
 add_library (llrender ${llrender_SOURCE_FILES})
 target_include_directories( llrender  INTERFACE   ${CMAKE_CURRENT_SOURCE_DIR})
+<<<<<<< HEAD
+=======
+
+set_property(TARGET llrender PROPERTY POSITION_INDEPENDENT_CODE ON)
+>>>>>>> fs/master
 
 # Libraries on which this library depends, needed for Linux builds
 # Sort by high-level to low-level

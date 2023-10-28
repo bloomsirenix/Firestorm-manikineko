@@ -4,6 +4,10 @@
 	<button label="新規…" name="new_btn"/>
 	<button label="削除…" name="delete_btn"/>
 	<text name="classifieds_panel_text">
+<<<<<<< HEAD
 		ロード中...
+=======
+		読み込んでいます…
+>>>>>>> fs/master
 	</text>
 </panel>

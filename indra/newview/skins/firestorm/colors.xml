@@ -1391,6 +1391,7 @@
       reference="AnsaStorm_HtmlLink_QueryPart" />
   <color
       name="UploadDialogBackground"
+<<<<<<< HEAD
       reference="SL-Background_66" />
   <color
       name="ChatHistoryMessageFromLog"
@@ -1398,6 +1399,9 @@
   <color
       name="AreaSearchBeaconColor"
       reference="Blue_80" />
+=======
+      reference="floater_bg_color_a" />
+>>>>>>> fs/master
   <color
      name="NotecardBackgroundColor"
      reference="TextBgFocusColor" />
@@ -1406,7 +1410,11 @@
      reference="TextFgColor" />
   <color
      name="NotecardSelectionColor"
+<<<<<<< HEAD
      reference="EmphasisColor" />
+=======
+     reference="simpleeditor_bg_selected" />
+>>>>>>> fs/master
   <color
      name="NotecardCursorColor"
      reference="TextCursorColor" />

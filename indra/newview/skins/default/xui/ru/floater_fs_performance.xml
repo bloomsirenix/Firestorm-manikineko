@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<<<<<<<< HEAD:indra/newview/skins/default/xui/ru/floater_fs_performance.xml
 <floater name="performance" title="Увеличить скорость графики">
 <floater.string name="frame_stats">
 Кадр:[TOT_FRAME_TIME]ms Сцена:[SCENERY_FRAME_PCT]% Аватары:[AV_FRAME_PCT]% UI:[UI_FRAME_PCT]% HUDS:[HUDS_FRAME_PCT]% Swap:[SWAP_FRAME_PCT]% Задачи:[IDLE_FRAME_PCT]%
@@ -32,50 +33,38 @@
 		<text name="frame_breakdown">
 [---------------------Здесь появится разбивка кадров.----------------------]
 		</text>
+========
+<floater name="performance" title="УЛУЧШИТЬ СКОРОСТЬ ГРАФИКИ">
+	<string name="fps_text" value="кадров в секунду"/>
+	<string name="max_text" value=" (максимум)"/>
+	<panel name="panel_top">
+		<panel name="fps_subpanel">
+			<text name="fps_lbl">кадров в секунду</text>
+			<text name="fps_desc1_lbl">Подождите 5–10 секунд,</text>
+			<text name="fps_desc2_lbl">чтобы изменения произошли.</text>
+		</panel>
+>>>>>>>> fs/master:indra/newview/skins/default/xui/ru/floater_performance.xml
 	</panel>
-	<panel name="target_subpanel">
-		<text name="settings_lbl" tool_tip="Автоматически настраивайет параметры для поддержания FPS. Установите цель на желаемую частоту кадров, и программа просмотра попытается соответствовать этому, динамически изменяя ваши настройки.">Авто.:</text>
-		<text name="targetfps_desc">Целевая частота (fps)</text>
-		<spinner name="target_fps" tool_tip="Цель FPS - Желаемый уровень FPS. Программа просмотра попытается добиться этого, изменив настройки графики."/>
-		<button name="AutoTuneFPS"  label="Старт" label_selected="Стоп" tool_tip="Программа попытается настроить параметры для достижения целевой частоты кадров."/>
-		<check_box name="AutoTuneContinuous" label="Непрерывно" tool_tip="Программа просмотра будет постоянно изменять настройки для достижения целевого FPS, пока не остановится, даже если окно закрыто. Если функция отключена, нажатие кнопки Автонастройка приведет к настройке текущих параметров, а затем остановится."/>
-		<button name="PrefSaveButton" tool_tip="Сохранить текущие настройки по умолчанию для использования в будущем."/>
-		<button name="PrefLoadButton" tool_tip="Загрузить существующие предустановки."/>
-		<button name="Defaults" tool_tip="Перезагрузить настройки графики по умолчанию для вашего оборудования."/>
-		<text name="settings_desc">Стратегия подстройки</text>
-		<combo_box name="FSTuningFPSStrategy">
-			<combo_box.item label="Только аватары" name="av_only"/>
-			<combo_box.item label="Аватары и сцена" name="av_and_scene"/>
-		</combo_box>
-		<button name="target_btn" tool_tip="Изменить поведение стратегии подстройки."/>
+	<panel name="panel_performance_main">
+		<panel name="autoadjustments_subpanel">
+			<text name="auto_adj_lbl">Автоподстройка настройки (рекомендуется)</text>
+			<text name="auto_adj_desc">Разрешите автонастройку для достижения желаемой частоты кадров.</text>
+		</panel>
+		<panel name="settings_subpanel">
+			<text name="settings_lbl">Настройки графики</text>
+			<text name="settings_desc">Выбирайте настройки расстояния, воды, освещения и многого другого.</text>
+		</panel>
+		<panel name="nearby_subpanel">
+			<text name="avatars_nearby_lbl">Аватары поблизости</text>
+			<text name="avatars_nearby_desc">Управляйте полным отображением ближайших аватаров.</text>
+		</panel>
+		<panel name="complexity_subpanel">
+			<text name="complexity_lbl">Сложность вашего аватара</text>
+			<text name="complexity_info">Уменьшите сложность вашего аватара, если вас не устраивает текущий FPS.</text>
+		</panel>
+		<panel name="huds_subpanel">
+			<text name="huds_lbl" width="135">Ваши активные HUD</text>
+			<text name="huds_desc" width="395">Удаление неиспользуемых HUD может повысить скорость.</text>
+		</panel>
 	</panel>
-</panel>
-<panel name="panel_performance_main">
-	<panel name="settings_subpanel">
-		<text name="settings_lbl">Настройки графики</text>
-		<text name="settings_desc">Выберите настройки расстояния, воды, освещения и т.д.</text>
-	</panel>
-	<panel name="nearby_subpanel">
-		<text name="avatars_nearby_lbl">Аватары рядом</text>
-		<text name="avatars_nearby_desc" >Управляйте отображением ближайших аватаров.</text>
-		<text name="avatars_frme_pct_lbl">
-Время
-отрисовки
-аватаров
-		</text>
-	</panel>
-	<panel name="complexity_subpanel">
-		<text name="complexity_lbl">Сложность аватара</text>
-		<text name="complexity_info">Будьте хорошим жителем. Управляйте влиянием вашего аватара</text>
-	</panel>
-	<panel name="huds_subpanel">
-		<text name="huds_lbl">HUD-ы аватара</text>
-		<text name="huds_desc">Удаление ненужных HUD может улучшить скорость.</text>
-		<text name="huds_frme_pct_lbl">
-Время
-отрисовки
-HUD-ов
-		</text>
-	</panel>
-</panel>
 </floater>

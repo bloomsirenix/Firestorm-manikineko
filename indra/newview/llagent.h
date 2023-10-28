@@ -120,15 +120,20 @@ private:
 	//--------------------------------------------------------------------
 public:
 	void			onAppFocusGained();
-	void			setFirstLogin(BOOL b) 	{ mFirstLogin = b; }
+	void			setFirstLogin(bool b);
 	// Return TRUE if the database reported this login as the first for this particular user.
-	BOOL 			isFirstLogin() const 	{ return mFirstLogin; }
-	BOOL 			isInitialized() const 	{ return mInitialized; }
+	bool 			isFirstLogin() const 	{ return mFirstLogin; }
+	bool 			isInitialized() const 	{ return mInitialized; }
+
+    void            setFeatureVersion(S32 version, S32 flags);
+    S32             getFeatureVersion();
+    void            getFeatureVersionAndFlags(S32 &version, S32 &flags);
+    void            showLatestFeatureNotification(const std::string key);
 public:
 	std::string		mMOTD; 					// Message of the day
 private:
-	BOOL			mInitialized;
-	BOOL			mFirstLogin;
+	bool			mInitialized;
+	bool			mFirstLogin;
 	boost::shared_ptr<LLAgentListener> mListener;
 
 	//--------------------------------------------------------------------
@@ -298,9 +303,19 @@ public:
 	boost::signals2::connection     addRegionChangedCallback(const region_changed_signal_t::slot_type& cb);
 	void                            removeRegionChangedCallback(boost::signals2::connection callback);
 
+
+	void changeInterestListMode(const std::string & new_mode);
+    const std::string & getInterestListMode() const { return mInterestListMode; }
+
 private:
 	LLViewerRegion	*mRegionp;
 	region_changed_signal_t		            mRegionChangedSignal;
+
+    std::string								mInterestListMode;	// How agent wants regions to send updates
+	// <FS:Beq> Area search fixes
+	bool mFSAreaSearchActive;
+	bool m360CaptureActive;
+	// </FS:Beq>
 
 	//--------------------------------------------------------------------
 	// History
@@ -309,6 +324,12 @@ public:
 	S32				getRegionsVisited() const;
 	F64				getDistanceTraveled() const;	
 	void			setDistanceTraveled(F64 dist) { mDistanceTraveled = dist; }
+	// <FS:Beq> Area search fixes
+	void			setFSAreaSearchActive(bool enabled) { mFSAreaSearchActive = enabled; }
+	void			set360CaptureActive(bool enabled) { m360CaptureActive = enabled; }
+	bool			getFSAreaSearchActive() const { return mFSAreaSearchActive; }
+	bool			get360CaptureActive() const { return m360CaptureActive; }
+	// </FS:Beq>
 	
 	const LLVector3d &getLastPositionGlobal() const { return mLastPositionGlobal; }
 	void			setLastPositionGlobal(const LLVector3d &pos) { mLastPositionGlobal = pos; }
@@ -638,7 +659,6 @@ public:
 	void			roll(F32 angle);
 	void			yaw(F32 angle);
 	LLVector3		getReferenceUpVector();
-    F32             clampPitchToLimits(F32 angle);
 
 	//--------------------------------------------------------------------
 	// Autopilot

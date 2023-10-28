@@ -56,6 +56,7 @@ public:
 	bool authSuccess() { return mAttemptComplete && mLoginState == "online"; }
 
 	const std::string& getLoginState() { return mLoginState; }
+    bool saveMFA() const { return mSaveMFA; }
 	LLSD getResponse(const std::string& key) { return getResponse()[key]; }
 	LLSD getResponse();
 // <FS:AW various patches>
@@ -87,6 +88,10 @@ private:
 	void syncWithUpdater(ResponsePtr resp, const LLSD& notification, const LLSD& response);
 
 	bool handleTOSResponse(bool v, const std::string& key);
+<<<<<<< HEAD
+=======
+    void showMFAChallange(const std::string& message);
+>>>>>>> fs/master
     bool handleMFAChallenge(LLSD const & notif, LLSD const & response);
 
 	void attemptComplete() { mAttemptComplete = true; } // In the future an event?
@@ -98,6 +103,7 @@ private:
 	LLSD mRequestData;
 	LLSD mResponseData;
 	bool mAttemptComplete;
+    bool mSaveMFA;
 	F64 mTransferRate;
 	std::string mSerialNumber;
 	int mLastExecEvent;

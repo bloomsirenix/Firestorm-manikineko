@@ -914,6 +914,7 @@ void LLRender::init(bool needs_vertex_buffer)
         initVertexBuffer();
     }
 
+<<<<<<< HEAD
     GLfloat range[2];
     glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, range);
     mMaxLineWidthAliased = range[1];
@@ -921,6 +922,17 @@ void LLRender::init(bool needs_vertex_buffer)
     mMaxLineWidthSmooth = range[1];
 
     isInit = true;  // Mark as initialized
+=======
+	// <FS:Ansariel> Don't ignore OpenGL max line width
+	GLfloat range[2];
+	glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, range);
+	stop_glerror();
+	mMaxLineWidthAliased = range[1];
+	glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, range);
+	stop_glerror();
+	mMaxLineWidthSmooth = range[1];
+	// </FS:Ansariel>
+>>>>>>> fs/master
 }
 
 void LLRender::initVertexBuffer()

@@ -123,8 +123,10 @@
 #include "llviewerobjectlist.h"
 #include "llviewerparcelmgr.h"
 #include "llviewerstats.h"
+#include "llviewerstatsrecorder.h"
 #include "llvoavatarself.h"
 #include "llvoicevivox.h"
+#include "llworld.h"
 #include "llworldmap.h"
 #include "pipeline.h"
 #include "llviewerjoystick.h"
@@ -391,6 +393,7 @@ void handle_debug_avatar_textures(void*);
 void handle_grab_baked_texture(void*);
 BOOL enable_grab_baked_texture(void*);
 void handle_dump_region_object_cache(void*);
+void handle_reset_interest_lists(void *);
 
 BOOL enable_save_into_task_inventory(void*);
 
@@ -479,14 +482,14 @@ void set_merchant_SLM_menu()
     LLCommand* command = LLCommandManager::instance().getCommand("marketplacelistings");
     gToolBarView->enableCommand(command->id(), true);
 
-    const LLUUID marketplacelistings_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS, false);
+    const LLUUID marketplacelistings_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS);
     if (marketplacelistings_id.isNull())
     {
         U32 mkt_status = LLMarketplaceData::instance().getSLMStatus();
         bool is_merchant = (mkt_status == MarketplaceStatusCodes::MARKET_PLACE_MERCHANT) || (mkt_status == MarketplaceStatusCodes::MARKET_PLACE_MIGRATED_MERCHANT);
         if (is_merchant)
         {
-            gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS, true);
+            gInventory.ensureCategoryForTypeExists(LLFolderType::FT_MARKETPLACE_LISTINGS);
             LL_WARNS("SLM") << "Creating the marketplace listings folder for a merchant" << LL_ENDL;
         }
     }
@@ -1480,6 +1483,7 @@ class LLAdvancedDumpRegionObjectCache : public view_listener_t
 	}
 };
 
+<<<<<<< HEAD
 // <FS:Beq> Handle InterestListFullUpdate as a proper state toggle
 // class LLAdvancedInterestListFullUpdate : public view_listener_t
 // {
@@ -1559,6 +1563,75 @@ class LLAdvancedToggleInterestListFullUpdate : public view_listener_t
 	}
 };
 // </FS:Beq>
+=======
+class LLAdvancedToggleInterestList360Mode : public view_listener_t
+{
+public:
+    bool handleEvent(const LLSD &userdata)
+    {
+        // Toggle the mode - regions will get updated
+        if (gAgent.getInterestListMode() == LLViewerRegion::IL_MODE_360)
+        {
+			// <FS:Beq> we need to force the 360 mode "users" to false or this override will fail
+			gAgent.setFSAreaSearchActive(false);
+			gAgent.set360CaptureActive(false);
+			// <FS:Beq/>
+			gAgent.changeInterestListMode(LLViewerRegion::IL_MODE_DEFAULT);
+		}
+		else
+		{
+			// <FS:Beq> we need to force the 360 mode user flag to true or this override will fail. Don;t set area search though as that can have other effects.
+			gAgent.set360CaptureActive(false);
+			// <FS:Beq/>
+			gAgent.changeInterestListMode(LLViewerRegion::IL_MODE_360);
+		}
+        return true;
+    }
+};
+
+class LLAdvancedCheckInterestList360Mode : public view_listener_t
+{
+	bool handleEvent(const LLSD& userdata)
+	{
+		return (gAgent.getInterestListMode() == LLViewerRegion::IL_MODE_360);
+	}
+};
+
+class LLAdvancedToggleStatsRecorder : public view_listener_t
+{
+    bool handleEvent(const LLSD &userdata)
+    {
+        if (LLViewerStatsRecorder::instance().isEnabled())
+		{	// Turn off both recording and logging
+			LLViewerStatsRecorder::instance().enableObjectStatsRecording(false);
+		}
+		else
+		{	// Turn on both recording and logging
+			LLViewerStatsRecorder::instance().enableObjectStatsRecording(true, true);
+		}
+        return true;
+    }
+};
+
+class LLAdvancedCheckStatsRecorder : public view_listener_t
+{
+    bool handleEvent(const LLSD &userdata)
+    {	// Use the logging state as the indicator of whether the stats recorder is on
+        return LLViewerStatsRecorder::instance().isLogging();
+    }
+};
+
+class LLAdvancedResetInterestLists : public view_listener_t
+{
+    bool handleEvent(const LLSD &userdata)
+    {	// Reset all region interest lists
+        handle_reset_interest_lists(NULL);
+        return true;
+    }
+};
+
+
+>>>>>>> fs/master
 class LLAdvancedBuyCurrencyTest : public view_listener_t
 	{
 	bool handleEvent(const LLSD& userdata)
@@ -3753,9 +3826,7 @@ void handle_object_inspect()
 	LLViewerObject* selected_objectp = selection->getFirstRootObject();
 	if (selected_objectp)
 	{
-		LLSD key;
-		key["task"] = "task";
-		LLFloaterSidePanelContainer::showPanel("inventory", key);
+        LLFloaterReg::showInstance("task_properties");
 	}
 	
 	/*
@@ -4792,6 +4863,22 @@ void handle_dump_region_object_cache(void*)
 	}
 }
 
+void handle_reset_interest_lists(void *)
+{
+    // Check all regions and reset their interest list
+    for (LLWorld::region_list_t::const_iterator iter = LLWorld::getInstance()->getRegionList().begin();
+         iter != LLWorld::getInstance()->getRegionList().end();
+         ++iter)
+    {
+        LLViewerRegion *regionp = *iter;
+        if (regionp && regionp->isAlive() && regionp->capabilitiesReceived())
+        {
+            regionp->resetInterestList();
+        }
+    }
+}
+
+
 void handle_dump_focus()
 {
 	LLUICtrl *ctrl = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
@@ -5733,33 +5820,6 @@ void handle_duplicate_in_place(void*)
 	LLSelectMgr::getInstance()->selectDuplicate(offset, TRUE);
 }
 
-/* dead code 30-apr-2008
-void handle_deed_object_to_group(void*)
-{
-	LLUUID group_id;
-	
-	LLSelectMgr::getInstance()->selectGetGroup(group_id);
-	LLSelectMgr::getInstance()->sendOwner(LLUUID::null, group_id, FALSE);
-	LLViewerStats::getInstance()->incStat(LLViewerStats::ST_RELEASE_COUNT);
-}
-
-BOOL enable_deed_object_to_group(void*)
-{
-	if(LLSelectMgr::getInstance()->getSelection()->isEmpty()) return FALSE;
-	LLPermissions perm;
-	LLUUID group_id;
-
-	if (LLSelectMgr::getInstance()->selectGetGroup(group_id) &&
-		gAgent.hasPowerInGroup(group_id, GP_OBJECT_DEED) &&
-		LLSelectMgr::getInstance()->selectGetPermissions(perm) &&
-		perm.deedToGroup(gAgent.getID(), group_id))
-	{
-		return TRUE;
-	}
-	return FALSE;
-}
-
-*/
 
 
 /*
@@ -11632,6 +11692,25 @@ class LLWorldPostProcess : public view_listener_t
 	}
 };
 
+class LLWorldCheckBanLines : public view_listener_t
+{
+    bool handleEvent(const LLSD& userdata)
+    {
+        S32 callback_data = userdata.asInteger();
+        return gSavedSettings.getS32("ShowBanLines") == callback_data;
+    }
+};
+
+class LLWorldShowBanLines : public view_listener_t
+{
+    bool handleEvent(const LLSD& userdata)
+    {
+        S32 callback_data = userdata.asInteger();
+        gSavedSettings.setS32("ShowBanLines", callback_data);
+        return true;
+    }
+};
+
 void handle_flush_name_caches()
 {
 	// <FS:Ansariel> Crash fix
@@ -12170,6 +12249,8 @@ void initialize_menus()
 	view_listener_t::addMenu(new LLWorldEnvPreset(), "World.EnvPreset");
 	view_listener_t::addMenu(new LLWorldEnableEnvPreset(), "World.EnableEnvPreset");
 	view_listener_t::addMenu(new LLWorldPostProcess(), "World.PostProcess");
+    view_listener_t::addMenu(new LLWorldCheckBanLines() , "World.CheckBanLines");
+    view_listener_t::addMenu(new LLWorldShowBanLines() , "World.ShowBanLines");
 
 	// Tools menu
 	view_listener_t::addMenu(new LLToolsSelectTool(), "Tools.SelectTool");
@@ -12274,12 +12355,20 @@ void initialize_menus()
 	// Advanced > World
 	view_listener_t::addMenu(new LLAdvancedDumpScriptedCamera(), "Advanced.DumpScriptedCamera");
 	view_listener_t::addMenu(new LLAdvancedDumpRegionObjectCache(), "Advanced.DumpRegionObjectCache");
+<<<<<<< HEAD
 	
 	// <FS:Beq> Make InterestList a proper stateful toggle
 	// view_listener_t::addMenu(new LLAdvancedInterestListFullUpdate(), "Advanced.InterestListFullUpdate");
 	view_listener_t::addMenu(new LLAdvancedCheckInterestListFullUpdate(), "Advanced.CheckInterestListFullUpdate"); 
 	view_listener_t::addMenu(new LLAdvancedToggleInterestListFullUpdate(), "Advanced.ToggleInterestListFullUpdate");
 	// </FS:Beq>
+=======
+    view_listener_t::addMenu(new LLAdvancedToggleStatsRecorder(), "Advanced.ToggleStatsRecorder");
+    view_listener_t::addMenu(new LLAdvancedCheckStatsRecorder(), "Advanced.CheckStatsRecorder");
+    view_listener_t::addMenu(new LLAdvancedToggleInterestList360Mode(), "Advanced.ToggleInterestList360Mode");
+    view_listener_t::addMenu(new LLAdvancedCheckInterestList360Mode(), "Advanced.CheckInterestList360Mode");
+    view_listener_t::addMenu(new LLAdvancedResetInterestLists(), "Advanced.ResetInterestLists");
+>>>>>>> fs/master
 
 	// Advanced > UI
 	commit.add("Advanced.WebBrowserTest", boost::bind(&handle_web_browser_test,	_2));	// sigh! this one opens the MEDIA browser

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<<<<<<< HEAD
 <floater name="floater_fs_search" title="Manikineko Online axtarışı">
+=======
+<floater name="floater_fs_search" title="Firestorm axtarışı">
+>>>>>>> fs/master
 	<floater.string name="string.location">
 		Yer: [LOCATION]
 	</floater.string>

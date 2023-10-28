@@ -2523,7 +2523,7 @@ void LLModelPreview::genMeshOptimizerLODs(S32 which_lod, S32 meshopt_mode, U32 d
         out << "Invalid level of detail: " << which_lod;
         LL_WARNS() << out.str() << LL_ENDL;
         LLFloaterModelPreview::addStringToLog(out, true); // <FS:Beq/> if you don't flash the log tab on error when do you?
-        assert(lod >= -1 && lod < LLModel::NUM_LODS);
+        assert(which_lod >= -1 && which_lod < LLModel::NUM_LODS); // <FS:PR-Aleric/> use the correct variable (which_lod).
         return;
     }
 
@@ -3681,9 +3681,12 @@ void LLModelPreview::clearBuffers()
 
 void LLModelPreview::genBuffers(S32 lod, bool include_skin_weights)
 {
+<<<<<<< HEAD
     U32 mesh_count = 0;
 
 
+=======
+>>>>>>> fs/master
     LLModelLoader::model_list* model = NULL;
 
     if (lod < 0 || lod > 4)
@@ -3818,8 +3821,11 @@ void LLModelPreview::genBuffers(S32 lod, bool include_skin_weights)
             vb->flush();
 
             mVertexBuffer[lod][mdl].push_back(vb);
+<<<<<<< HEAD
 
             ++mesh_count;
+=======
+>>>>>>> fs/master
         }
     }
 }

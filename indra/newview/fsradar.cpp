@@ -98,8 +98,11 @@ FSRadar::FSRadar() :
 		mNameFormatCallbackConnection(),
 		mAgeAlertCallbackConnection()
 {
+<<<<<<< HEAD
 	mRadarListUpdater = std::make_unique<FSRadarListUpdater>(std::bind(&FSRadar::updateRadarList, this));
 
+=======
+>>>>>>> fs/master
 	// Use the callback from LLAvatarNameCache here or we might update the names too early!
 	LLAvatarNameCache::getInstance()->addUseDisplayNamesCallback(boost::bind(&FSRadar::updateNames, this));
 	mShowUsernamesCallbackConnection = gSavedSettings.getControl("NameTagShowUsernames")->getSignal()->connect(boost::bind(&FSRadar::updateNames, this));
@@ -126,6 +129,14 @@ FSRadar::~FSRadar()
 	}
 }
 
+<<<<<<< HEAD
+=======
+void FSRadar::initSingleton()
+{
+	mRadarListUpdater = std::make_unique<FSRadarListUpdater>(std::bind(&FSRadar::updateRadarList, this));
+}
+
+>>>>>>> fs/master
 void FSRadar::radarAlertMsg(const LLUUID& agent_id, const LLAvatarName& av_name, std::string_view postMsg)
 {
 // <FS:CR> Milkshake-style radar alerts
@@ -290,14 +301,17 @@ void FSRadar::updateRadarList()
 		
 		// Skip modelling this avatar if its basic data is either inaccessible, or it's a dummy placeholder
 		auto ent = getEntry(avId);
+<<<<<<< HEAD
 		LLViewerRegion* reg = world->getRegionFromPosGlobal(avPos);
+=======
+>>>>>>> fs/master
 		if (!ent) // don't update this radar listing if data is inaccessible
 		{
 			continue;
 		}
 
 		// Try to get the avatar's viewer object - we will need it anyway later
-		LLVOAvatar* avVo = (LLVOAvatar*)gObjectList.findObject(avId);
+		LLVOAvatar* avVo = static_cast<LLVOAvatar*>(gObjectList.findObject(avId));
 
 		static LLUICachedControl<bool> sFSShowDummyAVsinRadar("FSShowDummyAVsinRadar");
 		if (!sFSShowDummyAVsinRadar && avVo && avVo->mIsDummy)
@@ -315,7 +329,7 @@ void FSRadar::updateRadarList()
 		}
 
 		LLUUID avRegion;
-		if (reg)
+		if (LLViewerRegion* reg = world->getRegionFromPosGlobal(avPos); reg)
 		{
 			avRegion = reg->getRegionID();
 		}
@@ -595,11 +609,10 @@ void FSRadar::updateRadarList()
 		// Voice power level indicator
 		if (voice_client->voiceEnabled() && voice_client->isVoiceWorking())
 		{
-			LLSpeaker* speaker = speakermgr->findSpeaker(avId);
-			if (speaker && speaker->isInVoiceChannel())
+			if (LLSpeaker* speaker = speakermgr->findSpeaker(avId); speaker && speaker->isInVoiceChannel())
 			{
 				EVoicePowerLevel power_level = voice_client->getPowerLevel(avId);
-			
+
 				switch (power_level)
 				{
 					case VPL_PTT_Off:
@@ -703,8 +716,7 @@ void FSRadar::updateRadarList()
 	}
 
 	static LLCachedControl<S32> sRadarAlertChannel(gSavedSettings, "RadarAlertChannel");
-	U32 num_entering = (U32)mRadarEnterAlerts.size();
-	if (num_entering > 0)
+	if (U32 num_entering = (U32)mRadarEnterAlerts.size(); num_entering > 0)
 	{
 		mRadarFrameCount++;
 		U32 num_this_pass = llmin(FSRADAR_MAX_AVATARS_PER_ALERT, num_entering);
@@ -732,8 +744,8 @@ void FSRadar::updateRadarList()
 			msg = llformat("%d,%d", mRadarFrameCount, num_this_pass);
 		}
 	}
-	U32 num_leaving  = (U32)mRadarLeaveAlerts.size();
-	if (num_leaving > 0)
+
+	if (U32 num_leaving = (U32)mRadarLeaveAlerts.size(); num_leaving > 0)
 	{
 		mRadarFrameCount++;
 		U32 num_this_pass = llmin(FSRADAR_MAX_AVATARS_PER_ALERT, num_leaving);
@@ -1010,10 +1022,9 @@ void FSRadar::zoomAvatar(const LLUUID& avatar_id, std::string_view name)
 
 void FSRadar::updateNames()
 {
-	const entry_map_t::iterator it_end = mEntryList.end();
-	for (entry_map_t::iterator it = mEntryList.begin(); it != it_end; ++it)
+	for (auto& [av_id, entry] : mEntryList)
 	{
-		it->second->updateName();
+		entry->updateName();
 	}
 }
 

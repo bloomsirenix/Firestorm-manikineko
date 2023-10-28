@@ -39,6 +39,7 @@ class LLLayoutPanel;
 class LLPanelMainInventory;
 class LLSidepanelItemInfo;
 class LLSidepanelTaskInfo;
+class LLFloater; // <FS:Ansariel> Secondary inventory window
 
 class LLSidepanelInventory : public LLPanel
 {
@@ -66,9 +67,8 @@ public:
 	void clearSelections(bool clearMain, bool clearInbox);
     std::set<LLFolderViewItem*> getInboxSelectionList();
 
-	void showItemInfoPanel();
-	void showTaskInfoPanel();
 	void showInventoryPanel();
+    void initInventoryViews();
 
 	// checks can share selected item(s)
 	bool canShare();
@@ -76,6 +76,8 @@ public:
 	void onToggleInboxBtn();
 
 	void enableInbox(bool enabled);
+    void toggleInbox();
+    void hideInbox();
 
 	// <FS:Ansariel> Optional hiding of Received Items folder aka Inbox
 	void refreshInboxVisibility();
@@ -84,9 +86,10 @@ public:
 	
 	bool isInboxEnabled() const { return mInboxEnabled; }
 
-	void updateVerbs();
-
 	static void cleanup();
+
+	// <FS:Ansariel> Secondary inventory window
+	static LLFloater* createSecondaryInventoryWindow(const LLSD& key);
 
 protected:
 	// Tracks highlighted (selected) item in inventory panel.
@@ -106,29 +109,25 @@ protected:
 private:
 	LLPanel*					mInventoryPanel; // Main inventory view
 	LLHandle<LLInventoryPanel>	mInventoryPanelInbox;
-	LLSidepanelItemInfo*		mItemPanel; // Individual item view
-	LLSidepanelTaskInfo*		mTaskPanel; // Individual in-world object view
 	LLPanelMainInventory*		mPanelMainInventory;
 
+    LLLayoutPanel* mInboxLayoutPanel;
+
 protected:
+<<<<<<< HEAD
 	void 						onInfoButtonClicked();
 	void 						onShareButtonClicked();
 	void 						onShopButtonClicked();
 	void 						onWearButtonClicked();
 	void 						onPlayButtonClicked();
 	void 						onTeleportButtonClicked();
+=======
+>>>>>>> fs/master
 	void						onReloadInboxClicked();			// <FS:Zi> Add reload button to inventory inbox
 public:
 	void 						onBackButtonClicked();
 
 private:
-	LLButton*					mInfoBtn;
-	LLButton*					mShareBtn;
-	LLButton*					mWearBtn;
-	LLButton*					mPlayBtn;
-	LLButton*					mTeleportBtn;
-	LLButton*					mShopBtn;
-
 	bool						mInboxEnabled;
 
 	LLInventoryCategoriesObserver* 	mCategoriesObserver;

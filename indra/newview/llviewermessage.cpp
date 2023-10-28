@@ -79,6 +79,7 @@
 #include "llnotifications.h"
 #include "llnotificationsutil.h"
 #include "llpanelgrouplandmoney.h"
+#include "llpanelmaininventory.h"
 #include "llrecentpeople.h"
 #include "llscriptfloater.h"
 #include "llscriptruntimeperms.h"
@@ -103,6 +104,7 @@
 #include "llviewerobjectlist.h"
 #include "llviewerparcelmgr.h"
 #include "llviewerstats.h"
+#include "llviewerstatsrecorder.h"
 #include "llviewertexteditor.h"
 #include "llviewerthrottle.h"
 #include "llviewerwindow.h"
@@ -1699,15 +1701,40 @@ void open_inventory_offer(const uuid_vec_t& objects, const std::string& from_nam
 		}
 
 		////////////////////////////////////////////////////////////////////////////////
+        static LLUICachedControl<bool> find_original_new_floater("FindOriginalOpenWindow", false);
+        //show in a new single-folder window
+        if(find_original_new_floater && !from_name.empty())
+        {
+            const LLInventoryObject *obj = gInventory.getObject(obj_id);
+            if (obj && obj->getParentUUID().notNull())
+            {
+                if (obj->getActualType() == LLAssetType::AT_CATEGORY)
+                {
+                    LLPanelMainInventory::newFolderWindow(obj_id);
+                }
+                else
+                {
+                    LLPanelMainInventory::newFolderWindow(obj->getParentUUID(), obj_id);
+                }
+            }
+        }
+        else
+        {
 		// Highlight item
 		// <FS:Ansariel> Only show if either ShowInInventory is true OR it is an inventory
 		//               offer from an agent and the asset is not previewable
 		const BOOL auto_open = gSavedSettings.getBOOL("ShowInInventory") || (from_agent_manual && !check_asset_previewable(asset_type));
 			//gSavedSettings.getBOOL("ShowInInventory") && // don't open if showininventory is false
 			//!from_name.empty(); // don't open if it's not from anyone.
-		// <FS:Ansariel> Don't mess with open inventory panels when ShowInInventory is FALSE
-		if (auto_open)
-		LLInventoryPanel::openInventoryPanelAndSetSelection(auto_open, obj_id);
+		// <FS:Ansariel> Use correct inventory floater
+		//if (auto_open)
+		//{
+		//	LLFloaterReg::showInstance("inventory");
+		//}
+		// </FS:Ansariel>
+		if (auto_open) // <FS:Ansariel> Don't mess with open inventory panels when ShowInInventory is FALSE
+		LLInventoryPanel::openInventoryPanelAndSetSelection(auto_open, obj_id, true);
+        }
 	}
 }
 
@@ -4675,68 +4702,71 @@ void process_kill_object(LLMessageSystem *mesgsys, void **user_data)
 			continue;
 		}
 
-			LLViewerObject *objectp = gObjectList.findObject(id);
-			if (objectp)
+		LLViewerObject *objectp = gObjectList.findObject(id);
+		if (objectp)
+		{
+			// <FS:Ansariel> FIRE-12004: Attachments getting lost on TP
+			static LLCachedControl<bool> fsExperimentalLostAttachmentsFix(gSavedSettings, "FSExperimentalLostAttachmentsFix");
+			static LLCachedControl<F32> fsExperimentalLostAttachmentsFixKillDelay(gSavedSettings, "FSExperimentalLostAttachmentsFixKillDelay");
+			if (fsExperimentalLostAttachmentsFix &&
+				isAgentAvatarValid() &&
+				(gAgent.getTeleportState() != LLAgent::TELEPORT_NONE || gPostTeleportFinishKillObjectDelayTimer.getElapsedTimeF32() <= fsExperimentalLostAttachmentsFixKillDelay || gAgentAvatarp->isCrossingRegion()) && 
+				(objectp->isAttachment() || objectp->isTempAttachment()) &&
+				objectp->permYouOwner())
 			{
-				// <FS:Ansariel> FIRE-12004: Attachments getting lost on TP
-				static LLCachedControl<bool> fsExperimentalLostAttachmentsFix(gSavedSettings, "FSExperimentalLostAttachmentsFix");
-				static LLCachedControl<F32> fsExperimentalLostAttachmentsFixKillDelay(gSavedSettings, "FSExperimentalLostAttachmentsFixKillDelay");
-				if (fsExperimentalLostAttachmentsFix &&
-					isAgentAvatarValid() &&
-					(gAgent.getTeleportState() != LLAgent::TELEPORT_NONE || gPostTeleportFinishKillObjectDelayTimer.getElapsedTimeF32() <= fsExperimentalLostAttachmentsFixKillDelay || gAgentAvatarp->isCrossingRegion()) && 
-					(objectp->isAttachment() || objectp->isTempAttachment()) &&
-					objectp->permYouOwner())
+				// Simply ignore the request and don't kill the object - this should work...
+
+				std::string reason;
+				if (gAgent.getTeleportState() != LLAgent::TELEPORT_NONE)
 				{
-					// Simply ignore the request and don't kill the object - this should work...
-
-					std::string reason;
-					if (gAgent.getTeleportState() != LLAgent::TELEPORT_NONE)
-					{
-						reason = "tp";
-					}
-					else if (gAgentAvatarp->isCrossingRegion())
-					{
-						reason = "crossing";
-					}
-					else
-					{
-						reason = "timer";
-						gFSRefreshAttachmentsTimer.triggerRefresh();
-					}
-					std::string message = "Region \"" + regionp->getName() + "\" tried to kill attachment: " + objectp->getAttachmentItemName() + " (" + reason + ") - Agent region: \"" + gAgent.getRegion()->getName() + "\"";
-					LL_WARNS("Messaging") << message << LL_ENDL;
-
-					if (gSavedSettings.getBOOL("FSExperimentalLostAttachmentsFixReport"))
-					{
-						report_to_nearby_chat(message);
-					}
-
-					continue;
+					reason = "tp";
 				}
-				// </FS:Ansariel>
-
-				// Display green bubble on kill
-				if ( gShowObjectUpdates )
+				else if (gAgentAvatarp->isCrossingRegion())
 				{
-					LLColor4 color(0.f,1.f,0.f,1.f);
-					gPipeline.addDebugBlip(objectp->getPositionAgent(), color);
-					LL_DEBUGS("MessageBlip") << "Kill blip for local " << local_id << " at " << objectp->getPositionAgent() << LL_ENDL;
+					reason = "crossing";
+				}
+				else
+				{
+					reason = "timer";
+					gFSRefreshAttachmentsTimer.triggerRefresh();
+				}
+				std::string message = "Region \"" + regionp->getName() + "\" tried to kill attachment: " + objectp->getAttachmentItemName() + " (" + reason + ") - Agent region: \"" + gAgent.getRegion()->getName() + "\"";
+				LL_WARNS("Messaging") << message << LL_ENDL;
+
+				if (gSavedSettings.getBOOL("FSExperimentalLostAttachmentsFixReport"))
+				{
+					report_to_nearby_chat(message);
 				}
 
-				// Do the kill
-				gObjectList.killObject(objectp);
+				continue;
+			}
+			// </FS:Ansariel>
+
+			// Display green bubble on kill
+			if ( gShowObjectUpdates )
+			{
+				LLColor4 color(0.f,1.f,0.f,1.f);
+				gPipeline.addDebugBlip(objectp->getPositionAgent(), color);
+				LL_DEBUGS("MessageBlip") << "Kill blip for local " << local_id << " at " << objectp->getPositionAgent() << LL_ENDL;
 			}
 
-			if(delete_object)
-			{
-				regionp->killCacheEntry(local_id);
+			// Do the kill
+			gObjectList.killObject(objectp);
+		}
+
+		if(delete_object)
+		{
+			regionp->killCacheEntry(local_id);
 		}
 
 		// We should remove the object from selection after it is marked dead by gObjectList to make LLToolGrab,
         // which is using the object, release the mouse capture correctly when the object dies.
         // See LLToolGrab::handleHoverActive() and LLToolGrab::handleHoverNonPhysical().
 		LLSelectMgr::getInstance()->removeObjectFromSelections(id);
-	}
+
+	}	// end for loop
+
+    LLViewerStatsRecorder::instance().recordObjectKills(num_objects);
 }
 
 // <FS:Techwolf Lupindo> area search
@@ -6459,6 +6489,11 @@ bool attempt_standard_notification(LLMessageSystem* msgsystem)
 				LandBuyAccessBlocked_AdultsOnlyContent
 			 
 			-----------------------------------------------------------------------*/ 
+            static LLCachedControl<S32> ban_lines_mode(gSavedSettings , "ShowBanLines" , LLViewerParcelMgr::PARCEL_BAN_LINES_ON_COLLISION);
+            if (ban_lines_mode == LLViewerParcelMgr::PARCEL_BAN_LINES_ON_COLLISION)
+            {
+                LLViewerParcelMgr::getInstance()->resetCollisionTimer();
+            }
 			if (handle_special_notification(notificationID, llsdBlock))
 			{
 				return true;
@@ -6664,6 +6699,13 @@ void process_alert_message(LLMessageSystem *msgsystem, void **user_data)
 	{
 		BOOL modal = FALSE;
 		process_alert_core(message, modal);
+
+        static LLCachedControl<S32> ban_lines_mode(gSavedSettings , "ShowBanLines" , LLViewerParcelMgr::PARCEL_BAN_LINES_ON_COLLISION);
+        if (ban_lines_mode == LLViewerParcelMgr::PARCEL_BAN_LINES_ON_COLLISION
+            && message.find("Cannot enter parcel") != std::string::npos)
+        {
+            LLViewerParcelMgr::getInstance()->resetCollisionTimer();
+        }
 	}
 }
 
@@ -7575,42 +7617,47 @@ void container_inventory_arrived(LLViewerObject* object,
 	{
 		// create a new inventory category to put this in
 		LLUUID cat_id;
-		cat_id = gInventory.createNewCategory(gInventory.getRootFolderID(),
-											  LLFolderType::FT_NONE,
-											  LLTrans::getString("AcquiredItems"));
+		gInventory.createNewCategory(
+            gInventory.getRootFolderID(),
+            LLFolderType::FT_NONE,
+            LLTrans::getString("AcquiredItems"),
+            [inventory](const LLUUID &new_cat_id)
+        {
+            LLInventoryObject::object_list_t::const_iterator it = inventory->begin();
+            LLInventoryObject::object_list_t::const_iterator end = inventory->end();
+            for (; it != end; ++it)
+            {
+                if ((*it)->getType() != LLAssetType::AT_CATEGORY)
+                {
+                    LLInventoryObject* obj = (LLInventoryObject*)(*it);
+                    LLInventoryItem* item = (LLInventoryItem*)(obj);
+                    LLUUID item_id;
+                    item_id.generate();
+                    time_t creation_date_utc = time_corrected();
+                    LLPointer<LLViewerInventoryItem> new_item
+                        = new LLViewerInventoryItem(item_id,
+                            new_cat_id,
+                            item->getPermissions(),
+                            item->getAssetUUID(),
+                            item->getType(),
+                            item->getInventoryType(),
+                            item->getName(),
+                            item->getDescription(),
+                            LLSaleInfo::DEFAULT,
+                            item->getFlags(),
+                            creation_date_utc);
+                    new_item->updateServer(TRUE);
+                    gInventory.updateItem(new_item);
+                }
+            }
+            gInventory.notifyObservers();
 
-		LLInventoryObject::object_list_t::const_iterator it = inventory->begin();
-		LLInventoryObject::object_list_t::const_iterator end = inventory->end();
-		for ( ; it != end; ++it)
-		{
-			if ((*it)->getType() != LLAssetType::AT_CATEGORY)
-			{
-				LLInventoryObject* obj = (LLInventoryObject*)(*it);
-				LLInventoryItem* item = (LLInventoryItem*)(obj);
-				LLUUID item_id;
-				item_id.generate();
-				time_t creation_date_utc = time_corrected();
-				LLPointer<LLViewerInventoryItem> new_item
-					= new LLViewerInventoryItem(item_id,
-												cat_id,
-												item->getPermissions(),
-												item->getAssetUUID(),
-												item->getType(),
-												item->getInventoryType(),
-												item->getName(),
-												item->getDescription(),
-												LLSaleInfo::DEFAULT,
-												item->getFlags(),
-												creation_date_utc);
-				new_item->updateServer(TRUE);
-				gInventory.updateItem(new_item);
-			}
-		}
-		gInventory.notifyObservers();
-		if(active_panel)
-		{
-			active_panel->setSelection(cat_id, TAKE_FOCUS_NO);
-		}
+            LLInventoryPanel *active_panel = LLInventoryPanel::getActiveInventoryPanel();
+            if (active_panel)
+            {
+                active_panel->setSelection(new_cat_id, TAKE_FOCUS_NO);
+            }
+        });
 	}
 	else if (inventory->size() == 2)
 	{

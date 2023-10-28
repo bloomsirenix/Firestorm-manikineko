@@ -71,6 +71,10 @@
 #include "llpanelblockedlist.h"
 #include "llpanelprofileclassifieds.h"
 #include "llpanelprofilepicks.h"
+<<<<<<< HEAD
+=======
+#include "llthumbnailctrl.h"
+>>>>>>> fs/master
 #include "lltrans.h"
 #include "llviewercontrol.h"
 #include "llviewermenu.h" //is_agent_mappable
@@ -379,7 +383,11 @@ LLUUID post_profile_image(std::string cap_url, const LLSD &first_data, std::stri
     httpResults = result[LLCoreHttpUtil::HttpCoroutineAdapter::HTTP_RESULTS];
     status = LLCoreHttpUtil::HttpCoroutineAdapter::getStatusFromLLSD(httpResults);
 
+<<<<<<< HEAD
     LL_WARNS("AvatarProperties") << result << LL_ENDL;
+=======
+    LL_DEBUGS("AvatarProperties") << result << LL_ENDL;
+>>>>>>> fs/master
 
     if (!status)
     {
@@ -474,8 +482,10 @@ public:
 	// requires trusted browser to trigger
 	LLProfileHandler() : LLCommandHandler("profile", UNTRUSTED_THROTTLE) { }
 
-	bool handle(const LLSD& params, const LLSD& query_map,
-		LLMediaCtrl* web)
+	bool handle(const LLSD& params,
+                const LLSD& query_map,
+                const std::string& grid,
+                LLMediaCtrl* web)
 	{
 		if (params.size() < 1) return false;
 		std::string agent_name = params[0];
@@ -522,8 +532,15 @@ public:
         return false;
     }
 
+<<<<<<< HEAD
 	bool handle(const LLSD& params, const LLSD& query_map,
 		LLMediaCtrl* web)
+=======
+	bool handle(const LLSD& params,
+                const LLSD& query_map,
+                const std::string& grid,
+                LLMediaCtrl* web)
+>>>>>>> fs/master
 	{
 		if (params.size() < 2) return false;
 		LLUUID avatar_id;
@@ -652,9 +669,9 @@ public:
 	// requires trusted browser to trigger
 	FSAgentSelfHandler() : LLCommandHandler("agentself", UNTRUSTED_THROTTLE) { }
 
-	bool handle(const LLSD& params, const LLSD& query_map, LLMediaCtrl* web)
+	bool handle(const LLSD& params, const LLSD& query_map, const std::string& grid, LLMediaCtrl* web)
 	{
-		return gAgentHandler.handle(params, query_map, web);
+		return gAgentHandler.handle(params, query_map, grid, web);
 	}
 };
 FSAgentSelfHandler gAgentSelfHandler;
@@ -955,7 +972,11 @@ BOOL LLPanelProfileSecondLife::postBuild()
     mShowInSearchCheckbox   = getChild<LLCheckBoxCtrl>("show_in_search");
     // </FS:Ansariel>
     // <FS:Zi> Allow proper texture swatch handling
+<<<<<<< HEAD
     // mSecondLifePic          = getChild<LLIconCtrl>("2nd_life_pic");
+=======
+    // mSecondLifePic          = getChild<LLThumbnailCtrl>("2nd_life_pic");
+>>>>>>> fs/master
     mSecondLifePic          = getChild<LLTextureCtrl>("2nd_life_pic");
     // <FS:Zi>
     mSecondLifePicLayout    = getChild<LLPanel>("image_panel");
@@ -1997,15 +2018,29 @@ void LLProfileImagePicker::notify(const std::vector<std::string>& filenames)
     const S32 MAX_DIM = 256;
     if (!LLViewerTextureList::createUploadFile(file_path, temp_file, codec, MAX_DIM))
     {
+<<<<<<< HEAD
         //todo: image not supported notification
         LL_WARNS("AvatarProperties") << "Failed to upload profile image of type " << (S32)PROFILE_IMAGE_SL << ", failed to open image" << LL_ENDL;
+=======
+        LLSD notif_args;
+        notif_args["REASON"] = LLImage::getLastError().c_str();
+        LLNotificationsUtil::add("CannotUploadTexture", notif_args);
+        LL_WARNS("AvatarProperties") << "Failed to upload profile image of type " << (S32)mType << ", " << notif_args["REASON"].asString() << LL_ENDL;
+>>>>>>> fs/master
         return;
     }
 
     std::string cap_url = gAgent.getRegionCapability(PROFILE_IMAGE_UPLOAD_CAP);
     if (cap_url.empty())
     {
+<<<<<<< HEAD
         LL_WARNS("AvatarProperties") << "Failed to upload profile image of type " << (S32)PROFILE_IMAGE_SL << ", no cap found" << LL_ENDL;
+=======
+        LLSD args;
+        args["CAPABILITY"] = PROFILE_IMAGE_UPLOAD_CAP;
+        LLNotificationsUtil::add("RegionCapabilityRequestError", args);
+        LL_WARNS("AvatarProperties") << "Failed to upload profile image of type " << (S32)mType << ", no cap found" << LL_ENDL;
+>>>>>>> fs/master
         return;
     }
 
@@ -2496,6 +2531,7 @@ void LLPanelProfileSecondLife::onShowTexturePicker()
 
             mFloaterTexturePickerHandle = texture_floaterp->getHandle();
 
+<<<<<<< HEAD
             texture_floaterp->setOnFloaterCommitCallback([this](LLTextureCtrl::ETexturePickOp op, LLUUID id)
             {
                 if (op == LLTextureCtrl::TEXTURE_SELECT)
@@ -2515,11 +2551,22 @@ void LLPanelProfileSecondLife::onShowTexturePicker()
                     }
 
                     onCommitProfileImage(image_asset_id);
+=======
+            texture_floaterp->setOnFloaterCommitCallback([this](LLTextureCtrl::ETexturePickOp op, LLPickerSource source, const LLUUID& asset_id, const LLUUID&)
+            {
+                if (op == LLTextureCtrl::TEXTURE_SELECT)
+                {
+                    onCommitProfileImage(asset_id);
+>>>>>>> fs/master
                 }
             });
             texture_floaterp->setLocalTextureEnabled(FALSE);
             texture_floaterp->setBakeTextureEnabled(FALSE);
+<<<<<<< HEAD
             texture_floaterp->setCanApply(false, true);
+=======
+            texture_floaterp->setCanApply(false, true, false);
+>>>>>>> fs/master
 
             parent_floater->addDependentFloater(mFloaterTexturePickerHandle);
 
@@ -2794,7 +2841,11 @@ BOOL LLPanelProfileFirstLife::postBuild()
 {
     mDescriptionEdit = getChild<LLTextEditor>("fl_description_edit");
     // <FS:Zi> Allow proper texture swatch handling
+<<<<<<< HEAD
     // mPicture = getChild<LLIconCtrl>("real_world_pic");
+=======
+    // mPicture = getChild<LLThumbnailCtrl>("real_world_pic");
+>>>>>>> fs/master
     mPicture = getChild<LLTextureCtrl>("real_world_pic");
     // </FS:Zi>
 
@@ -2904,6 +2955,7 @@ void LLPanelProfileFirstLife::onChangePhoto()
 
             mFloaterTexturePickerHandle = texture_floaterp->getHandle();
 
+<<<<<<< HEAD
             texture_floaterp->setOnFloaterCommitCallback([this](LLTextureCtrl::ETexturePickOp op, LLUUID id)
             {
                 if (op == LLTextureCtrl::TEXTURE_SELECT)
@@ -2927,6 +2979,17 @@ void LLPanelProfileFirstLife::onChangePhoto()
             });
             texture_floaterp->setLocalTextureEnabled(FALSE);
             texture_floaterp->setCanApply(false, true);
+=======
+            texture_floaterp->setOnFloaterCommitCallback([this](LLTextureCtrl::ETexturePickOp op, LLPickerSource source, const LLUUID& asset_id, const LLUUID&)
+            {
+                if (op == LLTextureCtrl::TEXTURE_SELECT)
+                {
+                    onCommitPhoto(asset_id);
+                }
+            });
+            texture_floaterp->setLocalTextureEnabled(FALSE);
+            texture_floaterp->setCanApply(false, true, false);
+>>>>>>> fs/master
 
             parent_floater->addDependentFloater(mFloaterTexturePickerHandle);
 

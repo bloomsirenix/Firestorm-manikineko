@@ -95,6 +95,20 @@ namespace
 
 
 //=========================================================================
+void LLSettingsVOBase::createNewInventoryItem(LLSettingsType::type_e stype, const LLUUID& parent_id, std::function<void(const LLUUID&)> created_cb)
+{
+    inventory_result_fn cb = NULL;
+
+    if (created_cb != NULL)
+    {
+        cb = [created_cb](LLUUID asset_id, LLUUID inventory_id, LLUUID object_id, LLSD results)
+        {
+            created_cb(inventory_id);
+        };
+    }
+    createNewInventoryItem(stype, parent_id, cb);
+}
+
 void LLSettingsVOBase::createNewInventoryItem(LLSettingsType::type_e stype, const LLUUID &parent_id, inventory_result_fn callback)
 {
     LLTransactionID tid;
@@ -312,7 +326,7 @@ void LLSettingsVOBase::onAssetDownloadComplete(const LLUUID &asset_id, S32 statu
         std::stringstream llsdstream(buffer);
         LLSD llsdsettings;
 
-        if (LLSDSerialize::deserialize(llsdsettings, llsdstream, -1))
+        if (LLSDSerialize::deserialize(llsdsettings, llsdstream, LLSDSerialize::SIZE_UNLIMITED))
         {
             settings = createFromLLSD(llsdsettings);
         }
@@ -379,7 +393,7 @@ LLSettingsBase::ptr_t LLSettingsVOBase::importFile(const std::string &filename)
             return LLSettingsBase::ptr_t();
         }
 
-        if (!LLSDSerialize::deserialize(settings, file, -1))
+        if (!LLSDSerialize::deserialize(settings, file, LLSDSerialize::SIZE_UNLIMITED))
         {
             LL_WARNS("SETTINGS") << "Unable to deserialize settings from '" << filename << "'" << LL_ENDL;
             return LLSettingsBase::ptr_t();

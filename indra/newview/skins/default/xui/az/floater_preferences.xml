@@ -21,7 +21,11 @@
 		<panel label="İstifadəçi interfeysi" name="ui"/>
 		<panel label="Mövzular" name="skins"/>
 		<panel label="Səhv raportları" name="crashreports"/>
+<<<<<<< HEAD
 		<panel label="Manikineko Online" name="firestorm"/>
+=======
+		<panel label="Firestorm" name="firestorm"/>
+>>>>>>> fs/master
 		<panel label="OpenSim" name="opensim"/>
 		<panel label="Yedekləmə" name="backup"/>
 	</tab_container>
