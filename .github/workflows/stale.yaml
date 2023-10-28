@@ -15,8 +15,13 @@ jobs:
       - uses: actions/stale@v6
         id: stale
         with:
+<<<<<<< HEAD
+          stale-pr-message: This pull request is stale because it has been open 60 days with no activity. Remove stale label or comment or it will be closed in 7 days
+          days-before-stale: 60
+=======
           stale-pr-message: This pull request is stale because it has been open 30 days with no activity. Remove stale label or comment or it will be closed in 7 days
           days-before-stale: 30
+>>>>>>> fs/master
           days-before-close: 7 
           exempt-pr-labels: blocked,must,should,keep
           stale-pr-label: stale

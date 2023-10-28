@@ -98,6 +98,11 @@ FSRadar::FSRadar() :
 		mNameFormatCallbackConnection(),
 		mAgeAlertCallbackConnection()
 {
+<<<<<<< HEAD
+	mRadarListUpdater = std::make_unique<FSRadarListUpdater>(std::bind(&FSRadar::updateRadarList, this));
+
+=======
+>>>>>>> fs/master
 	// Use the callback from LLAvatarNameCache here or we might update the names too early!
 	LLAvatarNameCache::getInstance()->addUseDisplayNamesCallback(boost::bind(&FSRadar::updateNames, this));
 	mShowUsernamesCallbackConnection = gSavedSettings.getControl("NameTagShowUsernames")->getSignal()->connect(boost::bind(&FSRadar::updateNames, this));
@@ -124,11 +129,14 @@ FSRadar::~FSRadar()
 	}
 }
 
+<<<<<<< HEAD
+=======
 void FSRadar::initSingleton()
 {
 	mRadarListUpdater = std::make_unique<FSRadarListUpdater>(std::bind(&FSRadar::updateRadarList, this));
 }
 
+>>>>>>> fs/master
 void FSRadar::radarAlertMsg(const LLUUID& agent_id, const LLAvatarName& av_name, std::string_view postMsg)
 {
 // <FS:CR> Milkshake-style radar alerts
@@ -293,6 +301,10 @@ void FSRadar::updateRadarList()
 		
 		// Skip modelling this avatar if its basic data is either inaccessible, or it's a dummy placeholder
 		auto ent = getEntry(avId);
+<<<<<<< HEAD
+		LLViewerRegion* reg = world->getRegionFromPosGlobal(avPos);
+=======
+>>>>>>> fs/master
 		if (!ent) // don't update this radar listing if data is inaccessible
 		{
 			continue;

@@ -56,9 +56,15 @@ public:
 	void loadFromDisk();
 
 	void setSetColor(std::string_view set_name, const LLColor4& color);
+<<<<<<< HEAD
+	LLColor4 getSetColor(std::string_view set_name);
+	LLColor4 getFriendColor(const LLUUID& friend_id, std::string_view ignored_set_name = "");
+	LLColor4 colorize(const LLUUID& uuid, const LLColor4& cur_color, ELGGCSType type);
+=======
 	LLColor4 getSetColor(std::string_view set_name) const;
 	LLColor4 getFriendColor(const LLUUID& friend_id, std::string_view ignored_set_name = "") const;
 	LLColor4 colorize(const LLUUID& uuid, LLColor4 color, ELGGCSType type) const;
+>>>>>>> fs/master
 
 	void setDefaultColor(const LLColor4& default_color) { mDefaultColor = default_color; };
 	LLColor4 getDefaultColor() const { return mDefaultColor; };
@@ -80,14 +86,24 @@ public:
 	void addToSet(const uuid_vec_t&, std::string_view set_name);
 	void removeFriendFromSet(const LLUUID& friend_id, std::string_view set_name, bool save_changes = true);
 	void removeFriendFromAllSets(const LLUUID& friend_id, bool save_changes = true);
+<<<<<<< HEAD
+	bool isFriendInSet(const LLUUID& friend_id, std::string_view set_name);
+	bool hasFriendColorThatShouldShow(const LLUUID& friend_id, ELGGCSType type);
+	bool hasFriendColorThatShouldShow(const LLUUID& friend_id, ELGGCSType type, LLColor4& color);
+=======
 	bool isFriendInSet(const LLUUID& friend_id, std::string_view set_name) const;
 	bool hasFriendColorThatShouldShow(const LLUUID& friend_id, ELGGCSType type) const;
 	bool hasFriendColorThatShouldShow(const LLUUID& friend_id, ELGGCSType type, LLColor4& color) const;
+>>>>>>> fs/master
 
 	void addSet(std::string_view set_name);
 	bool renameSet(std::string_view set_name, std::string_view new_set_name);
 	void removeSet(std::string_view set_name);
+<<<<<<< HEAD
+	bool isValidSet(std::string_view set_name);
+=======
 	bool isValidSet(std::string_view set_name) const;
+>>>>>>> fs/master
 
 	void removeNonFriendFromList(const LLUUID& non_friend_id, bool save_changes = true);
 	bool isNonFriend(const LLUUID& non_friend_id) const;
@@ -95,6 +111,16 @@ public:
 	uuid_vec_t getListOfNonFriends() const;
 	uuid_vec_t getListOfPseudonymAvs() const;
 
+<<<<<<< HEAD
+	bool notifyForFriend(const LLUUID& friend_id);
+	void setNotifyForSet(std::string_view set_name, bool notify);
+	bool getNotifyForSet(std::string_view set_name);
+
+	bool callbackAliasReset(const LLSD& notification, const LLSD& response);
+
+	bool isInternalSetName(std::string_view set_name);
+	bool hasSets() { return !mContactSets.empty(); }
+=======
 	bool notifyForFriend(const LLUUID& friend_id) const;
 	void setNotifyForSet(std::string_view set_name, bool notify);
 	bool getNotifyForSet(std::string_view set_name) const;
@@ -103,6 +129,7 @@ public:
 
 	bool isInternalSetName(std::string_view set_name) const;
 	bool hasSets() const { return !mContactSets.empty(); }
+>>>>>>> fs/master
 
 	class ContactSet
 	{
@@ -117,7 +144,11 @@ public:
 		bool			mNotify;
 		LLColor4		mColor;
 	};
+<<<<<<< HEAD
+	ContactSet* getContactSet(std::string_view set_name);
+=======
 	ContactSet* getContactSet(std::string_view set_name) const;
+>>>>>>> fs/master
 	
 	// [FS:CR] Signals for updating the various UI
 	typedef enum e_contact_set_update {
@@ -140,11 +171,19 @@ public:
 	
 private:
 	void toneDownColor(LLColor4& color) const;
+<<<<<<< HEAD
+	uuid_vec_t getFriendsInSet(std::string_view set_name);
+	uuid_vec_t getFriendsInAnySet();
+
+	void setPseudonym(const LLUUID& friend_id, std::string_view pseudonym);
+	bool hasVisuallyDifferentPseudonym(const LLUUID& friend_id);
+=======
 	uuid_vec_t getFriendsInSet(std::string_view set_name) const;
 	uuid_vec_t getFriendsInAnySet() const;
 
 	void setPseudonym(const LLUUID& friend_id, std::string_view pseudonym);
 	bool hasVisuallyDifferentPseudonym(const LLUUID& friend_id) const;
+>>>>>>> fs/master
 
 	LLSD exportContactSet(std::string_view set_name);
 	bool saveContactSetToDisk(std::string_view set_name, std::string_view filename);

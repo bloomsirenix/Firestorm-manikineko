@@ -1,4 +1,5 @@
 /** 
+<<<<<<<< HEAD:indra/newview/fsfloaterpartialinventory.h
  * @file fsfloaterpartialinventory.h
  * @brief Displays the inventory underneath a particular starting folder
  *
@@ -6,6 +7,15 @@
  * Phoenix Firestorm Viewer Source Code
  * Copyright (c) 2022 Ansariel Hiller @ Second Life
  *
+========
+ * @file lltexturemanagerbridge.h
+ * @brief Bridge to an application-specific texture manager.
+ *
+ * $LicenseInfo:firstyear=2012&license=viewerlgpl$
+ * Second Life Viewer Source Code
+ * Copyright (C) 2010, Linden Research, Inc.
+ * 
+>>>>>>>> fs/master:indra/llrender/lltexturemanagerbridge.h
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
@@ -24,6 +34,7 @@
  * $/LicenseInfo$
  */
 
+<<<<<<<< HEAD:indra/newview/fsfloaterpartialinventory.h
 #ifndef FS_FLOATERPARTIALINVENTORY_H
 #define FS_FLOATERPARTIALINVENTORY_H
 
@@ -50,3 +61,26 @@ private:
 };
 
 #endif
+========
+#ifndef LL_TEXTUREMANAGERBRIDGE_H
+#define LL_TEXTUREMANAGERBRIDGE_H
+
+#include "llpointer.h"
+#include "llgltexture.h"
+
+// Abstract bridge interface
+class LLTextureManagerBridge
+{
+public:
+    virtual ~LLTextureManagerBridge() {}
+
+	virtual LLPointer<LLGLTexture> getLocalTexture(BOOL usemipmaps = TRUE, BOOL generate_gl_tex = TRUE) = 0;
+	virtual LLPointer<LLGLTexture> getLocalTexture(const U32 width, const U32 height, const U8 components, BOOL usemipmaps, BOOL generate_gl_tex = TRUE) = 0;
+	virtual LLGLTexture* getFetchedTexture(const LLUUID &image_id) = 0;
+};
+
+extern LLTextureManagerBridge* gTextureManagerBridgep;
+
+#endif // LL_TEXTUREMANAGERBRIDGE_H
+
+>>>>>>>> fs/master:indra/llrender/lltexturemanagerbridge.h

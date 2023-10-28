@@ -888,7 +888,11 @@ U32 LLUUID::getRandomSeed()
    seed[7]=(unsigned char)(pid);
    getSystemTime((uuid_time_t *)(&seed[8]));
 
+<<<<<<< HEAD
+   U64 seed64 = HBXXH64((const void*)seed, 16).digest();
+=======
    U64 seed64 = HBXXH64::digest((const void*)seed, 16);
+>>>>>>> fs/master
    return U32(seed64) ^ U32(seed64 >> 32);
 }
 

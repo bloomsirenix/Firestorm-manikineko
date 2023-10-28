@@ -962,19 +962,55 @@
             <string>util.aditi.lindenlab.com</string>
             <key>slurl_base</key>
             <string>secondlife://util.aditi.lindenlab.com/secondlife/</string>
-            <key>system_grid</key>
-            <integer>1</integer>
             <key>web_profile_url</key>
             <string>https://my.aditi.lindenlab.com/</string>
         </map>
+      <key>master.manikineko.nl:8002</key>
+      <map>
+        <key>LastModified</key>
+        <date>2019-04-19T21:15:00Z</date>
+        <key>about</key>
+        <string>https://manikineko.nl</string>
+        <key>gatekeeper</key>
+        <string>http://master.manikineko.nl:8002/</string>
+        <key>gridname</key>
+        <string>Manikineko Online</string>
+        <key>gridnick</key>
+        <string>manikineko</string>
+        <key>helperuri</key>
+        <string>https://master.manikineko.nl/secondlife/helpers/</string>
+        <key>loginuri</key>
+        <array>
+          <string>http://master.manikineko.nl:8002/</string>
+        </array>
+        <key>login_identifier_types</key>
+        <array>
+          <string>agent</string>
+          <string>account</string>
+        </array>
+        <key>loginpage</key>
+        <string>https://manikineko.nl/</string>
+        <key>loginuri</key>
+        <array>
+          <string>http://master.manikineko.nl:8002/</string>
+        </array>
+        <key>password</key>
+        <string>https://manikineko.nl</string>
+        <key>platform</key>
+        <undef />
+        <key>register</key>
+        <string>https://manikineko.nl</string>
+        <key>slurl_base</key>
+        <string>hop://master.manikineko.nl:8002/</string>
+        <key>web_profile_url</key>
+        <string>http://master.manikineko.nl/agent?name=[AGENT_NAME]</string>
+      </map>
         <key>util.agni.lindenlab.com</key>
         <map>
             <key>LastModified</key>
             <date>2018-06-22T22:15:00Z</date>
             <key>app_slurl_base</key>
             <string>secondlife:///app</string>
-            <key>favorite</key>
-            <integer>1</integer>
             <key>gridname</key>
             <string>Second Life</string>
             <key>gridnick</key>

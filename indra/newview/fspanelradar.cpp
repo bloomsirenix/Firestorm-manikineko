@@ -462,7 +462,11 @@ void FSPanelRadar::onColumnDisplayModeChanged()
 	std::vector<LLScrollListColumn::Params> column_params = mRadarList->getColumnInitParams();
 	S32 column_padding = mRadarList->getColumnPadding();
 
+<<<<<<< HEAD
+	LLFloater* parent_floater = nullptr;
+=======
 	LLFloater* parent_floater{ nullptr };
+>>>>>>> fs/master
 	LLView* parent = getParent();
 	while (parent)
 	{
