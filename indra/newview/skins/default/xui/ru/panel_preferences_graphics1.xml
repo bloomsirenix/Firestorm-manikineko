@@ -29,7 +29,7 @@
 			<text name="ShadersPrefText4">
 				Ультра
 			</text>
-			<check_box label="Полноэкранный режим" name="Fullscreen Mode" tool_tip="Запустить Manikineko Online в полноэкранном режиме. Для изменения этого параметра требуется перезапуск."/>
+			<check_box label="Полноэкранный режим" name="Fullscreen Mode" tool_tip="Запустить Firestorm в полноэкранном режиме. Для изменения этого параметра требуется перезапуск."/>
 			<text name="ShadersText">
 				Шейдеры:
 			</text>

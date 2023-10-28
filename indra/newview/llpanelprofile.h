@@ -223,7 +223,6 @@ private:
 	LLCheckBoxCtrl*		mShowInSearchCheckbox;
 	// </FS:Ansariel>
     // <FS:Zi> Allow proper texture swatch handling
-	// LLIconCtrl*			mSecondLifePic;
 	// LLThumbnailCtrl*			mSecondLifePic;
 	LLTextureCtrl*		mSecondLifePic;
     // </FS:Zi>
@@ -362,7 +361,6 @@ protected:
 
 	LLTextEditor*	mDescriptionEdit;
     // <FS:Zi> Allow proper texture swatch handling
-    // LLIconCtrl*		mPicture;
     // LLThumbnailCtrl*		mPicture;
     LLTextureCtrl* mPicture;
     // </FS:Zi>

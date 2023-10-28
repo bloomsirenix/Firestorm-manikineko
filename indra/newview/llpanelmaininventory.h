@@ -267,11 +267,6 @@ protected:
 	bool isCoalescedObjectsChecked(const LLSD& userdata);
 	// </FS:Zi>
 
-	// <FS:Zi> FIRE-31369: Add inventory filter for coalesced objects
-	void onCoalescedObjectsToggled(const LLSD& userdata);
-	bool isCoalescedObjectsChecked(const LLSD& userdata);
-	// </FS:Zi>
-
 	// <FS:Zi> Filter Links Menu
 	BOOL isFilterLinksChecked(const LLSD& userdata);
 	void onFilterLinksChecked(const LLSD& userdata);

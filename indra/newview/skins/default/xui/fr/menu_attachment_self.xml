@@ -18,7 +18,6 @@
 		<menu_item_call label="Voltigement" name="Hover Height"/>
 		<menu_item_call label="Réinitialiser le squelette" name="Reset Skeleton"/>
 		<menu_item_call label="Réinitialiser le squelette et les animations" name="Reset Skeleton And Animations"/>
-	</context_menu>
 		<menu_item_call label="Réinitialiser le LOD du maillage" name="Reset Mesh LOD"/>
 	</context_menu>
 	<context_menu label="Enlever" name="Take Off &gt;">

@@ -832,7 +832,6 @@ bool unix_post_minidump_callback(const char *dump_dir,
 	llassert((dirPathLength + idLength + 5) < LLApp::MAX_MINDUMP_PATH_LENGTH); // <FS:Beq/> Buffer overrun avoidance (from Aleric Inglewood)
 	
 	char * path = LLApp::instance()->getMiniDumpFilename();
-	auto remaining = LLApp::MAX_MINDUMP_PATH_LENGTH;
 	auto remaining = LLApp::MAX_MINDUMP_PATH_LENGTH - 1; // <FS:Beq/> Buffer overrun avoidance (from Aleric Inglewood
 	strncpy(path, dump_dir, remaining);
 	remaining -= dirPathLength;

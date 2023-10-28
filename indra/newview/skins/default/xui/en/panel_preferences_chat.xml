@@ -11,7 +11,7 @@
  name="chat">
 
 <tab_container
- label="Manikineko Online Prefs"
+ label="Firestorm Prefs"
  layout="topleft"
  follows="all"
  top="5"
@@ -1206,7 +1206,7 @@
 		 height="18"
 		 name="FSShowMessageCountInWindowTitle"
 		 control_name="FSShowMessageCountInWindowTitle"
-		 label="Show number of unread IMs in Manikineko Online's window title"/>
+		 label="Show number of unread IMs in Firestorm's window title"/>
 
 		<check_box
 		 layout="topleft"

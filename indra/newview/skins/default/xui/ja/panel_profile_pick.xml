@@ -4,10 +4,6 @@
 		（掲載後更新）
 	</panel.string>
 	<line_editor name="pick_location">
-		ロード中...
-	</line_editor>
-	<button label="テレポート" name="teleport_btn"/>
-	<button label="地図に表示" name="show_on_map_btn"/>
 		（読み込んでいます…）
 	</line_editor>
 	<button label="テレポート" name="teleport_btn"/>

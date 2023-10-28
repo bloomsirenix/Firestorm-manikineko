@@ -9,7 +9,7 @@
 	<panel.string name="button5_mouse">
 		Przycisk myszy 5
 	</panel.string>
-	<tab_container label="Ust. Manikineko Onlinea" name="tabs">
+	<tab_container label="Ust. Firestorma" name="tabs">
 		<panel label="Dźwięki" name="Media Sounds Panel">
 			<slider label="Głośność ogólna" name="System Volume"/>
 			<check_box label="Wycisz gdy zminimalizowane" name="mute_when_minimized"/>
@@ -164,7 +164,7 @@
 Przytrzymaj kursor myszki ponad polem na UUID, aby zobaczyć jego domyślną wartość.
 			</text>
 
-			<text tool_tip="UUID dźwięku odgrywany podczas domyślnych ostrzeżeń Manikineko Onlinea." name="textFSSndAlert">
+			<text tool_tip="UUID dźwięku odgrywany podczas domyślnych ostrzeżeń Firestorma." name="textFSSndAlert">
 				Domyślne ostrzeżenie:
 			</text>
 			<button name="Prev_UISndAlert" tool_tip="Podgląd dźwięku."/>

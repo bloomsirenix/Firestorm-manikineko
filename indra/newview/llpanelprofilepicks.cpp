@@ -89,8 +89,6 @@ public:
         return true;
     }
 
-    bool handle(const LLSD& params, const LLSD& query_map,
-        LLMediaCtrl* web)
     bool handle(const LLSD& params,
                 const LLSD& query_map,
                 const std::string& grid,

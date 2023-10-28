@@ -9,7 +9,7 @@
 <panel.string name="button5_mouse">
 	Maustaste 5
 </panel.string>
-<tab_container label="Manikineko Online Prefs" name="tabs">
+<tab_container label="Firestorm Prefs" name="tabs">
 	<!-- Sounds -->
 	<panel label="Klänge" name="Media Sounds Panel">
 		<slider label="Master-Lautstärke" name="System Volume"/>
@@ -168,7 +168,7 @@
 			Hier können die Klänge der Benutzeroberfläche geändert, aktiviert oder deaktiviert werden.
 Der jeweilige Standardwert wird im Hovertip des UUID-Feldes angezeigt.
 		</text>
-		<text tool_tip="UUID des Klangs bei Standardwarnungen in Manikineko Online." name="textFSSndAlert">
+		<text tool_tip="UUID des Klangs bei Standardwarnungen in Firestorm." name="textFSSndAlert">
 			Warnung (Standard):
 		</text>
 		<button label="V" name="Prev_UISndAlert" tool_tip="Vorschau zu diesem Klang."/>

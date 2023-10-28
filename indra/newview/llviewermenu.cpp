@@ -1483,85 +1483,6 @@ class LLAdvancedDumpRegionObjectCache : public view_listener_t
 	}
 };
 
-// <FS:Beq> Handle InterestListFullUpdate as a proper state toggle
-// class LLAdvancedInterestListFullUpdate : public view_listener_t
-// {
-// 	bool handleEvent(const LLSD& userdata)
-// 	{
-// 		LLSD request;
-// 		LLSD body;
-// 		static bool using_360 = false;
-
-// 		if (using_360)
-// 		{
-// 			body["mode"] = LLSD::String("default");
-// 		}
-// 		else
-// 		{
-// 			body["mode"] = LLSD::String("360");
-// 		}
-// 		using_360 = !using_360;
-
-//         if (gAgent.requestPostCapability("InterestList", body, [](const LLSD& response)
-//         {
-//             LL_INFOS("Int") <<
-//                 "InterestList capability responded: \n" <<
-//                 ll_pretty_print_sd(response) <<
-//                 LL_ENDL;
-//         }))
-//         {
-//             LL_INFOS("360Capture") <<
-//                 "Successfully posted an InterestList capability request with payload: \n" <<
-//                 ll_pretty_print_sd(body) <<
-//                 LL_ENDL;
-//             return true;
-//         }
-//         else
-//         {
-//             LL_INFOS("360Capture") <<
-//                 "Unable to post an InterestList capability request with payload: \n" <<
-//                 ll_pretty_print_sd(body) <<
-//                 LL_ENDL;
-//             return false;
-//         }
-// 	}
-// };
-class LLAdvancedCheckInterestListFullUpdate : public view_listener_t
-{
-	bool handleEvent(const LLSD& userdata)
-	{
-		LLViewerRegion* regionp = gAgent.getRegion();
-		if (regionp)
-		{
-			bool current_value = ( regionp->mFullUpdateInUseCount > 0 );
-			return current_value;
-		}
-		return false;
-	}
-};
-class LLAdvancedToggleInterestListFullUpdate : public view_listener_t
-{
-	bool handleEvent(const LLSD& userdata)
-	{
-		LLViewerRegion* regionp = gAgent.getRegion();
-		if (regionp)
-		{
-			bool current_value = ( regionp->mFullUpdateInUseCount > 0 );
-			if(current_value)
-			{
-				regionp->useFullUpdateInterestListMode(false, true);
-				return false;
-			}
-			else
-			{
-				regionp->useFullUpdateInterestListMode(true);
-				return true;
-			}
-		}
-		return false;
-	}
-};
-// </FS:Beq>
 class LLAdvancedToggleInterestList360Mode : public view_listener_t
 {
 public:
@@ -12352,12 +12273,6 @@ void initialize_menus()
 	// Advanced > World
 	view_listener_t::addMenu(new LLAdvancedDumpScriptedCamera(), "Advanced.DumpScriptedCamera");
 	view_listener_t::addMenu(new LLAdvancedDumpRegionObjectCache(), "Advanced.DumpRegionObjectCache");
-	
-	// <FS:Beq> Make InterestList a proper stateful toggle
-	// view_listener_t::addMenu(new LLAdvancedInterestListFullUpdate(), "Advanced.InterestListFullUpdate");
-	view_listener_t::addMenu(new LLAdvancedCheckInterestListFullUpdate(), "Advanced.CheckInterestListFullUpdate"); 
-	view_listener_t::addMenu(new LLAdvancedToggleInterestListFullUpdate(), "Advanced.ToggleInterestListFullUpdate");
-	// </FS:Beq>
     view_listener_t::addMenu(new LLAdvancedToggleStatsRecorder(), "Advanced.ToggleStatsRecorder");
     view_listener_t::addMenu(new LLAdvancedCheckStatsRecorder(), "Advanced.CheckStatsRecorder");
     view_listener_t::addMenu(new LLAdvancedToggleInterestList360Mode(), "Advanced.ToggleInterestList360Mode");

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="チャット" name="chat">
-<tab_container label="Manikineko Online Prefs" name="tabs">
+<tab_container label="Firestorm Prefs" name="tabs">
 
 	<!-- Chat: Visuals -->
 	
@@ -192,7 +192,7 @@
 		<text name="FSIMChatHistoryFade_label">
 			チャット履歴ウィンドウでIMを薄く表示
 		</text>
-		<check_box name="FSShowMessageCountInWindowTitle" label="未読IMの数をManikineko Onlineのウィンドウタイトルに表示" />
+		<check_box name="FSShowMessageCountInWindowTitle" label="未読IMの数をFirestormのウィンドウタイトルに表示" />
 		<check_box label="相手が入力を始めたら、IMが来ることを事前に通知" name="FSAnnounceIncomingIM"/>
 		<check_box name="FSIMChatFlashOnFriendStatusChange" label="フレンドのオンラインステータスが変わったらIMタブを点滅"/>
 		<check_box name="FSNotifyNearbyChatFlash" label="新しい周辺チャットを受信したらチャットツールバーのボタンを点滅" tool_tip="新しい周辺チャットを受信したらチャットツールバーのボタンが点滅します。この時、周辺チャットは会話ウィンドウにドッキングしている必要があり、また、ボタンを点滅させるには会話ウィンドウが閉じている必要があります。"/>

@@ -3639,13 +3639,6 @@ void LLAgent::changeInterestListMode(const std::string &new_mode)
 
 bool LLAgent::requestPostCapability(const std::string &capName, LLSD &postData, httpCallback_t cbSuccess, httpCallback_t cbFailure)
 {
-    if (!getRegion())
-    {
-        return false;
-    }
-    std::string url = getRegion()->getCapability(capName);
-
-    if (url.empty())
     if (getRegion())
     {
         return getRegion()->requestPostCapability(capName, postData, cbSuccess, cbFailure);

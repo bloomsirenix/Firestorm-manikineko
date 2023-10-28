@@ -34,7 +34,7 @@
 						<chat_editor name="chat_box" />
 					</layout_panel>
 					<layout_panel name="input_button_layout_panel">
-						<spinner label="" name="ChatChannel" tool_tip="チャットを表示するチャンネルを選択します。環境設定＞チャット＞Manikineko Online＞「チャットバーにチャンネル選択を表示」で設定します。" />
+						<spinner label="" name="ChatChannel" tool_tip="チャットを表示するチャンネルを選択します。環境設定＞チャット＞Firestorm＞「チャットバーにチャンネル選択を表示」で設定します。" />
 					</layout_panel>
 				</layout_stack>
 

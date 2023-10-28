@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="Söhbət/İM" name="chat">
-	<tab_container label="Manikineko Online tənzimləmələri" name="tabs">
 	<tab_container label="Firestorm tənzimləmələri" name="tabs">
 		<panel label="Göstərişlər" name="ChatVisuals">
 			<text name="console_font_size">
@@ -180,7 +179,6 @@
 				Əsas söhbət pəncərəsindəki şəxsi mesajların solması
 			</text>
 			<spinner tool_tip="0.25-1.0, 0.25 kəskin solma üçün, 1 solmağı söndürür" name="FSIMChatHistoryFade"/>
-			<check_box name="FSShowMessageCountInWindowTitle" label="Manikineko Online pəncərə başlığında oxunmamış şəxsi mesajların sayısını göstərin"/>
 			<check_box name="FSShowMessageCountInWindowTitle" label="Firestorm pəncərə başlığında oxunmamış şəxsi mesajların sayısını göstərin"/>
 			<check_box name="FSAnnounceIncomingIM" label="Göndəricini yeni şəxsi mesajlar yazmağa başladıqda mənə bildirin"/>
 			<check_box name="FSIMChatFlashOnFriendStatusChange" label="Dostlar daxil olanda və ya çıxanda IM nişanlarını yandırın"/>

@@ -29,10 +29,6 @@
 	<string name="display_name_text_args">
 		[DISPLAY_NAME]
 	</string>
-	<string name="FSDev" value="Sviluppatore"/>
-	<string name="FSSupp" value="Assistenza"/>
-	<string name="FSQualityAssurance" value="Bug Hunter"/>
-	<string name="FSGW" value="Gateway"/>
 	<string name="FSDev" value="Sviluppatore "/>
 	<string name="FSSupp" value="Supporto "/>
 	<string name="FSQualityAssurance" value="Bug Hunter "/>

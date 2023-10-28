@@ -4615,26 +4615,6 @@ void LLAppearanceMgr::makeNewOutfitLinks(const std::string& new_folder_name, boo
 
 	// First, make a folder in the My Outfits directory.
 	const LLUUID parent_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MY_OUTFITS);
-    if (AISAPI::isAvailable())
-	{
-		// cap-based category creation was buggy until recently. use
-		// existence of AIS as an indicator the fix is present. Does
-		// not actually use AIS to create the category.
-		inventory_func_type func = boost::bind(&LLAppearanceMgr::onOutfitFolderCreated,this,_1,show_panel);
-		gInventory.createNewCategory(
-			parent_id,
-			LLFolderType::FT_OUTFIT,
-			new_folder_name,
-			func);
-	}
-	else
-	{		
-		LLUUID folder_id = gInventory.createNewCategory(
-			parent_id,
-			LLFolderType::FT_OUTFIT,
-			new_folder_name);
-		onOutfitFolderCreated(folder_id, show_panel);
-	}
 
     gInventory.createNewCategory(
         parent_id,

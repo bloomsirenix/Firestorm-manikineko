@@ -57,7 +57,6 @@ else()
   if (python)
     set(PYTHONINTERP_FOUND ON)
   endif (python)
-endif (WINDOWS)
 endif (DEFINED ENV{PYTHON})
 
 if (NOT python)

@@ -40,32 +40,41 @@
       <key>folder</key>
       <string>firestorm</string>
       <key>themes</key>
-        <array>
+      <array>
         <map>
           <key>name</key>
-          <string>Bright Blue</string>
+          <string>Grey</string>
           <key>folder</key>
           <string/>
         </map>
         <map>
           <key>name</key>
-          <string>Classic Brown</string>
+          <string>Dark</string>
           <key>folder</key>
-          <string>classic_brown</string>
+          <string>dark</string>
         </map>
+        <!-- Thea Brianna's blue theme -->
         <map>
           <key>name</key>
-          <string>Ectoplasma</string>
+          <string>Blue</string>
           <key>folder</key>
-          <string>ectoplasma</string>
+          <string>blue</string>
         </map>
+        <!-- Ansariel Hiller's high contrast theme -->
         <map>
           <key>name</key>
-          <string>Blood</string>
+          <string>High Contrast</string>
           <key>folder</key>
-          <string>blood</string>
+          <string>highcontrast</string>
         </map>
-      </array>  
+        <!-- David Rowe's purple theme from CtrlAltStudio Viewer -->
+        <map>
+          <key>name</key>
+          <string>CtrlAltStudio</string>
+          <key>folder</key>
+          <string>ctrlaltstudio</string>
+        </map>
+      </array>
     </map>
 
     <map>

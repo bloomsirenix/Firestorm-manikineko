@@ -109,13 +109,6 @@ public:
 		return mUpdateSignal.connect(cb);
 	}
 
-private:
-	void updateRadarList();
-	void updateTracking();
-	void checkTracking();
-	void radarAlertMsg(const LLUUID& agent_id, const LLAvatarName& av_name, std::string_view postMsg);
-	void updateAgeAlertCheck();
-
 protected:
 	void initSingleton() override;
 

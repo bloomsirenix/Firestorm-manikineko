@@ -48,31 +48,8 @@
 #include "llviewerregion.h"
 #include "llviewerwindow.h"
 #include "pipeline.h"
-#include "llworld.h" // </FS:Beq/> needed for getRegionByID();
+
 #include <iterator>
-
-// <FS:Beq> Fix 360 capture missing objects after TP
-void LLFloater360Capture::checkRegion()
-{
-	static LLUUID last_region_id = LLUUID::null;
-	auto last_region = LLWorld::instance().getRegionFromID(last_region_id);
-
-    // Check if we changed region, if so reset the interest list to full, 
-    LLViewerRegion* region = gAgent.getRegion();
-    if( region && (region != last_region) )
-    {
-        region->useFullUpdateInterestListMode(true, true);
-        if( last_region )
-        {
-            // we clear the old region status, because the instance may persist for us
-            // but the region itself will have reset when we left.
-            last_region->clearFullUpdateInterestList();
-        }
-	}
-    last_region_id = region->getRegionID();
-}
-
-// </FS:Beq>
 
 LLFloater360Capture::LLFloater360Capture(const LLSD& key)
     :   LLFloater(key)
@@ -87,21 +64,6 @@ LLFloater360Capture::LLFloater360Capture(const LLSD& key)
     // such time as we ask it not to (the dtor). If we crash or
     // otherwise, exit before this is turned off, the Simulator
     // will take care of cleaning up for us.
-    if (gSavedSettings.getBOOL("360CaptureUseInterestListCap"))
-    {
-// <FS:Beq> Fix 360 capture missing objects after TP
-        // send everything to us for as long as this floater is open
-        // const bool send_everything = true;
-        // changeInterestListMode(send_everything);
-    // }
-    // }
-        if( LLViewerRegion* region = gAgent.getRegion() )
-        {
-            checkRegion();
-        }
-    }
-	mRegionChangeConnection = gAgent.addRegionChangedCallback(boost::bind(&LLFloater360Capture::checkRegion, this));
-// </FS:Beq>
     mStartILMode = gAgent.getInterestListMode();
     gAgent.set360CaptureActive(true); // <FS:Beq/> make FS area search work aga
     // send everything to us for as long as this floater is open
@@ -121,24 +83,6 @@ LLFloater360Capture::~LLFloater360Capture()
     // Normally LLFloater360Capture tells the Simulator send everything
     // and now reverts to the regular "keyhole" frustum of interest
     // list updates.
-    if (!LLApp::isExiting() && gSavedSettings.getBOOL("360CaptureUseInterestListCap"))
-    {
-// <FS:Beq> Fix 360 capture missing objects after TP
-//         const bool send_everything = false;
-//         changeInterestListMode(send_everything);
-//     }
-// }
-
-        if( LLViewerRegion* region = gAgent.getRegion() )
-        {
-            region->useFullUpdateInterestListMode(false);
-        }
-    }
-	if (mRegionChangeConnection.connected())
-	{
-		mRegionChangeConnection.disconnect();
-	}
-// </FS:Beq>
     // <FS:Beq> This whole thing is wrong because it is not a simple before/after state states can overlap.
     // if (!LLApp::isExiting() && 
     //     // gSavedSettings.getBOOL("360CaptureUseInterestListCap") && // <FS:Beq/> Invalid dependency - This is not used anywhere else now.
@@ -234,54 +178,6 @@ void LLFloater360Capture::onChooseQualityRadioGroup()
     setSourceImageSize();
 }
 
-// <FS:Beq> Area search improvements - allow area search and 360 to coexist nicely.
-// Code moved to LLViewerRegion.cpp
-// Using a new capability, tell the simulator that we want it to send everything
-// it knows about and not just what is in front of the camera, in its view
-// frustum. We need this feature so that the contents of the region that appears
-// in the 6 snapshots which we cannot see and is normally not "considered", is
-// also rendered. Typically, this is turned on when the 360 capture floater is
-// opened and turned off when it is closed.
-// Note: for this version, we do not have a way to determine when "everything"
-// has arrived and has been rendered so for now, the proposal is that users
-// will need to experiment with the low resolution version and wait for some
-// (hopefully) small period of time while the full contents resolves.
-// Pass in a flag to ask the simulator/interest list to "send everything" or
-// not (the default mode)
-// void LLFloater360Capture::changeInterestListMode(bool send_everything)
-// {
-// 	LLSD body;
-// 	if (send_everything)
-// 	{
-// 		body["mode"] = LLSD::String("360");
-// 	}
-// 	else
-// 	{
-// 		body["mode"] = LLSD::String("default");
-// 	}
-
-//     if (gAgent.requestPostCapability("InterestList", body, [](const LLSD & response)
-//     {
-//         LL_INFOS("360Capture") <<
-//                                "InterestList capability responded: \n" <<
-//                                ll_pretty_print_sd(response) <<
-//                                LL_ENDL;
-//     }))
-//     {
-//         LL_INFOS("360Capture") <<
-//                                "Successfully posted an InterestList capability request with payload: \n" <<
-//                                ll_pretty_print_sd(body) <<
-//                                LL_ENDL;
-//     }
-//     else
-//     {
-//         LL_INFOS("360Capture") <<
-//                                "Unable to post an InterestList capability request with payload: \n" <<
-//                                ll_pretty_print_sd(body) <<
-//                                LL_ENDL;
-//     }
-// }
-// </FS:Beq>
 
 // There is is a setting (360CaptureSourceImageSize) that holds the size
 // (width == height since it's a square) of each of the 6 source snapshots.

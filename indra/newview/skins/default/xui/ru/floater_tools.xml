@@ -417,7 +417,7 @@
 			<text name="LOD_swap_defaults_label" value="По умолч." tool_tip="Значение фактора LOD по умолчанию, которое будет применяться большинством вьюверов."/>
 			<text name="LOD_swap_usr_label" tool_tip="Ваши текущие настройки, взятые из RenderVolumeLODFactor" value="Ваши"/>
 			<text name="LOD_swap_label" value="Обмен LOD" width="65"/>
-			<string name="ll_lod_tooltip_msg">Linden Lab Manikineko Online Viewer по умолчанию ([FACTOR])</string>
+			<string name="ll_lod_tooltip_msg">Linden Lab Second Life Viewer по умолчанию ([FACTOR])</string>
 			<text name="LOD_swap_ll_default" value="LL" width="25"/>
 			<string name="fs_lod_tooltip_msg">[APPNAME] по умолчанию ([FACTOR])</string>
 			<text name="LOD_swap_usr_current" tool_tip="Ваш текущий коэффициент LOD"/>

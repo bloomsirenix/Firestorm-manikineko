@@ -22,7 +22,7 @@
 		<panel label="UI" name="ui"/>
 		<panel label="スキン" name="skins"/>
 		<panel label="レポート" name="crashreports"/>
-		<panel label="Manikineko Online" name="firestorm"/>
+		<panel label="Firestorm" name="firestorm"/>
 		<panel label="Opensim" name="opensim" />
 		<panel label="バックアップ" name="backup" />
 	</tab_container>

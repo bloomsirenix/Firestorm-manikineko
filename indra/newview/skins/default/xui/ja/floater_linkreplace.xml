@@ -1,5 +1,3 @@
-<?xml version="1.0" ?>
-<floater name="linkreplace" title="インベントリ リンク交換"/>
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <floater name="linkreplace" title="インベントリのリンク置換え">
 	<string name="Ready">

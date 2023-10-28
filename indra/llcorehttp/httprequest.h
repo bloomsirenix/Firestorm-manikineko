@@ -255,9 +255,8 @@ public:
 											long value, long * ret_value);
 	static HttpStatus setStaticPolicyOption(EPolicyOption opt, policy_t pclass,
 											const std::string & value, std::string * ret_value);
-	static HttpStatus setStaticPolicyOption(EPolicyOption opt, policy_t pclass, policyCallback_t value, policyCallback_t *ret_value);
-    bool              isServiceRunning() const;
-    ;
+	static HttpStatus setStaticPolicyOption(EPolicyOption opt, policy_t pclass,
+											policyCallback_t value, policyCallback_t * ret_value);;
 
 	/// Set a parameter on a class-based policy option.  Calls
 	/// made after the start of the servicing thread are

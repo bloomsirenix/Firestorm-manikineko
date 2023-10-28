@@ -1,5 +1,3 @@
-<?xml version="1.0" ?>
-<floater name="groups" title="記憶されたユーザー名"/>
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <floater name="groups" title="記録済みのユーザ名">
 	<scroll_list name="user_list">

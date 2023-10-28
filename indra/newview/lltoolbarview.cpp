@@ -385,9 +385,6 @@ bool LLToolBarView::loadToolbars(bool force_default)
 	}
 
     // SL-18581: Don't show the starter avatar toolbar button for NUX users
-    LLViewerInventoryCategory* my_outfits_cat = gInventory.getCategory(gInventory.findCategoryUUIDForType(LLFolderType::FT_MY_OUTFITS));
-    if (gAgent.isFirstLogin())
-    {
     if (gAgent.isFirstLogin())
     {
         LLViewerInventoryCategory* my_outfits_cat = gInventory.getCategory(gInventory.findCategoryUUIDForType(LLFolderType::FT_MY_OUTFITS));

@@ -41,7 +41,6 @@ typedef unsigned int			U32;
 
 // to express an index that might go negative
 // (ssize_t is provided by SOME compilers, don't collide)
-typedef typename std::make_signed<std::size_t>::type llssize; // <FS:Ansariel> Stop Linux complaining
 typedef typename std::make_signed<std::size_t>::type llssize;
 
 #if LL_WINDOWS

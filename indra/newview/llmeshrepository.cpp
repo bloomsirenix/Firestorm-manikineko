@@ -1971,7 +1971,6 @@ EMeshProcessingResult LLMeshRepoThread::headerReceived(const LLVolumeParams& mes
 	llssize header_size = 0;
 	if (data_size > 0)
 	{
-		U32 dsize = data_size;
 		llssize dsize = data_size;
 		char* result_ptr = strip_deprecated_header((char*)data, dsize, &header_size);
 

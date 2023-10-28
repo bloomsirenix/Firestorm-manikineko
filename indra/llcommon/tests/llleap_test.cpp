@@ -17,8 +17,6 @@
 // std headers
 #include <functional>
 // external library headers
-#include <boost/assign/list_of.hpp>
-#include <boost/phoenix/core/argument.hpp>
 // other Linden headers
 #include "../test/lltut.h"
 #include "../test/namedtempfile.h"
@@ -29,10 +27,6 @@
 #include "llstring.h"
 #include "stringize.h"
 #include "StringVec.h"
-
-using boost::assign::list_of;
-
-StringVec sv(const StringVec& listof) { return listof; }
 
 #if defined(LL_WINDOWS)
 #define sleep(secs) _sleep((secs) * 1000)
@@ -109,7 +103,6 @@ namespace tut
                    "import os\n"
                    "import sys\n"
                    "\n"
-                   "from llbase import llsd\n"
                    "import llsd\n"
                    "\n"
                    "class ProtocolError(Exception):\n"
@@ -232,10 +225,6 @@ namespace tut
     void object::test<2>()
     {
         set_test_name("stderr to log");
-        NamedTempFile script("py",
-                             "import sys\n"
-                             "sys.stderr.write('''Hello from Python!\n"
-                             "note partial line''')\n");
         NamedExtTempFile script("py",
                                 "import sys\n"
                                 "sys.stderr.write('''Hello from Python!\n"

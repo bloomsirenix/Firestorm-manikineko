@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel label="UI-Pref" name="Display panel">
-<tab_container label="Manikineko Online Prefs" name="tabs" >
+<tab_container label="Firestorm Prefs" name="tabs" >
 
     <!-- 3D World -->
 	
@@ -88,7 +88,7 @@
             （再起動が必要）
         </text>
 		<check_box label="グループチャットとIMのミニアイコンを表示しない" name="FSDisableIMChiclets" tool_tip="チェックを入れるとファイアーストームは全てのグループチャットやIMのミニアイコンを表示しないようになります。（通知の封筒アイコンとIM数の合計は画面上に残ります。" />
-		<check_box label="通知ウィンドウに旧式のリスト表示レイアウトを使用" name="FSLegacyNotificationWell" tool_tip="ここにチェックを入れるとManikineko Onlineは保存された通知の表示に旧式のリスト表示形式を使用するようになります" />
+		<check_box label="通知ウィンドウに旧式のリスト表示レイアウトを使用" name="FSLegacyNotificationWell" tool_tip="ここにチェックを入れるとFirestormは保存された通知の表示に旧式のリスト表示形式を使用するようになります" />
 		<text name="FSLegacyNotificationWellRequiresRestart">
 			（再起動が必要）
 		</text>
@@ -110,7 +110,7 @@
 			ステータスバー
 		</text>
 		<check_box name="ShowNetStats" label="トラフィックインジケータを画面の右上に表示" tool_tip="ステータスオーバーレイにトラフィックインジケータを表示します。"/>
-		<check_box label="トラフィックインジケータに１秒当り平均周期を表示（旧式の表示方法）" name="FSStatbarLegacyMeanPerSec" tool_tip="ここにチェックを入れると、Manikineko Online は現在測定されている値でなく、１秒当りの平均周期をラグメータに表示する旧式の表示方法を使用します。" />
+		<check_box label="トラフィックインジケータに１秒当り平均周期を表示（旧式の表示方法）" name="FSStatbarLegacyMeanPerSec" tool_tip="ここにチェックを入れると、Firestorm は現在測定されている値でなく、１秒当りの平均周期をラグメータに表示する旧式の表示方法を使用します。" />
 		<check_box label="トラフィックインジケータをクリックするとラグメーターでなく統計情報を表示" name="FSUseStatsInsteadOfLagMeter" />
 		<check_box name="FSEnableVolumeControls" label="メディアコントロールをトップメニューに表示" tool_tip="ここにチェックを入れると、ファイアーストームの画面右上にメディアコントロール（音量、メディア、ストリーム）が表示されるようになります。既に独自の場所にコントロールが配置されている場合にこのチェックを外しておくと便利です。" />
 		<check_box name="FSStatusbarShowSimulatorVersion" label="ステータスバーにシミュレータのチャンネルを表示" tool_tip="V1形式のステータスバーに現在のシミュレータのチャンネル（RC Magnum, RC Le Tigre, RC BlueSteel 等）を表示します。" />
@@ -146,7 +146,6 @@
 
 	<panel label="インターフェイス" name="UI-interface-windows-tab" >
 
-		<check_box label="名前をクリックするとアバターのプロフィールをすぐに表示" name="FSInspectAvatarSlurlOpensProfile" tool_tip="Iここにチェックを入れると、名前の表示されているリンクをクリックすると Manikineko Online はそのアバターのプロフィールを表示します。" />
 		<check_box label="名前をクリックするとアバターのプロフィールをすぐに表示" name="FSInspectAvatarSlurlOpensProfile" tool_tip="Iここにチェックを入れると、名前の表示されているリンクをクリックすると Firestorm はそのアバターのプロフィールを表示します。" />
 		<check_box label="無視リストが自動的に開かないようにする" name="FSDisableBlockListAutoOpen" tool_tip="アバターやオブジェクトをブロックする時に、無視リストが自動的に開かないようにします。" />
 		<check_box label="「コミュニケーション」メニューの「フレンド」と「所属グループ」を[SHORT_VIEWER_GENERATION]形式のウィンドウで開く" name="FSUseV2Friends" tool_tip="ここにチェックを入れると、「フレンド」や「所属グループ」を「人」パネルで開くようになります。チェックを入れない場合は、「連絡先」パネルで開きます。"/>

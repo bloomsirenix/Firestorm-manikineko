@@ -602,7 +602,6 @@ BOOL get_is_item_worn(const LLUUID& id)
 	const LLViewerInventoryItem* item = gInventory.getItem(id);
 	if (!item)
 		return FALSE;
-    
 
     if (item->getIsLinkType() && !gInventory.getItem(item->getLinkedUUID()))
     {
@@ -987,13 +986,6 @@ void show_item_original(const LLUUID& item_uuid)
     LLSidepanelInventory *sidepanel_inventory =	LLFloaterSidePanelContainer::getPanel<LLSidepanelInventory>("inventory");
     if (sidepanel_inventory)
     {
-        // <FS:Ansariel> FIRE-31037: "Recent" inventory filter gets reset when using "Show Original"
-        //LLPanelMainInventory* main_inventory = sidepanel_inventory->getMainInventoryPanel();
-        //if (main_inventory)
-        //{
-        //    main_inventory->resetAllItemsFilters();
-        //}
-        // </FS:Ansariel>
         LLPanelMainInventory* main_inventory = sidepanel_inventory->getMainInventoryPanel();
         if (main_inventory)
         {
@@ -1010,7 +1002,6 @@ void show_item_original(const LLUUID& item_uuid)
         {
             LLFloaterReg::toggleInstanceOrBringToFront("inventory");
         }
-        sidepanel_inventory->showInventoryPanel();
 
         const LLUUID inbox_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_INBOX);
         // <FS:Ansariel> Optional hiding of Received Items folder aka Inbox
@@ -1073,7 +1064,6 @@ S32 depth_nesting_in_marketplace(LLUUID cur_uuid)
     // Todo: findCategoryUUIDForType is somewhat expensive with large
     // flat root folders yet we use depth_nesting_in_marketplace at
     // every turn, find a way to correctly cache this id.
-    const LLUUID marketplace_listings_uuid = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS, false);
     const LLUUID marketplace_listings_uuid = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS);
     if (marketplace_listings_uuid.isNull())
     {
@@ -1694,39 +1684,6 @@ bool move_item_to_marketplacelistings(LLInventoryItem* inv_item, LLUUID dest_fol
             else if (depth == 1)
             {
                 // We need a version folder
-                dest_folder = gInventory.createNewCategory(dest_folder, LLFolderType::FT_NONE, viewer_inv_item->getName());
-                depth++;
-            }
-			LLViewerInventoryCategory* dest_cat = gInventory.getCategory(dest_folder);
-            if (!viewer_inv_item->getPermissions().allowOperationBy(PERM_COPY, gAgent.getID(), gAgent.getGroupID()) &&
-                (dest_cat->getPreferredType() != LLFolderType::FT_MARKETPLACE_STOCK))
-            {
-                // We need to create a stock folder to move a no copy item
-                dest_folder = gInventory.createNewCategory(dest_folder, LLFolderType::FT_MARKETPLACE_STOCK, viewer_inv_item->getName());
-                dest_cat = gInventory.getCategory(dest_folder);
-                depth++;
-            }
-            
-            // Verify we can have this item in that destination category
-            if (!dest_cat->acceptItem(viewer_inv_item))
-            {
-                LLSD subs;
-                subs["[ERROR_CODE]"] = LLTrans::getString("Marketplace Error Prefix") + LLTrans::getString("Marketplace Error Not Accepted");
-                LLNotificationsUtil::add("MerchantPasteFailed", subs);
-                return false;
-            }
-
-            if (copy)
-            {
-                // Copy the item
-                LLPointer<LLInventoryCallback> cb = new LLBoostFuncInventoryCallback(boost::bind(update_folder_cb, dest_folder));
-                copy_inventory_item(
-                                    gAgent.getID(),
-                                    viewer_inv_item->getPermissions().getOwner(),
-                                    viewer_inv_item->getUUID(),
-                                    dest_folder,
-                                    std::string(),
-                                    cb);
                 gInventory.createNewCategory(dest_folder, LLFolderType::FT_NONE, viewer_inv_item->getName(), callback_dest_create);
             }
             else
@@ -1809,12 +1766,6 @@ bool sort_alpha(const LLViewerInventoryCategory* cat1, const LLViewerInventoryCa
 // This function does no deletion of listings but a mere audit and raises issues to the user (through the
 // optional callback cb).
 // The only inventory changes that are done is to move and sort folders containing no-copy items to stock folders.
-bool validate_marketplacelistings(
-    LLInventoryCategory* cat,
-    validation_callback_t cb,
-    bool fix_hierarchy,
-    S32 depth,
-    bool notify_observers)
 // @pending_callbacks - how many callbacks we are waiting for, must be inited before use
 // @result - true if things validate, false if issues are raised, must be inited before use
 typedef boost::function<void(S32 pending_callbacks, bool result)> validation_result_callback_t;
@@ -1881,11 +1832,6 @@ void validate_marketplacelistings(
             // Nest the stock folder one level deeper in a normal folder and restart from there
             pending_callbacks++;
             LLUUID parent_uuid = cat->getParentUUID();
-            LLUUID folder_uuid = gInventory.createNewCategory(parent_uuid, LLFolderType::FT_NONE, cat->getName());
-            LLInventoryCategory* new_cat = gInventory.getCategory(folder_uuid);
-            gInventory.changeCategoryParent(viewer_cat, folder_uuid, false);
-            result &= validate_marketplacelistings(new_cat, cb, fix_hierarchy, depth + 1, notify_observers);
-            return result;
             LLUUID cat_uuid = cat->getUUID();
             gInventory.createNewCategory(parent_uuid,
                 LLFolderType::FT_NONE,
@@ -2122,14 +2068,6 @@ void validate_marketplacelistings(
                         }
                         cb_result(0, true);
                     }
-                    
-                    // Next type
-                    update_marketplace_category(parent_uuid);
-                    update_marketplace_category(folder_uuid);
-                    if (notify_observers)
-                    {
-                        gInventory.notifyObservers();
-                    }
                     );
                     items_vector_it++;
                 }
@@ -2144,7 +2082,6 @@ void validate_marketplacelistings(
                 {
                     LLViewerInventoryCategory * viewer_cat = (LLViewerInventoryCategory *) (*iter);
                     gInventory.changeCategoryParent(viewer_cat, parent_uuid, false);
-                    result &= validate_marketplacelistings(viewer_cat, cb, fix_hierarchy, depth, false);
                     validate_marketplacelistings(viewer_cat, cb_result, cb_msg, fix_hierarchy, depth, false, pending_callbacks, result);
                 }
             }
@@ -2221,7 +2158,6 @@ void validate_marketplacelistings(
             {
                 gInventory.notifyObservers();
             }
-            return result && !has_bad_items;
             result &=!has_bad_items;
             return;
         }
@@ -2236,7 +2172,6 @@ void validate_marketplacelistings(
 	for (LLInventoryModel::cat_array_t::iterator iter = cat_array_copy.begin(); iter != cat_array_copy.end(); iter++)
 	{
 		LLInventoryCategory* category = *iter;
-		result &= validate_marketplacelistings(category, cb, fix_hierarchy, depth + 1, false);
 		validate_marketplacelistings(category, cb_result, cb_msg, fix_hierarchy, depth + 1, false, pending_callbacks, result);
 	}
 
@@ -2245,7 +2180,6 @@ void validate_marketplacelistings(
     {
         gInventory.notifyObservers();
     }
-    return result && !has_bad_items;
     result &= !has_bad_items;
 }
 
@@ -2346,9 +2280,6 @@ void move_items_to_new_subfolder(const uuid_vec_t& selected_uuids, const std::st
 
     inventory_func_type func = boost::bind(&move_items_to_folder, _1, selected_uuids);
     gInventory.createNewCategory(first_item->getParentUUID(), LLFolderType::FT_NONE, folder_name, func);
-
-}
-
 }
 
 // Returns true if the item can be moved to Current Outfit or any outfit folder.
@@ -3308,7 +3239,6 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
 			LLSD args;
 			// <FS:Ansariel> FIRE-31816: Include selection count when deleting more than one object from inventory
 			//args["QUESTION"] = LLTrans::getString(root->getSelectedCount() > 1 ? "DeleteItems" :  "DeleteItem");
-			//args["QUESTION"] = LLTrans::getString(root->getSelectedCount() > 1 ? "DeleteItems" : "DeleteItem", args);
 			LLLocale locale("");
 			std::string count_str{};
 			S32 selection_count = root->getSelectedCount();
@@ -3532,7 +3462,6 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
     if (action == "wear" || action == "wear_add")
     {
         const LLUUID trash_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_TRASH);
-        const LLUUID mp_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS, false);
         const LLUUID mp_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_MARKETPLACE_LISTINGS);
         std::copy_if(selected_uuid_set.begin(),
             selected_uuid_set.end(),
@@ -3648,51 +3577,6 @@ void LLInventoryAction::doToSelected(LLInventoryModel* model, LLFolderView* root
     {
         if (ids.size() == 1)
         {
-            LLInventoryCategory* inv_cat = gInventory.getCategory(*ids.begin());
-            if (!inv_cat || LLFolderType::lookupIsProtectedType(inv_cat->getPreferredType()))
-            {
-                return;
-            }
-
-            // <FS:Ansariel> FIRE-32736: Add confirmation before ungrouping folder
-            LLSD args;
-            args["FOLDER_NAME"] = inv_cat->getName();
-            LLNotificationsUtil::add("UngroupFolder", args, LLSD(),
-                [inv_cat](const LLSD& notification, const LLSD& response)
-            {
-                S32 opt = LLNotificationsUtil::getSelectedOption(notification, response);
-                if (opt == 1)
-                    return;
-            // </FS:Ansariel>
-
-            const LLUUID &new_cat_uuid = inv_cat->getParentUUID();
-            LLInventoryModel::cat_array_t* cat_array;
-            LLInventoryModel::item_array_t* item_array;
-            gInventory.getDirectDescendentsOf(inv_cat->getUUID(), cat_array, item_array);
-            LLInventoryModel::cat_array_t cats = *cat_array;
-            LLInventoryModel::item_array_t items = *item_array;
-
-            for (LLInventoryModel::cat_array_t::const_iterator cat_iter = cats.begin(); cat_iter != cats.end(); ++cat_iter)
-            {
-                LLViewerInventoryCategory* cat = *cat_iter;
-                if (cat)
-                {
-                    gInventory.changeCategoryParent(cat, new_cat_uuid, false);
-                }
-            }
-            for (LLInventoryModel::item_array_t::const_iterator item_iter = items.begin(); item_iter != items.end(); ++item_iter)
-            {
-                LLViewerInventoryItem* item = *item_iter;
-                if(item)
-                {
-                    gInventory.changeItemParent(item, new_cat_uuid, false);
-                }
-            }
-            gInventory.removeCategory(inv_cat->getUUID());
-            gInventory.notifyObservers();
-
-            }); // <FS:Ansariel> FIRE-32736: Add confirmation before ungrouping folder
-
             ungroup_folder_items(*ids.begin());
         }
     }

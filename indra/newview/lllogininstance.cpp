@@ -466,10 +466,6 @@ void LLLoginInstance::handleLoginFailure(const LLSD& event)
             gViewerWindow->setShowProgress(FALSE, FALSE);
         }
 
-        LLSD args(llsd::map( "MESSAGE", LLTrans::getString(response["message_id"]) ));
-        LLSD payload;
-        LLNotificationsUtil::add("PromptMFAToken", args, payload,
-            boost::bind(&LLLoginInstance::handleMFAChallenge, this, _1, _2));
         showMFAChallange(LLTrans::getString(response["message_id"]));
     }
     else if(   reason_response == "key"
@@ -558,10 +554,6 @@ bool LLLoginInstance::handleTOSResponse(bool accepted, const std::string& key)
         {
             // SL-18511 this TOS failure happened while we are in the middle of an MFA challenge/response.
             // the previously entered token is very likely expired, so prompt again
-            LLSD args(llsd::map( "MESSAGE", LLTrans::getString("LoginFailedAuthenticationMFARequired") ));
-            LLSD payload;
-            LLNotificationsUtil::add("PromptMFAToken", args, payload,
-                boost::bind(&LLLoginInstance::handleMFAChallenge, this, _1, _2));
             showMFAChallange(LLTrans::getString("LoginFailedAuthenticationMFARequired"));
         }
         else

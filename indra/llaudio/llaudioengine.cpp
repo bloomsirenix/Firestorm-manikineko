@@ -411,7 +411,6 @@ void LLAudioEngine::idle()
 	for (source_map::value_type& src_pair : mAllSources)
 	{
 		LLAudioSource *sourcep = src_pair.second;
-		if (sourcep->isMuted())
 		if (sourcep->isMuted() && sourcep->isSyncMaster() && sourcep->getPriority() > max_sm_priority)
 		{
 			sync_masterp = sourcep;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="Audio" name="Preference Media panel">
 	<panel.string name="middle_mouse">Bouton central de la souris</panel.string>
-	<tab_container label="Préférences Manikineko Online" name="tabs">
+	<tab_container label="Préférences Firestorm" name="tabs">
 		<panel label="Général" name="Media Sounds Panel">
 			<slider label="Volume principal" name="System Volume"/>
 			<check_box label="Muet lorsque minimisé" name="mute_when_minimized"/>
@@ -108,7 +108,7 @@
 		<panel label="Sons 1" name="UI Sounds tab 1">
 			<text name="textFSExplanation_tab1">Vous pouvez modifier ici chaque son produit par l'interface ainsi que décider de l'activer ou non
 Saisissez son UUID ou passez votre souris sur le champ pour voir sa valeur par défaut.</text>
-			<text tool_tip="UUID du son joué par défaut pour les alertes Manikineko Online." name="textFSSndAlert">Alerte par défaut :</text>
+			<text tool_tip="UUID du son joué par défaut pour les alertes Firestorm." name="textFSSndAlert">Alerte par défaut :</text>
 			<button name="Prev_UISndAlert" label="▶" tool_tip="Jouer ce son."/>
 			<button name="Def_UISndAlert" label="↻" tool_tip="Réinitialiser."/>
 			<check_box label="Activer" name="PlayModeUISndAlert"/>

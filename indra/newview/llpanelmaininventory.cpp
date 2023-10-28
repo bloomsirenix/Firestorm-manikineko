@@ -470,12 +470,6 @@ LLPanelMainInventory::~LLPanelMainInventory( void )
 	gInventory.removeObserver(this);
 	delete mSavedFolderState;
 
-	auto menu = mMenuAddHandle.get();
-	if(menu)
-	{
-		menu->die();
-		mMenuAddHandle.markDead();
-	}
     auto menu = mMenuAddHandle.get();
     if(menu)
     {
@@ -731,18 +725,6 @@ void LLPanelMainInventory::resetFilters()
 }
 
 void LLPanelMainInventory::resetAllItemsFilters()
-{
-    LLFloaterInventoryFinder *finder = getFinder();
-    getAllItemsPanel()->getFilter().resetDefault();
-    if (finder)
-    {
-        finder->updateElementsFromFilter();
-    }
-
-    setFilterTextFromFilter();
-}
-
-void LLPanelMainInventory::onSelectSearchType()
 {
     LLFloaterInventoryFinder *finder = getFinder();
     getAllItemsPanel()->getFilter().resetDefault();
@@ -1974,7 +1956,6 @@ void LLPanelMainInventory::initListCommandsHandlers()
     //mEnableCallbackRegistrar.add("Inventory.GearDefault.Visible", boost::bind(&LLPanelMainInventory::isActionVisible, this, _2));
 	// </FS:Ansariel>
 	mMenuGearDefault = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_inventory_gear_default.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
-	mGearMenuButton->setMenu(mMenuGearDefault, LLMenuButton::MP_TOP_LEFT, true);
 	mGearMenuButton->setMenu(mMenuGearDefault, LLMenuButton::MP_BOTTOM_LEFT, true);
     mMenuViewDefault = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_inventory_view_default.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
 	if (mViewMenuButton) // <FS:Ansariel> Keep better inventory layout
@@ -1983,7 +1964,6 @@ void LLPanelMainInventory::initListCommandsHandlers()
 	mMenuAddHandle = menu->getHandle();
 
 	mMenuVisibility = LLUICtrlFactory::getInstance()->createFromFile<LLToggleableMenu>("menu_inventory_search_visibility.xml", gMenuHolder, LLViewerMenuHolderGL::child_registry_t::instance());
-	mVisibilityMenuButton->setMenu(mMenuVisibility, LLMenuButton::MP_BOTTOM_LEFT, true);
     mVisibilityMenuButton->setMenu(mMenuVisibility, LLMenuButton::MP_BOTTOM_LEFT, true);
 
 	// Update the trash button when selected item(s) get worn or taken off.

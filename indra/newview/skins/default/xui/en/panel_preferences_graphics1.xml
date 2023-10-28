@@ -229,7 +229,7 @@
          layout="topleft"
          left="4"
          name="Fullscreen Mode"
-         tool_tip="Run Manikineko Online in Fullscreen mode. A restart is required to change mode."
+         tool_tip="Run Firestorm in Fullscreen mode. A restart is required to change mode."
          top="80"
          width="280" />
         <text

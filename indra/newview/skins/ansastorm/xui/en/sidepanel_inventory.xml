@@ -70,7 +70,6 @@
 						font="SansSerifMedium"
                         name="inbox_btn"
                         height="35"
-                        width="270"
                         image_unselected="MarketplaceBtn_Off"
                         image_selected="MarketplaceBtn_Selected"
                         halign="left"
@@ -80,7 +79,6 @@
                         tab_stop="false"
                         pad_left="35"
                         top="0"
-                        left="10" />
                         left="5"
                         right="-43" />
                      <button

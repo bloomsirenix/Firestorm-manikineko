@@ -108,8 +108,6 @@ public:
         return true;
     }
     
-
-(const LLSD& params, const LLSD& query_map, LLMediaCtrl* web)
 	bool handle(const LLSD& params, const LLSD& query_map, const std::string& grid, LLMediaCtrl* web)
     {
         if (LLStartUp::getStartupState() < STATE_STARTED)

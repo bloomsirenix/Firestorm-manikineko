@@ -416,7 +416,6 @@ Aşağı:
 			<text name="LOD_swap_defaults_label" value="Susmaya g." tool_tip="Əksər izləyicilər tərəfindən istifadə olunacaq defolt LOD faktoru dəyəri."/>
 			<text name="LOD_swap_usr_label" tool_tip="Cari RenderVolumeLODFactor-dan götürülmüş seçimləriniz" value="Sizin"/>
 			<text name="LOD_swap_label" value="Mübadilə LOD" width="65"/>
-			<string name="ll_lod_tooltip_msg">Linden Lab Manikineko Online Viewer susmaya görə ([FACTOR])</string>
 			<string name="ll_lod_tooltip_msg">Linden Lab Second Life Viewer susmaya görə ([FACTOR])</string>
 			<text name="LOD_swap_ll_default" value="LL" width="25"/>
 			<string name="fs_lod_tooltip_msg">[APPNAME] susmaya görə ([FACTOR])</string>

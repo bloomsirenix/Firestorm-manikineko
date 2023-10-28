@@ -26,7 +26,7 @@
 			<text name="ShadersPrefText4">
 				Ultra
 			</text>
-			<check_box label="A schermo intero" name="Fullscreen Mode" tool_tip="Avvia Manikineko Online in modalità Schermo Intero (richiede riavvio)"/>
+			<check_box label="A schermo intero" name="Fullscreen Mode" tool_tip="Avvia Firestorm in modalità Schermo Intero (richiede riavvio)"/>
 			<text name="ShadersText">
 				Effetti grafici:
 			</text>

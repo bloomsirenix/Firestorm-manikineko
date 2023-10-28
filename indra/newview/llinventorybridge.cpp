@@ -909,19 +909,6 @@ void LLInvFVBridge::getClipboardEntries(bool show_asset_id,
             }
         }
 
-        if (isAgentInventory())
-        {
-            items.push_back(std::string("New folder from selected"));
-            items.push_back(std::string("Subfolder Separator"));
-            std::set<LLUUID> selected_uuid_set = LLAvatarActions::getInventorySelectedUUIDs();
-            uuid_vec_t ids;
-            std::copy(selected_uuid_set.begin(), selected_uuid_set.end(), std::back_inserter(ids));
-            if (!is_only_items_selected(ids) && !is_only_cats_selected(ids))
-            {
-                disabled_items.push_back(std::string("New folder from selected"));
-            }
-        }
-
 		if (obj->getIsLinkType())
 		{
 			items.push_back(std::string("Find Original"));
@@ -1045,19 +1032,6 @@ void LLInvFVBridge::getClipboardEntries(bool show_asset_id,
         addDeleteContextMenuOptions(items, disabled_items);
     }
 
-	// If multiple items are selected, disable properties (if it exists).
-	// <FS> Old, standalone properties floater
-	//if ((flags & FIRST_SELECTED_ITEM) == 0)
-	//{
-	//	disabled_items.push_back(std::string("Properties"));
-	//}
-	// </FS>
-
-	LLInventoryPanel *active_panel = LLInventoryPanel::getActiveInventoryPanel(FALSE);
-	// <FS:Zi> Don't offer "Show in Main View" for folders opened in separate inventory views
-	//         as there are no tabs to switch to
-	// if (active_panel && (active_panel->getName() != "All Items"))
-	if (active_panel && (active_panel->getName() != "All Items") && (active_panel->getName() != "inv_panel"))
 	// <FS:Zi> Don't offer "Show in Main View" for folders opened in separate inventory views
 	//         as there are no tabs to switch to
 	//if (!isPanelActive("All Items") && !isPanelActive("comb_single_folder_inv"))
@@ -4462,7 +4436,6 @@ void LLFolderBridge::perform_pasteFromClipboard()
                         }
                         else
                         {
-                            dropToFavorites(item);
                             dropToFavorites(item, cb);
                         }
 					}

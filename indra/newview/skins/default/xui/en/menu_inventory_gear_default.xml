@@ -410,7 +410,6 @@
 			function="Inventory.CoalescedObjects.Check"
 			parameter="coalesced_objects_only" />
 	</menu_item_check>
-	<menu_item_separator />
     <menu_item_separator>
         <menu_item_separator.on_visible
          function="Inventory.GearDefault.Visible"

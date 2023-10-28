@@ -23,7 +23,7 @@
     </panel.string>
 
 <tab_container
- label="Manikineko Online Prefs"
+ label="Firestorm Prefs"
  layout="topleft"
  follows="all"
  top="5"
@@ -1338,7 +1338,7 @@ Hover your mouse cursor over UUID field to show its default value.
          left="5"
          height="14"
          width="150"
-         tool_tip="Sound UUID played on default Manikineko Online alerts."
+         tool_tip="Sound UUID played on default Firestorm alerts."
          name="textFSSndAlert">
             Default alert:
         </text>

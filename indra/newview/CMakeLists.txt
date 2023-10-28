@@ -359,10 +359,6 @@ set(viewer_SOURCE_FILES
     llfloaternewfeaturenotification.cpp
     llfloaternotificationsconsole.cpp
     llfloaternotificationstabbed.cpp
-    llfloateroutfitphotopreview.cpp 
-    llfloaterobjectweights.cpp
-    llfloateropenobject.cpp
-    llfloatersimpleoutfitsnapshot.cpp
     llfloaterobjectweights.cpp
     llfloateropenobject.cpp
     llfloatersimplesnapshot.cpp
@@ -381,7 +377,6 @@ set(viewer_SOURCE_FILES
     llfloaterpreferenceviewadvanced.cpp
     llfloaterpreviewtrash.cpp
     llfloaterprofiletexture.cpp
-    llfloaterproperties.cpp
     llfloaterproperties.cpp # <FS:Ansariel> Keep legacy properties floater
     llfloaterregiondebugconsole.cpp
     llfloaterregioninfo.cpp
@@ -1154,10 +1149,6 @@ set(viewer_HEADER_FILES
     llfloaternewfeaturenotification.h
     llfloaternotificationsconsole.h
     llfloaternotificationstabbed.h
-    llfloateroutfitphotopreview.h
-    llfloaterobjectweights.h
-    llfloateropenobject.h
-    llfloatersimpleoutfitsnapshot.h
     llfloaterobjectweights.h
     llfloateropenobject.h
     llfloatersimplesnapshot.h
@@ -1176,7 +1167,6 @@ set(viewer_HEADER_FILES
     llfloaterpreferenceviewadvanced.h
     llfloaterpreviewtrash.h
     llfloaterprofiletexture.h
-    llfloaterproperties.h
     llfloaterproperties.h # <FS:Ansariel> Keep legacy properties floater
     llfloaterregiondebugconsole.h
     llfloaterregioninfo.h

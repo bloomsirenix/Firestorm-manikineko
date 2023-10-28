@@ -696,7 +696,6 @@ void LLSidepanelInventory::cleanup()
 // <FS:Zi> Add reload button to inventory inbox
 void LLSidepanelInventory::onReloadInboxClicked()
 {
-	const LLUUID inbox_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_INBOX, true);
 	const LLUUID inbox_id = gInventory.findCategoryUUIDForType(LLFolderType::FT_INBOX);
 
 	if (LLViewerInventoryCategory* cat = gInventory.getCategory(inbox_id); cat)

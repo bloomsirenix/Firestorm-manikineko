@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="Sonidos" name="Preference Media panel">
-	<tab_container label="Prefs. Manikineko Online" name="tabs">
+	<tab_container label="Prefs. Firestorm" name="tabs">
 		<panel label="General" name="Media Sounds Panel">
 			<slider label="Volumen general" name="System Volume"/>
 			<check_box label="Silenciar al minimizar" name="mute_when_minimized"/>
@@ -119,7 +119,7 @@
 				Aquí puedes cambiar (mediante UUIDs) los sonidos por defecto de la interfaz.
 Sitúa el cursor del ratón sobre el campo de UUID para mostrar su valor por defecto.
 			</text>
-			<text tool_tip="Sonido a reproducir por las alertas por defecto de Manikineko Online." name="textFSSndAlert">
+			<text tool_tip="Sonido a reproducir por las alertas por defecto de Firestorm." name="textFSSndAlert">
 				Alerta por defecto:
 			</text>
 			<button name="Prev_UISndAlert" label="P" tool_tip="Probar sonido."/>

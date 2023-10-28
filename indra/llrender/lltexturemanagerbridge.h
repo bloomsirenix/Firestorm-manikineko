@@ -1,12 +1,4 @@
 /** 
- * @file fsfloaterpartialinventory.h
- * @brief Displays the inventory underneath a particular starting folder
- *
- * $LicenseInfo:firstyear=2022&license=viewerlgpl$
- * Phoenix Firestorm Viewer Source Code
- * Copyright (c) 2022 Ansariel Hiller @ Second Life
- *
-========
  * @file lltexturemanagerbridge.h
  * @brief Bridge to an application-specific texture manager.
  *
@@ -14,7 +6,6 @@
  * Second Life Viewer Source Code
  * Copyright (C) 2010, Linden Research, Inc.
  * 
->>>>>>>> fs/master:indra/llrender/lltexturemanagerbridge.h
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
@@ -33,33 +24,6 @@
  * $/LicenseInfo$
  */
 
-#ifndef FS_FLOATERPARTIALINVENTORY_H
-#define FS_FLOATERPARTIALINVENTORY_H
-
-#include "llfloater.h"
-#include "llinventorypanel.h"
-
-class LLFilterEditor;
-
-class FSFloaterPartialInventory : public LLFloater
-{
-public:
-	FSFloaterPartialInventory(const LLSD& key);
-	virtual ~FSFloaterPartialInventory();
-
-	BOOL postBuild() override;
-	void onOpen(const LLSD& key) override;
-
-	LLInventoryPanel* getInventoryPanel() const { return mInventoryList; };
-
-private:
-	LLUUID				mRootFolderId;
-	LLInventoryPanel*	mInventoryList{ nullptr };
-	LLFilterEditor*		mFilterEdit{ nullptr };
-};
-
-#endif
-========
 #ifndef LL_TEXTUREMANAGERBRIDGE_H
 #define LL_TEXTUREMANAGERBRIDGE_H
 
@@ -81,4 +45,3 @@ extern LLTextureManagerBridge* gTextureManagerBridgep;
 
 #endif // LL_TEXTUREMANAGERBRIDGE_H
 
->>>>>>>> fs/master:indra/llrender/lltexturemanagerbridge.h

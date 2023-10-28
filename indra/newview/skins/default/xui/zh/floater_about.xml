@@ -42,7 +42,7 @@ Qt Webkit 版本： [QT_WEBKIT_VERSION]
 	<tab_container name="about_tab">
 		<panel label="資訊" name="support_panel">
 			<text name="support_intro">    
-For the latest information about Manikineko Online, visit    
+For the latest information about Firestorm, visit    
 https://www.firestormviewer.org
     		</text>
 			<button label="覆製到剪貼簿" name="copy_btn"/>

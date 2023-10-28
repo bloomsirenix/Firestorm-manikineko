@@ -177,7 +177,6 @@ bool FSLSLBridge::lslToViewer(std::string_view message, const LLUUID& fromID, co
 		return false;
 	}
 	std::string_view tag = message.substr(0, tagend + 1);
-	std::string ourBridge = findFSCategory().asString();
 	std::string ourBridge = getBridgeFolder().asString();
 	//</FS:TS> FIRE-962
 	
@@ -1548,8 +1547,6 @@ LLUUID FSLSLBridge::findFSCategory()
 			{
 				if (cat->getName() == FS_BRIDGE_FOLDER)
 				{
-					bridgeCatID = cat->getUUID();
-					break;
 					mBridgeFolderID = cat->getUUID();
 					return mBridgeFolderID;
 				}

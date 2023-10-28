@@ -362,11 +362,7 @@ public:
 	bool dynamicPathfindingEnabled() const;
 
 	bool avatarHoverHeightEnabled() const;
-// <FS:Beq> Area search improvements
-	U32 mFullUpdateInUseCount {0};
-	void clearFullUpdateInterestList(){ LL_DEBUGS("InterestListMode") << "Resetting for previous region" << LL_ENDL; mFullUpdateInUseCount = 0; };
-	void useFullUpdateInterestListMode(bool full_update, bool force_update=false);
-// </FS:Beq>
+
 // </FS:CR>
 #ifdef OPENSIM
 	std::set<std::string> getGods() { return mGodNames; };	
@@ -493,7 +489,6 @@ public:
 	std::vector<U32> mMapAvatars;
 	std::vector<LLUUID> mMapAvatarIDs;
 
-	static bool sFSAreaSearchActive; // <FS:Beq/> FIRE-32688 Area Search improvements
 	static BOOL sVOCacheCullingEnabled; //vo cache culling enabled or not.
 	static S32  sLastCameraUpdated;
 

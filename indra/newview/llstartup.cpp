@@ -300,7 +300,6 @@ static bool mLoginStatePastUI = false;
 static bool mBenefitsSuccessfullyInit = false;
 
 const F32 STATE_AGENT_WAIT_TIMEOUT = 240; //seconds
-const S32 MAX_SEED_CAP_ATTEMPTS_BEFORE_LOGIN = 3; // Give region 3 chances
 const S32 MAX_SEED_CAP_ATTEMPTS_BEFORE_ABORT = 4; // Give region 4 chances
 
 std::unique_ptr<LLEventPump> LLStartUp::sStateWatcher(new LLEventStream("StartupState"));
@@ -1022,8 +1021,6 @@ bool idle_startup()
 #else
 				void* window_handle = NULL;
 #endif
-				bool init = gAudiop->init(window_handle, LLAppViewer::instance()->getSecondLifeTitle());
-				if(init)
 				if (gAudiop->init(window_handle, LLAppViewer::instance()->getSecondLifeTitle()))
 				{
 					if (FALSE == gSavedSettings.getBOOL("UseMediaPluginsForStreamingAudio"))
@@ -2080,11 +2077,6 @@ bool idle_startup()
 		else
 		{
 			U32 num_retries = regionp->getNumSeedCapRetries();
-            if (num_retries > MAX_SEED_CAP_ATTEMPTS_BEFORE_LOGIN)
-            {
-                // Region will keep trying to get capabilities,
-                // but for now continue as if caps were granted
-                LLStartUp::setStartupState(STATE_SEED_CAP_GRANTED);
             if (num_retries > MAX_SEED_CAP_ATTEMPTS_BEFORE_ABORT)
             {
                 LL_WARNS("AppInit") << "Failed to get capabilities. Backing up to login screen!" << LL_ENDL;
@@ -3673,7 +3665,6 @@ void register_viewer_callbacks(LLMessageSystem* msg)
 	msg->setHandlerFunc("InitiateDownload", process_initiate_download);
 	msg->setHandlerFunc("LandStatReply", LLFloaterTopObjects::handle_land_reply);
     msg->setHandlerFunc("GenericMessage", process_generic_message);
-    msg->setHandlerFunc("GenericStreamingMessage", process_generic_streaming_message);
     msg->setHandlerFunc("LargeGenericMessage", process_large_generic_message);
 
 	msg->setHandlerFuncFast(_PREHASH_FeatureDisabled, process_feature_disabled_message);

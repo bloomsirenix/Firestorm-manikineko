@@ -2621,8 +2621,6 @@ Voulez-vous les jouer ?
 		Votre corbeille déborde. Cela risque de provoquer des problèmes lors de la connexion.
 		<usetemplate name="okcancelbuttons" notext="Je viderai la corbeille plus tard" yestext="Vérifier le dossier Corbeille"/>
 	</notification>
-	<notification name="InventoryLimitReachedAIS">
-		Votre inventaire rencontre des problèmes. Veuillez contacter le support de votre grille.
 	<notification name="InventoryLimitReachedAISAlert">
 		Votre inventaire rencontre des problèmes. Veuillez contacter l'assistance de votre grille.
 	</notification>

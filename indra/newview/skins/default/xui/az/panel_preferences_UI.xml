@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel label="İnterfeys seçimləri" name="Display panel">
-<tab_container label="Manikineko Online seçimləri" name="tabs">
 <tab_container label="Firestorm seçimləri" name="tabs">
     <panel label="3D dünya" name="UI Prefs Panel">
         <text name="HoverTipText" width="150">
@@ -75,9 +74,6 @@
            (Yen.başlatma tələb olunur)
         </text>
         <check_box label="Qrup və İM söhbət nişanlarını gizlədin" name="FSDisableIMChiclets" tool_tip="Şəxsi mesajlar və qrup söhbətləri üçün nişanlar silinəcək (Bildirişlər hələ də göstəriləcək)." />
-        <check_box label="Bildirişlər pəncərəsi üçün köhnə siyahıdan istifadə edin." name="FSLegacyNotificationWell" tool_tip="Əgər qeyd olunarsa, Manikineko Online saxlanmış bildirişləri göstərmək üçün köhnə siyahı görünüşündən istifadə edəcək." width="320" />
-        <text name="FSLegacyNotificationWellRequiresRestart" width="150">(Yen.başlatma tələb olunur)</text>
-        <check_box label="Söhbətlərin və Bildirişlərin avtomatik ölçüsü siyahıları" name="FSLegacyNotificationWellAutoResize" tool_tip="Əgər bu qutu işarələnərsə, elementlər əlavə etdikdə və ya sildikdə Manikineko Online həmişə Söhbət siyahılarınızı və köhnə Bildirişlərinizi avtomatik olaraq dəyişdirəcək."/>
         <check_box label="Bildirişlər pəncərəsi üçün köhnə siyahıdan istifadə edin." name="FSLegacyNotificationWell" tool_tip="Əgər qeyd olunarsa, Firestorm saxlanmış bildirişləri göstərmək üçün köhnə siyahı görünüşündən istifadə edəcək." width="320" />
         <text name="FSLegacyNotificationWellRequiresRestart" width="150">(Yen.başlatma tələb olunur)</text>
         <check_box label="Söhbətlərin və Bildirişlərin avtomatik ölçüsü siyahıları" name="FSLegacyNotificationWellAutoResize" tool_tip="Əgər bu qutu işarələnərsə, elementlər əlavə etdikdə və ya sildikdə Firestorm həmişə Söhbət siyahılarınızı və köhnə Bildirişlərinizi avtomatik olaraq dəyişdirəcək."/>
@@ -98,7 +94,6 @@
 		</text>
 
 		<check_box tool_tip="Ekranın yuxarı sağ küncündə trafikin ölçülməsini göstərin" label="Ekranın yuxarı sağ küncündə trafikin ölçülməsini göstərin" name="ShowNetStats"/>
-		<check_box label="Gecikmə sayğacı üçün köhnə dəyər ekranından istifadə edin" name="FSStatbarLegacyMeanPerSec" tool_tip="Bu seçim aktivləşdirilərsə, Manikineko Online məlumatların göstərilməsində ənənəvi üsuldan istifadə edəcək."/>
 		<check_box label="Gecikmə sayğacı üçün köhnə dəyər ekranından istifadə edin" name="FSStatbarLegacyMeanPerSec" tool_tip="Bu seçim aktivləşdirilərsə, Firestorm məlumatların göstərilməsində ənənəvi üsuldan istifadə edəcək."/>
 		<check_box label="Trafik göstəricisinə basmaqla Statistika açılır" name="FSUseStatsInsteadOfLagMeter"/>
 		<check_box label="Üst menyuda media nəzarətini göstərin" name="FSEnableVolumeControls" tool_tip="Yuxarı sağda axın audio, medianın daxil edilməsinə və söndürülməsinə nəzarət etmək imkanı göstərilir."/>
