@@ -53,8 +53,13 @@ viewer_dir = os.path.dirname(__file__)
 # indra.util.llmanifest under their system Python!
 sys.path.insert(0, os.path.join(viewer_dir, os.pardir, "lib", "python"))
 from indra.util.llmanifest import LLManifest, main, path_ancestors, CHANNEL_VENDOR_BASE, RELEASE_CHANNEL, ManifestError, MissingError
-import llsd
-
+# <FS:Beq> try to work around weird Mac build issue that seems to find the wrong python
+#import llsd
+try:
+    import llsd
+except ImportError:
+    from llbase import llsd
+# </FS:Beq>
 class ViewerManifest(LLManifest,FSViewerManifest):
     def is_packaging_viewer(self):
         # Some commands, files will only be included
@@ -1972,12 +1977,10 @@ class LinuxManifest(ViewerManifest):
         # CEF files 
         with self.prefix(src=os.path.join(pkgdir, 'lib', 'release'), dst="lib"):
             self.path( "libcef.so" )
+            self.path( "libEGL.so" )
+            self.path( "libGLESv2.so" )
+            self.path( "libvk_swiftshader.so" )
             self.path_optional( "libminigbm.so" )
-            
-        with self.prefix(src=os.path.join(pkgdir, 'lib', 'release', 'swiftshader'), dst=os.path.join("bin", "swiftshader") ):
-            self.path( "*.so" )
-        with self.prefix(src=os.path.join(pkgdir, 'lib', 'release', 'swiftshader'), dst=os.path.join("lib", "swiftshader") ):
-            self.path( "*.so" )
 
         with self.prefix(src=os.path.join(pkgdir, 'bin', 'release'), dst="bin"):
             self.path( "chrome-sandbox" )
@@ -1999,7 +2002,7 @@ class LinuxManifest(ViewerManifest):
             self.path( "resources.pak" )
             self.path( "icudtl.dat" )
 
-        with self.prefix(src=os.path.join(pkgdir, 'resources', 'locales'), dst=os.path.join('bin', 'locales')):
+        with self.prefix(src=os.path.join(pkgdir, 'resources', 'locales'), dst=os.path.join('lib', 'locales')):
             self.path("am.pak")
             self.path("ar.pak")
             self.path("bg.pak")
