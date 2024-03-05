@@ -10,7 +10,7 @@
 		[ITEM_COUNT] Elemente abgerufen [FILTER]
 	</panel.string>
 	<panel.string name="inventory_title">Inventar</panel.string>
-	<layout_stack name="nav_stack">
+	<layout_stack name="top_stack">
 		<layout_panel name="nav_buttons">
 			<button name="back_btn" tool_tip="Zurück"/>
 			<button name="forward_btn" tool_tip="Vor"/>
@@ -41,7 +41,7 @@
 				<combo_box.item value="filter_type_sounds" label="Sounds" />
 				<combo_box.item value="filter_type_textures" label="Texturen" />
 				<combo_box.item value="filter_type_snapshots" label="Fotos" />
-				<combo_box.item value="filter_type_meshes" label="Meshes" />
+				<combo_box.item value="filter_type_materials" label="Materialien" />
 				<combo_box.item value="filter_type_settings" label="Einstellungen" />
 				<combo_box.item value="filter_separator" label="------------" />
 				<combo_box.item value="filter_type_custom" label="Benutzerdefiniert..." />

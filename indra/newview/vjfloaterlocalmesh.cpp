@@ -392,22 +392,34 @@ bool LLFloaterLocalMesh::processPrimCreated(LLViewerObject* object)
 		return false;
 	}
 
-	if(auto floater_ptr = LLLocalMeshSystem::getInstance()->getFloaterPointer())
+	if (auto floater_ptr = LLLocalMeshSystem::getInstance()->getFloaterPointer())
 	{
-		floater_ptr->update_selected_target( object->getID() );
+		floater_ptr->update_selected_target(object->getID());
 		auto scroll_ctrl_selected_item = floater_ptr->mScrollCtrl->getFirstSelected();
-		if(!scroll_ctrl_selected_item){return true;}; // at this point we have a valid object even if we can't fill it.
+		if (!scroll_ctrl_selected_item)
+		{
+			// at this point we have a valid object even if we can't fill it.
+			return true;
+		}
 
 		auto scroll_ctrl_selected_column = scroll_ctrl_selected_item->getColumn(LOCAL_TRACKING_ID_COLUMN);
-		if(!scroll_ctrl_selected_column){return true;}; // at this point we have a valid object even if we can't fill it.
+		if (!scroll_ctrl_selected_column)
+		{
+			// at this point we have a valid object even if we can't fill it.
+			return true;
+		}
 
 		auto objectlist_combo_box = floater_ptr->getChild<LLComboBox>("object_apply_list");
-		if(!objectlist_combo_box){return true;}; // at this point we have a valid object even if we can't fill it.
+		if (!objectlist_combo_box)
+		{
+			// at this point we have a valid object even if we can't fill it.
+			return true;
+		}
 		
 		// TODO: replace this with check box. "apply selected"
 		bool apply_local { scroll_ctrl_selected_item && scroll_ctrl_selected_column && objectlist_combo_box };
 
-		if ( apply_local )
+		if (apply_local)
 		{
 			local_id = scroll_ctrl_selected_column->getValue().asUUID();
 			// fill it up with local goodness
@@ -419,13 +431,13 @@ bool LLFloaterLocalMesh::processPrimCreated(LLViewerObject* object)
 			int object_idx = objectlist_combo_box->getFirstSelectedIndex();
 			LLLocalMeshSystem::getInstance()->applyVObject(object->getID(), local_id, object_idx, use_scale);
 			volp = object->getVolume();
-			if(!volp) 
+			if (!volp) 
 			{
 				return true;
 			}
 			volume_params = volp->getParams();
 			object->updateVolume(volume_params);
-			object->markForUpdate(true);
+			object->markForUpdate();
 		}
 	}
 	return true;
@@ -461,7 +473,7 @@ void LLFloaterLocalMesh::showLog()
 	LLUUID file_id = scroll_ctrl_selected_column->getValue().asUUID();
 	auto log = LLLocalMeshSystem::getInstance()->getFileLog(file_id);
 
-	for (auto log_string : log)
+	for (const auto& log_string : log)
 	{
 		mLogPanel->appendText(log_string, true);
 	}
@@ -600,7 +612,7 @@ void LLFloaterLocalMesh::reloadLowerUI()
 	if (!selected_file_id.isNull())
 	{
 		const auto& fileinfo_vector = LLLocalMeshSystem::getInstance()->getFileInfoVector();
-		for (auto fileinfo : fileinfo_vector)
+		for (const auto& fileinfo : fileinfo_vector)
 		{
 			if (selected_file_id == fileinfo.mLocalID)
 			{
@@ -672,7 +684,7 @@ void LLFloaterLocalMesh::reloadLowerUI()
 		// and if it is loaded & active, fill object list
 		if (selected_file_active && (!selected_object_list.empty()))
 		{
-			for (auto object_name : selected_object_list)
+			for (const auto& object_name : selected_object_list)
 			{
 				objectlist_combo_box->addSimpleElement(object_name);
 			}

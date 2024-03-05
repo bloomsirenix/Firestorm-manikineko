@@ -33,7 +33,6 @@
 #include "llagent.h"
 #include "llpanel.h"
 #include "llbutton.h"
-#include "llcolorswatch.h"
 #include "llcombobox.h"
 #include "llview.h"
 #include "llbufferstream.h"
@@ -351,7 +350,7 @@ void LLFloaterAutoReplaceSettings::onDeleteEntry()
 // called when the Import List button is pressed
 void LLFloaterAutoReplaceSettings::onImportList()
 {
-	(new LLFilePickerReplyThread(boost::bind(&LLFloaterAutoReplaceSettings::loadListFromFile, this, _1), LLFilePicker::FFLOAD_XML, false))->getFile();
+	LLFilePickerReplyThread::startPicker(boost::bind(&LLFloaterAutoReplaceSettings::loadListFromFile, this, _1), LLFilePicker::FFLOAD_XML, false);
 }
 
 void LLFloaterAutoReplaceSettings::loadListFromFile(const std::vector<std::string>& filenames)
@@ -546,7 +545,7 @@ void LLFloaterAutoReplaceSettings::onExportList()
 {
 	std::string listName=mListNames->getFirstSelected()->getColumn(0)->getValue().asString();
 	std::string listFileName = listName + ".xml";
-	(new LLFilePickerReplyThread(boost::bind(&LLFloaterAutoReplaceSettings::saveListToFile, this, _1, listName), LLFilePicker::FFSAVE_XML, listFileName))->getFile();
+	LLFilePickerReplyThread::startPicker(boost::bind(&LLFloaterAutoReplaceSettings::saveListToFile, this, _1, listName), LLFilePicker::FFSAVE_XML, listFileName);
 }
 
 void LLFloaterAutoReplaceSettings::saveListToFile(const std::vector<std::string>& filenames, std::string listName)

@@ -227,6 +227,13 @@
 				function="Inventory.DoCreate"
 				parameter="gesture" />
 		</menu_item_call>
+		<menu_item_call
+			name="inventory_new_material"
+			label="New Material">
+			<menu_item_call.on_click
+				function="Inventory.DoCreate"
+				parameter="material" />
+		</menu_item_call>
 		<menu
 			name="inventory_new_clothes"
 			label="New Clothes">
@@ -578,8 +585,8 @@
    top_pad="0"
    left="4"
    right="-5"
-   name="nav_stack"
-   orientation="horizontal">
+   orientation="horizontal"
+   name="top_stack">
     <layout_panel
      border="false"
      bevel_style="in"
@@ -729,7 +736,7 @@
         <combo_box.item value="filter_type_sounds" label="Sounds" />
         <combo_box.item value="filter_type_textures" label="Textures" />
         <combo_box.item value="filter_type_snapshots" label="Snapshots" />
-        <combo_box.item value="filter_type_meshes" label="Meshes" />
+        <combo_box.item value="filter_type_materials" label="Materials" />
         <combo_box.item value="filter_type_settings" label="Settings" />
         <combo_box.item value="filter_separator" label="------------" enabled="false" />
         <combo_box.item value="filter_type_custom" label="Custom..." />

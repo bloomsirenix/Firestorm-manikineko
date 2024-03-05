@@ -12,7 +12,7 @@
 	<panel.string name="inventory_title">
 		Инвентарь
 	</panel.string>
-	<layout_stack name="nav_stack">
+	<layout_stack name="top_stack">
 		<layout_panel name="nav_buttons">
 			<button name="back_btn" tool_tip="Назад"/>
 			<button name="forward_btn" tool_tip="Вперед"/>
@@ -42,7 +42,6 @@
 				<combo_box.item value="filter_type_sounds" label="Звуки" />
 				<combo_box.item value="filter_type_textures" label="Текстуры" />
 				<combo_box.item value="filter_type_snapshots" label="Снимки" />
-				<combo_box.item value="filter_type_meshes" label="Меш" />
 				<combo_box.item value="filter_type_settings" label="Настройки" />
 				<combo_box.item value="filter_type_custom" label="Другое..." />
 			</combo_box>

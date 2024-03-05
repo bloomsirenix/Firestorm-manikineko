@@ -57,6 +57,12 @@
 #if 0
 
 #ifndef LL_WINDOWS
+
+typedef struct {
+  void *re_pcre;
+  size_t re_nsub;
+  size_t re_erroffset;
+} regex_t;
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #endif
@@ -264,7 +270,7 @@ public:
 				break;
 			case tut::test_result::ex:
 				++mFailedTests;
-				out << "exception: " << tr.exception_typeid;
+				out << "exception: " << LLError::Log::demangle(tr.exception_typeid.c_str());
 				break;
 			case tut::test_result::warn:
 				++mFailedTests;
@@ -406,7 +412,7 @@ public:
 	{
 		// Per http://confluence.jetbrains.net/display/TCD65/Build+Script+Interaction+with+TeamCity#BuildScriptInteractionwithTeamCity-ServiceMessages
 		std::string result;
-		BOOST_FOREACH(char c, str)
+		for (char c : str)
 		{
 			switch (c)
 			{

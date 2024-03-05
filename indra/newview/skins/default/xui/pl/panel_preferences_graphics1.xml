@@ -31,11 +31,8 @@
 				Cieniowanie pikseli:
 			</text>
 			<check_box label="Przezroczysta woda" name="TransparentWater"/>
-			<check_box label="Mapping wypukłości i połysk" name="BumpShiny"/>
-			<check_box label="Lokalne światła" name="LocalLights"/>
-			<check_box label="Shadery atmosfery" name="WindLightUseAtmosShaders"/>
-			<check_box label="Zaawansowane oświetlenie" tool_tip="Włącza zaawansowane renderowanie świateł ('deferred rendering')." name="UseLightShaders"/>
-			<check_box label="Okluzja otoczenia" name="UseSSAO"/>
+			<check_box label="Okluzja otoczenia (SSAO)" name="UseSSAO"/>
+			<check_box label="Odbicia obszaru ekranu (SSR)" name="ScreenSpaceReflections"/>
 			<text name="shadows_label">
 				Cienie:
 			</text>
@@ -44,17 +41,22 @@
 				<combo_box.item label="Słońce/Księżyc" name="1"/>
 				<combo_box.item label="Słońce/Księżyc + inne źródła" name="2"/>
 			</combo_box>
-			<text name="reflection_label">
-				Odbicia w wodzie:
+			<text name="ReflectionDetailText">
+				Szczegóły odbić:
 			</text>
-			<combo_box name="Reflections">
-				<combo_box.item label="Żadne (nieprzezroczyste)" name="-2" />
-				<combo_box.item label="Żadne (przezroczyste)" name="-1" />
-				<combo_box.item label="Minimalne" name="0"/>
-				<combo_box.item label="Teren i drzewa" name="1"/>
-				<combo_box.item label="Wszystkie obiekty statyczne" name="2"/>
-				<combo_box.item label="Wszystkie awatary i obiekty" name="3"/>
-				<combo_box.item label="Wszystko" name="4"/>
+			<combo_box name="ReflectionDetail">
+				<combo_box.item label="Tylko statyczne" name="0" />
+				<combo_box.item label="Statyczne + dynamiczne" name="1" />
+				<combo_box.item label="W czasie rzeczywistym" name="2" />
+			</combo_box>
+			<text name="ReflectionProbeText">
+				Zasięg odbić:
+			</text>
+			<combo_box name="ReflectionLevel">
+				<combo_box.item label="Brak" name="0" />
+				<combo_box.item label="Tylko ręczne" name="1" />
+				<combo_box.item label="Ręczne + podłoże" name="2" />
+				<combo_box.item label="Pełna scena" name="3" />
 			</combo_box>
 			<text name="local lights_label" tool_tip="Wpływa na liczbę renderowanych źródeł światła, gdy 'zaawansowane oświetlenie' jest wyłączone. Aby zmienić tryb wymagany jest restart.">
 				Oświetlenie punktowe:
@@ -73,6 +75,7 @@
 				Niska
 			</text>
 			<slider label="Fizyka awatarów" name="AvatarPhysicsDetail"/>
+			<slider label="Ekspozycja" name="RenderExposure" />
 			<text name="MeshDetailText">
 				Poziom szczegółowości obiektów (LOD):
 			</text>
@@ -82,17 +85,6 @@
 			<slider label="  Awatary" name="AvatarMeshDetail"/>
 			<slider label="  Teren" name="TerrainMeshDetail"/>
 			<slider label="  Niebo" name="SkyMeshDetail"/>
-			<text name="AvatarRenderingText">
-				Rendering awatarów:
-			</text>
-			<check_box label="Elastyczne tkaniny ubrań" name="AvatarCloth"/>
-			<!-- <text name="TerrainDetailText">
-				Szczegóły terenu:
-			</text>
-			<radio_group name="TerrainDetailRadio">
-				<radio_item label="Mało" name="0"/>
-				<radio_item label="Dużo" name="2"/>
-			</radio_group> -->
 			<text name="Presets_Label">
 				Ustawienia:
 			</text>
@@ -104,7 +96,6 @@
 		<panel label="Ustawienia sprzętowe" name="Hardware Settings">
 			<check_box label="Filtrowanie anizotropowe (wolniej, gdy włączone)" name="ani" tool_tip="To pole wyboru włącza filtrowanie anizotropowe, które jest metodą polepszania jakości tekstur, gdy są one oglądane pod względnie dużymi kątami w stosunku do położenia kamery. Zazwyczaj sprawia, że wydają się mniej rozmyte przy większych odległościach." />
 			<check_box label="Włącz VSync" name="vsync" tool_tip="Synchronizuje liczbę klatek na sekundę z częstotliwością odświeżania monitora, może skutkować zmniejszeniem widocznej płynności i opóźnieniami."/>
-			<check_box label="Włącz strumieniowe VBO" name="vbo_stream" tool_tip="Wyłączenie tej opcji może zwiększyć wydajność, gdy VBO jest włączone. Odnotowano zauważalny wzrost wydajności na różnych GPU ze stajni AMD i Intela przy wyłączonej tej pozycji."/>
 			<check_box label="Włącz stratną kompresję tekstur (wymaga restartu)" name="texture compression" tool_tip="Kompresuje tekstury w pamięci wideo. Umożliwi to ładowanie tekstur w wyższej rozdzielczości / większej ich ilości, ale kosztem jakości obrazu."/>
 			<check_box label="Włącz wsparcie dla ekranów HiDPI (tylko Mac OSX; wymaga restartu)" name="use HiDPI" tool_tip="Włącz funkcje OpenGL dla rysowania w wysokich rozdzielczościach." />
 			<text name="Antialiasing:" tool_tip="Zmiana tego ustawienia może wymagać ponownego uruchomienia na niektórych urządzeniach.">
@@ -113,16 +104,6 @@
 			<combo_box label="Antyaliasing" name="fsaa">
 				<combo_box.item label="Wyłączony" name="FSAADisabled"/>
 			</combo_box>
-			<text name="brightness text">
-				(0/1.0 = domyślna jasność, niżej = jaśniej)
-			</text>
-			<slider label="Bufor pamięci tekstur (MB):" name="GraphicsCardTextureMemory" tool_tip="Ilość pamięci przeznaczona na tekstury. Domyślnie jest to maksymalna wielkość pamięci karty graficznej, ale nie więcej niż 512 MB na systemach 32 bitowych lub 2048 MB na 64 bitowych. Zmniejszenie tej wartości może spowodować wzrost wydajności, ale tekstury będą bardziej rozmazane."/>
-			<check_box label="Włącz dynamiczną pamięć tekstur" name="FSDynamicTextureMemory" tool_tip="Umożliwia dynamiczne obliczanie pamięci tekstur (dostępne tylko w przeglądarkach 64-bitowych i procesorach graficznych AMD/NVIDIA z co najmniej 512 MB pamięci wideo)" />
-			<slider label="Minimalny bufor pamięci tekstur (MB):" name="FSDynamicTextureMemoryMinTextureMemory" tool_tip="Minimalna ilość pamięci do przydzielenia na tekstury. Dzięki temu określona ilość będzie zawsze używana dla tekstur, nawet jeśli przekracza ilość dostępnej pamięci wideo. Jeśli określona tutaj ilość plus zapas przekracza wielkość fizycznej pamięci wideo, to zostanie ona odpowiednio ograniczona." />
-			<slider label="Dodatkowy zapas pamięci podręcznej tekstur (%):" name="FSDynamicTextureMemoryCacheReserve" tool_tip="Procent fizycznej pamięci wideo zarezerwowanej dla tekstur ładowanych do pamięci podręcznej, które obecnie nie są wyświetlane." />
-			<slider label="Fizyczny zapas pamięci wideo (%):" name="FSDynamicTextureMemoryGPUReserve" tool_tip="Procent fizycznej pamięci wideo zarezerwowanej do innego użytku." />
-			<spinner label="Stosunek odległości dla mgły:" name="fog"/>
-			<spinner label="Wątki dekodowania obrazów:" name="image_decode_threads" tool_tip="Liczba wątków używanych do dekodowania obrazów. 0 = Auto, 1 = Synchroniczne, 2+ = określone przez użytkownika. Zalecane 0 lub 1." />
 		</panel>
 		<panel name="Rendering">
 			<text name="World Updating">
@@ -146,8 +127,7 @@
 			<text name="Alpha Mask Rendering">
 				Maski przezroczystości (alpha):
 			</text>
-			<check_box label="Renderuj maski przezroczystości gdy 'zaawansowane oświetlenie' jest WYŁĄCZONE" tool_tip="Gdy opcja jest zaznaczona, to następuje poprawny rendering masek alpha (przezroczystych bitów), gdy zaawansowane oświetlenie nie jest włączone" name="RenderAutoMaskAlphaNonDeferred"/>
-			<check_box label="Renderuj maski przezroczystości gdy 'zaawansowane oświetlenie' jest WŁĄCZONE" tool_tip="Gdy opcja jest zaznaczona, to następuje poprawny rendering masek alpha (przezroczystych bitów), gdy zaawansowane oświetlenie JEST włączone" name="RenderAutoMaskAlphaDeferred"/>
+			<check_box label="Renderuj maski przezroczystości" tool_tip="Gdy opcja jest zaznaczona, to następuje poprawny rendering masek alpha (przezroczystych bitów)" name="RenderAutoMaskAlphaDeferred"/>
 			<text name="Miscellaneous Rendering">
 				Inne opcje wyświetlania:
 			</text>
@@ -168,7 +148,6 @@
 		<panel label="Głębia ostrości" name="DOF panel">
 			<check_box label="Włącz głębię ostrości (rozmywaj widok z wyjątkiem miejsca, gdzie skupiona jest kamera)" name="UseDoF"/>
 			<check_box label="Włączaj w trybie budowania" name="RenderDepthOfFieldInEditMode"/>
-			<check_box label="Włączaj pod wodą" name="FSRenderDoFUnderwater"/>
 			<check_box label="Głębia ostrości podąża za kursorem" name="FSFocusPointFollowsPointer" tool_tip="Głębia ostrości (DoF) będzie podążać za kursorem myszy - to zachowanie jest zgodne z tym, co widać podczas korzystania z Flycam. Używaj w połączeniu z blokadą ostrości DoF." />
 			<slider label="Wartość F kamery:" name="CameraFNum" tool_tip="Wartość F kamery dla głębi ostrości"/>
 			<slider label="Ogniskowa (mm):" name="CameraFocal" tool_tip="Ogniskowa dla głębi ostrości (w milimetrach)"/>

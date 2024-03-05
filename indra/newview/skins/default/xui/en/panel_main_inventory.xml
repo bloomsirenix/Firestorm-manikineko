@@ -32,8 +32,8 @@
    animate="false"
    top_pad="4"
    left="10"
-   name="nav_stack"
-   orientation="horizontal">
+   orientation="horizontal"
+   name="top_stack">
     <layout_panel
      border="false"
      bevel_style="in"
@@ -88,7 +88,8 @@
       height="25"
       width="324"
       name="filter_panel"
-      visible="true">
+      visible="true"
+      >
       <filter_editor
        text_pad_left="10"
        follows="left|top|right"
@@ -179,7 +180,7 @@
         <combo_box.item value="filter_type_sounds" label="Sounds" />
         <combo_box.item value="filter_type_textures" label="Textures" />
         <combo_box.item value="filter_type_snapshots" label="Snapshots" />
-        <combo_box.item value="filter_type_meshes" label="Meshes" />
+        <combo_box.item value="filter_type_materials" label="Materials" />
         <combo_box.item value="filter_type_settings" label="Settings" />
         <combo_box.item value="filter_separator" label="------------" enabled="false" />
         <combo_box.item value="filter_type_custom" label="Custom..." />

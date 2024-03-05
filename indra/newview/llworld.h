@@ -209,8 +209,6 @@ public:
 	LLViewerTexture *getDefaultWaterTexture();
     void updateWaterObjects();
 
-    void precullWaterObjects(LLCamera& camera, LLCullResult* cull, bool include_void_water);
-
 	void waterHeightRegionInfo(std::string const& sim_name, F32 water_height);
 	void shiftRegions(const LLVector3& offset);
 
@@ -244,8 +242,9 @@ public:
 	// or if the circuit to this simulator had been lost.
 	bool isRegionListed(const LLViewerRegion* region) const;
 
-    // <FS:Ansariel> [FS performance floater]
-    //S32 getNearbyAvatarsAndCompl(std::vector<LLCharacter*> &valid_nearby_avs);
+    // profile nearby avatars using gPipeline.profileAvatar and update their render times
+    // return max GPU time
+    F32 getNearbyAvatarsAndMaxGPUTime(std::vector<LLCharacter*> &valid_nearby_avs);
 
 private:
     void clearHoleWaterObjects();

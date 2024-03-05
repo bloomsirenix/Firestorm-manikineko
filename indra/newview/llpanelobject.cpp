@@ -42,7 +42,6 @@
 #include "llbutton.h"
 #include "llcalc.h"
 #include "llcheckboxctrl.h"
-#include "llcolorswatch.h"
 #include "llcombobox.h"
 #include "llfocusmgr.h"
 #include "llmanipscale.h"
@@ -307,8 +306,6 @@ BOOL	LLPanelObject::postBuild()
 		// Don't allow (no copy) or (no transfer) textures to be selected during immediate mode
 		mCtrlSculptTexture->setImmediateFilterPermMask(PERM_COPY | PERM_TRANSFER);
 		mCtrlSculptTexture->setDnDFilterPermMask(PERM_COPY | PERM_TRANSFER);
-		// Allow any texture to be used during non-immediate mode.
-		mCtrlSculptTexture->setNonImmediateFilterPermMask(PERM_NONE);
 		LLAggregatePermissions texture_perms;
 		if (LLSelectMgr::getInstance()->selectGetAggregateTexturePermissions(texture_perms))
 		{

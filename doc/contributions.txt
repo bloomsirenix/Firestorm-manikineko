@@ -19,6 +19,7 @@ Agathos Frascati
 	CT-317
 	CT-352
 Ai Austin
+    SL-19399
 Aiko Ying
 Aimee Trescothick
 	SNOW-227
@@ -240,7 +241,10 @@ Ansariel Hiller
 	SL-15398
 	SL-18432
 	SL-19140
+	SL-19575
+	SL-19623
 	SL-4126
+	SL-20224
 Aralara Rajal
 Arare Chantilly
 	CHUIBUG-191
@@ -600,6 +604,7 @@ Henri Beauchamp
 	SL-15175
 	SL-19110
 	SL-19159
+	[NO JIRA] (fullbright HUD alpha fix)
 herina Bode
 Hikkoshi Sakai
 	VWR-429
@@ -901,6 +906,7 @@ Kitty Barnett
 	STORM-2149
 	MAINT-7581
 	MAINT-7081
+	DRTVWR-489 (Internal JIRA that tracks Kitty's sizeable, epic contribution: support for Emoji characters in the Viewer [April 2023])
     SL-18988
 Kolor Fall
 Komiko Okamoto
@@ -933,6 +939,8 @@ LSL Scientist
 Lamorna Proctor
 Lares Carter
 Larry Pixel
+Lars Næsbye Christensen
+	SL-20054
 Laurent Bechir
 Leal Choche
 Lenae Munz
@@ -1424,6 +1432,7 @@ Sovereign Engineer
     SL-18497
     SL-18525
     SL-18534
+    SL-19690
     SL-19336
 SpacedOut Frye
 	VWR-34

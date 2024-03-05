@@ -4,7 +4,7 @@
 	<panel.string name="ItemcountCompleted">[ITEM_COUNT] objets [FILTER]</panel.string>
 	<panel.string name="ItemcountUnknown">[ITEM_COUNT] objets extraits [FILTER]</panel.string>
 	<panel.string name="inventory_title">Inventaire</panel.string>
-	<layout_stack name="nav_stack">
+	<layout_stack name="top_stack">
 		<layout_panel name="nav_buttons">
 			<button name="back_btn" tool_tip="Précédent"/>
 			<button name="forward_btn" tool_tip="Suivant"/>
@@ -34,7 +34,6 @@
 				<combo_box.item value="filter_type_sounds" label="Sons"/>
 				<combo_box.item value="filter_type_textures" label="Textures"/>
 				<combo_box.item value="filter_type_snapshots" label="Photos"/>
-				<combo_box.item value="filter_type_meshes" label="Meshs"/>
 				<combo_box.item value="filter_type_settings" label="Paramètres" />
 				<combo_box.item value="filter_type_custom" label="Personnalisé..."/>
 			</combo_box>
