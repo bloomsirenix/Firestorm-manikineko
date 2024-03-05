@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<panel label="Grafik" name="Display panel">
+<tab_container label="Graphics Prefs" name="tabs">
+	<panel label="Allgemein" name="General">
+		<text name="preset_label">
+			Aktuelle Voreinstellung:
+		</text>
+		<text name="QualitySpeed">
+			Qualität und Geschwindigkeit:
+		</text>
+		<text name="FasterText">
+			Schneller
+		</text>
+		<text name="BetterText">
+			Besser
+		</text>
+		<text name="ShadersPrefText">
+			Niedrig
+		</text>
+		<text name="ShadersPrefText2">
+			Mittel
+		</text>
+		<text name="ShadersPrefText3">
+			Hoch
+		</text>
+		<text name="ShadersPrefText4">
+			Ultra
+		</text>
+		<check_box label="Vollbildmodus" name="Fullscreen Mode" tool_tip="Firestorm im Vollbildmodus ausführen. (Erfordert Neustart)"/>
+		<text name="ShadersText">
+			Shader:
+		</text>
+		<check_box label="Transparentes Wasser" name="TransparentWater"/>
+		<check_box label="Bumpmapping und Glanz" name="BumpShiny"/>
+		<check_box label="Lokale Lichtquellen" name="LocalLights"/>
+		<check_box label="Atmosphären-Shader" name="WindLightUseAtmosShaders"/>
+		<check_box label="Erw. Beleuchtungsmodell" name="UseLightShaders" tool_tip="Aktiviert erweitertes Rendering von Lichtquellen."/>
+		<check_box label="Ambient Occlusion" name="UseSSAO"/>
+		<text name="shadows_label">
+			Schatten:
+		</text>
+		<combo_box name="ShadowDetail">
+			<combo_box.item label="Keine" name="0"/>
+			<combo_box.item label="Sonne/Mond" name="1"/>
+			<combo_box.item label="Sonne/Mond + Projektoren" name="2"/>
+		</combo_box>
+		<text name="reflection_label">
+			Wasserreflexionen:
+		</text>
+		<combo_box initial_value="true" label="Wasserreflexionen" name="Reflections">
+			<combo_box.item label="Keine (undurchsichtig)" name="-2"/>
+			<combo_box.item label="Keine (transparent)" name="-1"/>
+			<combo_box.item label="Minimal" name="0"/>
+			<combo_box.item label="Terrain und Bäume" name="1"/>
+			<combo_box.item label="Alle statischen Objekte" name="2"/>
+			<combo_box.item label="Alle Avatare und Objekte" name="3"/>
+			<combo_box.item label="Alles" name="4"/>
+		</combo_box>
+		<text name="local lights_label" tool_tip="Beeinflusst die Anzahl an dargestellten Lichtquellen, wenn Erweitertes Beleuchtungsmodell aktiviert ist (Neustart erforderlich).">
+			Punkt. Beleucht. (Neustart erf.):
+		</text>
+		<combo_box name="LocalLightsDetail">
+			<combo_box.item label="Vollständig (Standard)" name="3"/>
+			<combo_box.item label="Reduziert" name="2"/>
+			<combo_box.item label="Nur Sonne/Mond" name="1"/>
+		</combo_box>
+		<slider label="Sichtweite:" name="DrawDistance"/>
+		<text name="DrawDistanceMeterText2">
+			m
+		</text>
+		<slider label="Max. Partikelanzahl:" name="MaxParticleCount"/>
+		<slider label="Max. Komplexität:" name="IndirectMaxComplexity" tool_tip="Legt fest, ab welchem Wert ein visuell komplexer Avatar als JellyDoll dargestellt wird."/>
+		<slider label="Max. voll dargestellte Avatare:" name="IndirectMaxNonImpostors"/>
+		<slider label="Post-Processing-Qualität:" name="RenderPostProcess"/>
+		<text name="PostProcessText">
+			Niedrig
+		</text>
+		<slider label="Avatar-Physik:" name="AvatarPhysicsDetail"/>
+		<text name="MeshDetailText">
+			Darstellungsgrad:
+		</text>
+		<slider label="   Objekte:" name="ObjectMeshDetail" tool_tip="Legt fest, wann ein niedrigerer Detailgrad von Objekten verwendet wird, um Renderkosten zu reduzieren. Bitte mit Vorsicht verwenden: Höhere Werte verschlechtern die Performance."/>
+		<slider label="   Flexiprimitiva:" name="FlexibleMeshDetail"/>
+		<slider label="   Bäume:" name="TreeMeshDetail"/>
+		<slider label="   Avatare:" name="AvatarMeshDetail"/>
+		<slider label="   Terrain:" name="TerrainMeshDetail"/>
+		<slider label="   Himmel:" name="SkyMeshDetail"/>
+		<text name="AvatarRenderingText">
+			Avatar-Darstellung:
+		</text>
+		<check_box label="Vereinfachte Avatardarstellung" name="AvatarImpostors"/>
+		<check_box label="Avatar-Kleidung" name="AvatarCloth"/>
+		<text name="TerrainDetailText">
+			Terraindetails:
+		</text>
+		<radio_group name="TerrainDetailRadio">
+			<radio_item label="Niedrig" name="0"/>
+			<radio_item label="Hoch" name="2"/>
+		</radio_group>
+		<text name="Presets_Label" width="200">
+			Voreinstellungen:
+		</text>
+		<button label="Speichern" left="300" name="PrefSaveButton" width="72"/>
+		<button label="Laden" left_pad="5" name="PrefLoadButton" width="72"/>
+		<button label="Löschen" left_pad="5" name="PrefDeleteButton" width="72"/>
+		<button tool_tip="Standardeinstellungen neu laden" name="Defaults"/>
+	</panel>
+
+	<panel label="Hardware" name="Hardware Settings">
+		<check_box label="Anisotropische Filterung (langsamer, wenn aktiviert)" name="ani" tool_tip="Aktiviert anisotropischen Filter, wodurch die Qualität von Texturen verbessert wird, wenn sie im relativ großen Winkel in Abhängigkeit der Kameraposition betrachtet werden. Üblicherweise erscheinen sie dadurch in größerer Entfernung weniger verwaschen."/>
+		<check_box label="VSync aktivieren" name="vsync" tool_tip="Synchronisiert die Bilder pro Sekunde mit der Bildwiederholrate des Monitors, was in einer gleichmäßigeren Performance resultiert."/>
+		<check_box label="Gestreamte VBOs aktivieren" name="vbo_stream" tool_tip="Deaktivieren kann die Performance verbessern, wenn VBOs aktiviert sind, insbesondere auf diversen AMD-GPUs."/>
+		<text name="tc label">
+			S3TC aktivieren:
+		</text>
+		<check_box label="Textur-Komprimierung aktivieren (Erfordert Neustart)" name="texture compression" tool_tip="Komprimiert Texturen im Videospeicher und erlaubt dadurch eine höhrere Auflösung und/oder Laden von mehr Texturen auf Kosten der Textqualität."/>
+		<check_box label="Unterstützung für HiDPI-Displays aktivieren (nur Mac OSX; erfordert Neustart)" name="use HiDPI" tool_tip="Aktiviert OpenGL für High-Resolution Drawing."/>
+		<text name="Antialiasing:" tool_tip="Eine Änderung dieser Einstellung kann auf bestimmter Hardware einen Neustart erfordern.">
+			Antialiasing (Neustart empfohlen):
+		</text>
+		<combo_box label="Antialiasing" name="fsaa">
+			<combo_box.item label="Deaktiviert" name="FSAADisabled"/>
+			<combo_box.item label="2x" name="2x"/>
+			<combo_box.item label="4x" name="4x"/>
+			<combo_box.item label="8x" name="8x"/>
+			<combo_box.item label="16x" name="16x"/>
+		</combo_box>
+
+		<spinner label="Gamma:" name="gamma"/>
+		<text name="brightness text">
+			(0/1.0 = Standard-Helligkeit, weniger = heller)
+		</text>
+		<slider label="Texturen-Speicherbuffer (MB):" name="GraphicsCardTextureMemory" tool_tip="Speicherplatz, der für Texturen zur Verfügung steht. In der Regel handelt es sich um Grafikkartenspeicher, maximal 512 MB auf 32bit-Systemen und bis zu 2048 MB auf 64bit-Systemen, abhängig vom dedizierten Videospeicher der Grafikkarte. Ein kleinerer Wert kann die Geschwindigkeit erhöhen, aber auch zu Texturunschärfen führen."/>
+		<check_box label="Dynamischen Texturen-Speicherbuffer aktivieren" name="FSDynamicTextureMemory" tool_tip="Aktiviert dynamische Berechnung für den Texturen-Speicherbuffer (nur verfügbar auf 64bit-System und AMD/NVIDIA-GPUs mit mindestens 512 MB Grafikkartenspeicher)"/>
+		<slider label="Minimum Texturen-Speicherbuffer (MB):" name="FSDynamicTextureMemoryMinTextureMemory" tool_tip="Die minimale Speichergröße, die für Texturen verwendet wird. Diese Einstellung stellt sicher, dass jederzeit mindestens die angegebene Größe an Speicher für Texturen verwendet wird, auch wenn diese die Menge an tatsächlich verfügbaren Speicher überschreitet. Falls der eingestellte Wert plus Reserven den physischen Videospeicher übersteigt, wird er entsprechend angepasst."/>
+		<slider label="Zusätzliche Textur-Speicherbuffer-Reserve (%):" name="FSDynamicTextureMemoryCacheReserve" tool_tip="Prozentsatz des gesamten Videospeichers, der zum Zwischenspeichern von geladenen Texturen verwendet wird, die aktuell nicht dargestellt werden."/>
+		<slider label="Physische Videospeicher-Reserve (%):" name="FSDynamicTextureMemoryGPUReserve" tool_tip="Prozentsatz des gesamten Videospeichers, der für andere Zwecke reserviert wird."/>
+		<spinner label="Nebeldistanzverhältnis:" name="fog"/>
+		<spinner label="Parallelität Textur-Dekodierung:" name="image_decode_threads" tool_tip="Die Anzahl an Threads, für zur Dekodierung von Texturen verwendet wird. 0 = Automatisch ermitteln, 1 = Synchron, 2+ = Benutzerdefiniert. (Empfohlen: 0 oder 1)"/>
+	</panel>
+
+	<panel label="Darstellung" name="Rendering">
+		<text name="World Updating">
+			Welt-Aktualisierung:
+		</text>
+		<check_box label="Aktualisierung der Welt einfrieren (alles pausieren)" tool_tip="Aktivieren, um alle Aktualisierungen durch den Server einzufrieren - stoppt alle Aktionen Inworld, hat aber keine Auswirkungen auf Chat, IMs und Voice-Chat." name="WorldPause"/>
+		<text name="Texture Rendering">
+			Textur-Darstellung:
+		</text>
+		<check_box label="Minimale Texturen laden" tool_tip="Diese Einstellung setzt den 'TextureDisable'-Parameter - lädt Texturen extrem langsam, eventuell nützlich für Computer mit langsamer GPU" name="TexturesLoaded"/>
+		<check_box label="HTTP für Laden von Texturen verwenden" tool_tip="Aktiviert das Laden von Texturen über das HTTP-Protokoll - deaktivieren wenn es Probleme mit schlecht oder nicht korrekt ladenden Texturen gibt und das veraltete UDP-Protokoll verwendet werden soll." name="TexturesHTTP"/>
+		<check_box label="Maximale Auflösung für Texturen auf 512px beschränken (nur 64bit; erfordert Neustart)" tool_tip="Beschränkt die maximale Auflösung für Inworld-Texturen auf 512px. Dies erlaubt die Darstellung von mehreren Texturen bevor der vorhandene Texturspeicher aufgebraucht ist und unscharfe Texturen dargestellt werden." name="FSRestrictMaxTextureSize"/>
+		<slider label="Max. Anzahl gleichzeitiger HTTP-GET-Anfragen" name="HTTPFetchMaxRequests"/>
+		<text name="TextureDetailLabel" width="215" tool_tip="Qualitätslevel, auf das Texturen geladen werden. Beeinflusst die Einstellung TextureDiscardLevel">
+			Maximales Qualitätslevel für Texturen:
+		</text>
+		<combo_box name="TextureDetail">
+			<combo_box.item label="Normale (0) Qualität" name="0"/>
+			<combo_box.item label="Mittlere (3) Qualität" name="3"/>
+			<combo_box.item label="Geringe (4) Qualität" name="4"/>
+			<combo_box.item label="Keine (5) Texturen" name="5"/>
+		</combo_box>
+		<text name="Alpha Mask Rendering">
+			Darstellung von Alpha-Masken:
+		</text>
+		<check_box label="Alpha-Masken wenn 'Erweitertes Beleuchtungsmodell' deaktiviert ist" tool_tip="Falls aktiviert werden Alpha-Masken korrekt dargestellt, falls das erweiterte Beleuchtungsmodell nicht aktiviert ist." name="RenderAutoMaskAlphaNonDeferred"/>
+		<check_box label="Alpha-Masken wenn 'Erweitertes Beleuchtungsmodell' aktiviert ist" tool_tip="Falls aktiviert werden Alpha-Masken korrekt dargestellt, falls das erweiterte Beleuchtungsmodell aktiviert ist." name="RenderAutoMaskAlphaDeferred"/>
+		<text name="Miscellaneous Rendering">
+			Sonstige Darstellungsoptionen:
+		</text>
+		<check_box label="Leuchten anzeigen" tool_tip="Stellt Leuchteffekte dar. Stärke muss auf 0 gesetzt werden, um Leuchteffekte zu deaktiveren, falls Schatten aktiviert sind." name="RenderGlow"/>
+		<slider label="Stärke:" tool_tip="Leuchtstärke. Größer = Breitere und weichere Darstellung (Standardwert: 2)" name="glow_strength"/>
+		<check_box label="Avatare anzeigen, die nicht vollständig geladen sind" name="RenderUnloadedAvatars"/>
+		<check_box label="Framerate begrenzen" name="FSLimitFramerate"/>
+		<check_box label="Szene als Wireframe darstellen" name="Wireframe"/>
+		<check_box label="Angehängte Lichter rendern" tool_tip="Diese Option aktiviert alle Lichtquellen, die Avatare angehängt haben, wie z.B. Facelights. Nützlich, um beispielsweise Facelights zu deaktivieren falls notwendig." name="Render Attached Lights"/>
+		<check_box label="Angehängte Partikel rendern" name="Render Attached Particles"/>
+		<slider name="MaxFPS" label="FPS:"/>
+		<slider label="Pre-Caching-Verzögerung bevor die Welt angezeigt wird." tool_tip="Setzt die Verzögerung, nach der die Welt angezeigt wird, nachdem man selbst als Online gemeldet wird. (Standard: 6 Sekunden)" name="PrecachingDelay"/>
+		<text name="PrecachingDelayText" width="60">
+			Sekunden
+		</text>
+		<slider label="Schattenqualität" tool_tip="Qualität der Schattendarstellung (Standard: 1)" name="ShadowResolution"/>
+		<slider label="Skalierung der Bodentexturen (Erfordert Neustart)" name="RenderTerrainScale" tool_tip="Setzt die Skalierung der Bodentexturen - niedriger bedeutet höhere Kompression"/>
+	</panel>
+	
+	<panel label="Schärfentiefe" name="DOF panel">
+		<check_box label="Schärfentiefe aktivieren (Bereiche außerhalb des Kamerafokus erscheinen unscharf)" name="UseDoF"/>
+		<check_box label="Im Editier-Modus aktivieren" name="RenderDepthOfFieldInEditMode"/>
+		<check_box label="Unter Wasser aktivieren" name="FSRenderDoFUnderwater"/>
+		<check_box label="Schärfentiefe-Fokus folgt Mauszeiger" name="FSFocusPointFollowsPointer" tool_tip="Der Fokus der Schärfentiefe folgt der Maus, ähnlich dem Verhalten bei der Verwendung einer Flycam. In Verbindung mit fixiertem Schärfentiefe-Fokus verwenden."/>
+		<slider label="Kamera-Blendenzahl (k-Wert):" name="CameraFNum" tool_tip="Kamera-Blendenzahl (k-Wert) für die Schärfentiefe" label_width="195" width="409"/>
+		<slider label="Kamera-Brennweite in mm:" name="CameraFocal" tool_tip="Kamera-Brennweite für die Schärfentiefe (in Millimeter)" label_width="195" width="409"/>
+		<slider label="Kamera-Sichtfeld (Grad):" name="Camera FOV" tool_tip="Vertikales Kamera-Sichtfeld für die Schärfentiefe (in Grad)" label_width="195" width="409"/>
+		<slider label="Kamera-Bildseitenverhältnis:" name="CameraAspectRatio" tool_tip="Kamera-Bildseitenverhältnis für die Schärfentiefe" label_width="195" width="409"/>
+		<slider label="Fokus-Übergangszeit:" name="CameraFocusTrans" tool_tip="Zeit, die benötigt wird, um den Focus neu einzustellen" label_width="195" width="409"/>
+		<slider label="Schärfentiefe-Darstellungsqualität:" name="CameraDoFResScale" tool_tip="Beeinflusst die Qualität der Unschärfe und Geschwindigkeit der Darstellung (höher = bessere Qualität, niedriger = höhere Geschwindigkeit" label_width="195" width="409"/>
+	</panel>
+	
+</tab_container>
+</panel>
