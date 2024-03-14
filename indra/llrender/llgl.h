@@ -122,7 +122,15 @@ public:
 	
 	// Whether this version of GL is good enough for SL to use
 	BOOL mHasRequirements;
-
+void initGLExtensions();
+    void extractVideoCardStrings();
+    void parseGLVersion();
+    void checkGLSLVersion();
+    void checkTextureCompression();
+    void checkVendor();
+    void checkVRAM();
+    void getGLStates();
+    void reloadExtensionsString();
 	S32 mDriverVersionMajor;
 	S32 mDriverVersionMinor;
 	S32 mDriverVersionRelease;

@@ -40,8 +40,8 @@ LLRenderNavPrim gRenderNav;
 //=============================================================================
 void LLRenderNavPrim::renderLLTri( const LLVector3& a, const LLVector3& b, const LLVector3& c, const LLColor4U& color ) const
 {
-	LLColor4 cV(color);
-	gGL.color4fv( cV.mV );
+    GLfloat colorArray[4] = { color.mV[0] / 255.f, color.mV[1] / 255.f, color.mV[2] / 255.f, color.mV[3] / 255.f };
+	gGL.color4fv( colorArray );
 	gGL.begin(LLRender::TRIANGLES);
 	{
 		gGL.vertex3fv( a.mV );

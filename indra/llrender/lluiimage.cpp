@@ -62,7 +62,6 @@ S32 LLUIImage::getHeight() const
 	// return clipped dimensions of actual image area
 	return ll_round((F32)mImage->getHeight(0) * mClipRegion.getHeight()); 
 }
-
 void LLUIImage::draw3D(const LLVector3& origin_agent, const LLVector3& x_axis, const LLVector3& y_axis, 
 						const LLRect& rect, const LLColor4& color)
 {
