@@ -34,6 +34,40 @@
       </array>
     </map>
 
+ <map>
+      <key>name</key>
+      <string>Manikineko.nl</string>
+      <key>folder</key>
+      <string>manikineko</string>
+      <key>themes</key>
+      <array>
+        <map>
+          <key>name</key>
+          <string>Bright Blue</string>
+          <key>folder</key>
+          <string/>
+        </map>
+        <map>
+          <key>name</key>
+          <string>Classic Brown</string>
+          <key>folder</key>
+          <string>classic_brown</string>
+        </map>
+        <map>
+          <key>name</key>
+          <string>Ectoplasma</string>
+          <key>folder</key>
+          <string>ectoplasma</string>
+        </map>
+        <map>
+          <key>name</key>
+          <string>Blood</string>
+          <key>folder</key>
+          <string>blood</string>
+        </map>
+      </array>
+    </map>
+
     <map>
       <key>name</key>
       <string>Firestorm</string>
